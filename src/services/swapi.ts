@@ -28,3 +28,18 @@ export async function fetchCharacters(
 
 	return response.json();
 }
+
+/**
+ * Fetches a single resource from a specific SWAPI URL
+ * @param url - The full SWAPI URL
+ * @returns Promise with the resource data
+ */
+export async function fetchFromUrl<T>(url: string): Promise<T> {
+	const response = await fetch(url);
+
+	if (!response.ok) {
+		throw new Error(`HTTP error! status: ${response.status}`);
+	}
+
+	return response.json();
+}

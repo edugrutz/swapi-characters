@@ -1,5 +1,6 @@
-import { Modal, Descriptions, Tag, Divider } from "antd";
+import { Modal, Descriptions, Tag, Divider, Spin } from "antd";
 import { useTranslation } from "react-i18next";
+import { useCharacterDetails } from "../../hooks/useCharacterDetails";
 import type { CharacterModalProps } from "./types";
 
 export function CharacterModal({
@@ -8,6 +9,8 @@ export function CharacterModal({
 	onClose,
 }: CharacterModalProps) {
 	const { t } = useTranslation();
+	const { films, species, vehicles, starships, isLoading } = useCharacterDetails(character);
+
 	if (!character) return null;
 
 	return (
@@ -20,7 +23,7 @@ export function CharacterModal({
 			open={open}
 			onCancel={onClose}
 			footer={null}
-			width={600}
+			width={700}
 			centered
 		>
 			<Descriptions bordered column={1} size="small" className="custom-descriptions">
@@ -39,17 +42,46 @@ export function CharacterModal({
 				<Descriptions.Item label={t("table.columns.eye_color") || "Eye Color"}>
 					<span style={{ textTransform: "capitalize" }}>{character.eye_color}</span>
 				</Descriptions.Item>
+				<Descriptions.Item label={t("modal.species")}>
+					{isLoading ? <Spin size="small" /> : species.map(s => s.name).join(", ") || "n/a"}
+				</Descriptions.Item>
 			</Descriptions>
 
 			<Divider style={{ borderColor: "#FFE81F" }}>
 				<span className="star-wars-font" style={{ fontSize: "0.9rem" }}>{t("modal.statistics")}</span>
 			</Divider>
 
-			<div style={{ display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "center" }}>
-				<Tag color="gold">{t("modal.films")}: {character.films.length}</Tag>
-				<Tag color="blue">{t("modal.species")}: {character.species.length}</Tag>
-				<Tag color="green">{t("modal.vehicles")}: {character.vehicles.length}</Tag>
-				<Tag color="purple">{t("modal.starships")}: {character.starships.length}</Tag>
+			<div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+				<section>
+					<h4 style={{ color: "#FFE81F", marginBottom: "8px" }}>{t("modal.films")}</h4>
+					{isLoading ? <Spin size="small" /> : (
+						<div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+							{films.map(f => <Tag key={f.url} color="gold">{f.title}</Tag>)}
+						</div>
+					)}
+				</section>
+
+				{character.vehicles.length > 0 && (
+					<section>
+						<h4 style={{ color: "#FFE81F", marginBottom: "8px" }}>{t("modal.vehicles")}</h4>
+						{isLoading ? <Spin size="small" /> : (
+							<div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+								{vehicles.map(v => <Tag key={v.url} color="green">{v.name}</Tag>)}
+							</div>
+						)}
+					</section>
+				)}
+
+				{character.starships.length > 0 && (
+					<section>
+						<h4 style={{ color: "#FFE81F", marginBottom: "8px" }}>{t("modal.starships")}</h4>
+						{isLoading ? <Spin size="small" /> : (
+							<div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+								{starships.map(s => <Tag key={s.url} color="purple">{s.name}</Tag>)}
+							</div>
+						)}
+					</section>
+				)}
 			</div>
 
 			<div style={{ marginTop: "20px", fontSize: "0.8rem", textAlign: "right", opacity: 0.6 }}>
