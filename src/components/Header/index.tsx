@@ -1,8 +1,13 @@
-import { Typography, Segmented } from "antd";
+import { Segmented } from "antd";
 import logo from "../../assets/images/storm.png";
 import { useTranslation } from "react-i18next";
-
-const { Title } = Typography;
+import {
+	StyledHeader,
+	ContentSection,
+	TextContainer,
+	ResponsiveTitle,
+	ResponsiveText,
+} from "../../styles/antd/components/header";
 
 export function Header() {
 	const { t, i18n } = useTranslation();
@@ -12,49 +17,25 @@ export function Header() {
 	};
 
 	return (
-		<header
-			style={{
-				display: "flex",
-				alignItems: "center",
-				justifyContent: "space-between",
-				padding: "1rem 0",
-				gap: "1.5rem",
-			}}
-		>
-			<div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+		<StyledHeader>
+			<ContentSection>
 				<img
 					src={logo}
 					alt="Star Wars Logo"
 					style={{
-						height: "80px",
+						height: "clamp(60px, 10vw, 80px)",
 						width: "auto",
 					}}
 				/>
-				<div
-					style={{
-						display: "flex",
-						flexDirection: "column",
-						justifyContent: "center",
-					}}
-				>
-					<Title
-						level={1}
-						style={{
-							margin: 0,
-							fontSize: "2.5rem",
-							fontWeight: "bold",
-							lineHeight: 1.2,
-						}}
-					>
+				<TextContainer>
+					<ResponsiveTitle level={1}>
 						{t("header.title")}
-					</Title>
-					<Typography.Text
-						style={{ color: "#FFE81F", fontSize: "1rem", opacity: 0.8 }}
-					>
+					</ResponsiveTitle>
+					<ResponsiveText>
 						{t("header.description")}
-					</Typography.Text>
-				</div>
-			</div>
+					</ResponsiveText>
+				</TextContainer>
+			</ContentSection>
 
 			<Segmented
 				value={i18n.language.split("-")[0]}
@@ -63,7 +44,8 @@ export function Header() {
 					{ label: "PT", value: "pt" },
 				]}
 				onChange={handleLanguageChange}
+				style={{ flexShrink: 0 }}
 			/>
-		</header>
+		</StyledHeader>
 	);
 }

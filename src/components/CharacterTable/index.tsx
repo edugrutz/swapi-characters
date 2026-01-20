@@ -6,24 +6,29 @@ import {
 } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { useCharacters } from "../../hooks/useCharacters";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDebounce } from "../../hooks/useDebounce";
 import { CharacterModal } from "../CharacterModal";
 import type { Character } from "../../types/character";
 
 export function CharacterTable() {
 	const { t } = useTranslation();
 	const [page, setPage] = useState(1);
-	const [search, setSearch] = useState("");
+	const [searchValue, setSearchValue] = useState("");
 	const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
 		null,
 	);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
-	const { data, isFetching, error } = useCharacters({ page, search });
+	const debouncedSearch = useDebounce(searchValue, 500);
+	const { data, isFetching, error } = useCharacters({ page, search: debouncedSearch });
+
+	useEffect(() => {
+		setPage(1);
+	}, [debouncedSearch]);
 
 	const handleSearch = (value: string) => {
-		setSearch(value);
-		setPage(1);
+		setSearchValue(value);
 	};
 
 	const handleRowClick = (record: Character) => {
@@ -106,13 +111,12 @@ export function CharacterTable() {
 					marginBottom: 10,
 				}}
 			>
-				<Input.Search
+				<Input
 					placeholder={t("table.search_placeholder")}
 					allowClear
-					enterButton
-					onSearch={handleSearch}
+					value={searchValue}
+					onChange={(e) => handleSearch(e.target.value)}
 					style={{ maxWidth: 400 }}
-					loading={isFetching}
 				/>
 			</div>
 			{error && (
