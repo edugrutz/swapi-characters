@@ -1,7 +1,7 @@
 import type { Character } from "../types/character";
 import type { FetchCharactersParams, PaginatedResponse } from "../types/api";
 
-const SWAPI_BASE_URL = "https://swapi.dev/api";
+const SWAPI_BASE_URL = "https://swapi.py4e.com/api";
 
 /**
  * Fetches characters from SWAPI API
