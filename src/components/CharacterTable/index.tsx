@@ -4,12 +4,14 @@ import {
 	WomanOutlined,
 	QuestionOutlined,
 } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import { useCharacters } from "../../hooks/useCharacters";
 import { useState } from "react";
 import { CharacterModal } from "../CharacterModal";
 import type { Character } from "../../types/character";
 
 export function CharacterTable() {
+	const { t } = useTranslation();
 	const [page, setPage] = useState(1);
 	const [search, setSearch] = useState("");
 	const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
@@ -31,31 +33,31 @@ export function CharacterTable() {
 
 	const columns = [
 		{
-			title: "Name",
+			title: t("table.columns.name"),
 			dataIndex: "name",
 			key: "name",
 			width: 200,
 		},
 		{
-			title: "Height",
+			title: t("table.columns.height"),
 			dataIndex: "height",
 			key: "height",
 			width: 100,
 		},
 		{
-			title: "Mass",
+			title: t("table.columns.mass"),
 			dataIndex: "mass",
 			key: "mass",
 			width: 100,
 		},
 		{
-			title: "Birth Year",
+			title: t("table.columns.birth_year"),
 			dataIndex: "birth_year",
 			key: "birth_year",
 			width: 150,
 		},
 		{
-			title: "Gender",
+			title: t("table.columns.gender"),
 			dataIndex: "gender",
 			key: "gender",
 			width: 180,
@@ -105,7 +107,7 @@ export function CharacterTable() {
 				}}
 			>
 				<Input.Search
-					placeholder="Search characters by name..."
+					placeholder={t("table.search_placeholder")}
 					allowClear
 					enterButton
 					onSearch={handleSearch}
@@ -115,10 +117,9 @@ export function CharacterTable() {
 			</div>
 			{error && (
 				<Alert
-					message="Error loading characters"
+					message={t("error.loading")}
 					description={
-						error.message ||
-						"Failed to fetch data from SWAPI. Please try again later."
+						error.message || t("error.swapi")
 					}
 					type="error"
 					showIcon

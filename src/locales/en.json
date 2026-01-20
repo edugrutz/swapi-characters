@@ -1,0 +1,33 @@
+{
+    "header": {
+        "title": "Star Wars Characters",
+        "description": "Explore the vast database of characters from the legendary Star Wars saga",
+        "language": "Language"
+    },
+    "table": {
+        "search_placeholder": "Search characters by name...",
+        "columns": {
+            "name": "Name",
+            "height": "Height",
+            "mass": "Mass",
+            "birth_year": "Birth Year",
+            "gender": "Gender",
+            "hair_color": "Hair Color",
+            "skin_color": "Skin Color",
+            "eye_color": "Eye Color"
+        }
+    },
+    "modal": {
+        "statistics": "Statistics",
+        "films": "Films",
+        "species": "Species",
+        "vehicles": "Vehicles",
+        "starships": "Starships",
+        "created": "Created",
+        "edited": "Edited"
+    },
+    "error": {
+        "loading": "Error loading characters",
+        "swapi": "Failed to fetch data from SWAPI. Please try again later."
+    }
+}

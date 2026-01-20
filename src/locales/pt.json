@@ -1,0 +1,33 @@
+{
+    "header": {
+        "title": "Personagens de Star Wars",
+        "description": "Explore o vasto banco de dados de personagens da lendária saga Star Wars",
+        "language": "Idioma"
+    },
+    "table": {
+        "search_placeholder": "Pesquisar personagens por nome...",
+        "columns": {
+            "name": "Nome",
+            "height": "Altura",
+            "mass": "Peso",
+            "birth_year": "Ano de Nascimento",
+            "gender": "Gênero",
+            "hair_color": "Cor do Cabelo",
+            "skin_color": "Cor da Pele",
+            "eye_color": "Cor dos Olhos"
+        }
+    },
+    "modal": {
+        "statistics": "Estatísticas",
+        "films": "Filmes",
+        "species": "Espécies",
+        "vehicles": "Veículos",
+        "starships": "Naves",
+        "created": "Criado em",
+        "edited": "Editado em"
+    },
+    "error": {
+        "loading": "Erro ao carregar personagens",
+        "swapi": "Falha ao buscar dados da SWAPI. Por favor, tente novamente mais tarde."
+    }
+}
