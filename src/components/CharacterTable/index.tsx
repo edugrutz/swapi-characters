@@ -1,4 +1,4 @@
-import { Table } from 'antd';
+import { Table, Input, Alert } from 'antd';
 import { useCharacters } from '../../hooks/useCharacters';
 import { useState } from 'react';
 
@@ -6,7 +6,12 @@ export function CharacterTable() {
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
 
-    const { data, isLoading } = useCharacters({ page, search });
+    const { data, isLoading, error } = useCharacters({ page, search });
+
+    const handleSearch = (value: string) => {
+        setSearch(value);
+        setPage(1);
+    };
 
     const columns = [
         {
@@ -37,17 +42,36 @@ export function CharacterTable() {
     ];
 
     return (
-        <Table
-            columns={columns}
-            dataSource={data?.results || []}
-            loading={isLoading}
-            rowKey="name"
-            pagination={{
-                current: page,
-                total: data?.count || 0,
-                pageSize: 10,
-                onChange: setPage,
-            }}
-        />
+        <div>
+            <Input.Search
+                placeholder="Search characters by name..."
+                allowClear
+                enterButton
+                onSearch={handleSearch}
+                style={{ marginBottom: 16, maxWidth: 400 }}
+            />
+            {error && (
+                <Alert
+                    message="Error loading characters"
+                    description={error.message || 'Failed to fetch data from SWAPI. Please try again later.'}
+                    type="error"
+                    showIcon
+                    closable
+                    style={{ marginBottom: 16 }}
+                />
+            )}
+            <Table
+                columns={columns}
+                dataSource={data?.results || []}
+                loading={isLoading}
+                rowKey="name"
+                pagination={{
+                    current: page,
+                    total: data?.count || 0,
+                    pageSize: 10,
+                    onChange: setPage,
+                }}
+            />
+        </div>
     );
 }
