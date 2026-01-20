@@ -17,7 +17,7 @@ export function CharacterTable() {
 	);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
-	const { data, isLoading, error } = useCharacters({ page, search });
+	const { data, isFetching, error } = useCharacters({ page, search });
 
 	const handleSearch = (value: string) => {
 		setSearch(value);
@@ -110,6 +110,7 @@ export function CharacterTable() {
 					enterButton
 					onSearch={handleSearch}
 					style={{ maxWidth: 400 }}
+					loading={isFetching}
 				/>
 			</div>
 			{error && (
@@ -128,7 +129,7 @@ export function CharacterTable() {
 			<Table
 				columns={columns}
 				dataSource={data?.results || []}
-				loading={isLoading}
+				loading={isFetching}
 				rowKey="name"
 				tableLayout="fixed"
 				scroll={{ x: 730 }}
