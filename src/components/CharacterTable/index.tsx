@@ -69,6 +69,7 @@ export function CharacterTable() {
                     current: page,
                     total: data?.count || 0,
                     pageSize: 10,
+                    showSizeChanger: false,
                     onChange: setPage,
                 }}
             />
