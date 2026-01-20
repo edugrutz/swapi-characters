@@ -9,22 +9,22 @@ const SWAPI_BASE_URL = "https://swapi.py4e.com/api";
  * @returns Promise with paginated character data
  */
 export async function fetchCharacters(
-  params: FetchCharactersParams = {},
+	params: FetchCharactersParams = {},
 ): Promise<PaginatedResponse<Character>> {
-  const { page = 1, search = "" } = params;
+	const { page = 1, search = "" } = params;
 
-  const url = new URL(`${SWAPI_BASE_URL}/people/`);
-  url.searchParams.append("page", page.toString());
+	const url = new URL(`${SWAPI_BASE_URL}/people/`);
+	url.searchParams.append("page", page.toString());
 
-  if (search) {
-    url.searchParams.append("search", search);
-  }
+	if (search) {
+		url.searchParams.append("search", search);
+	}
 
-  const response = await fetch(url.toString());
+	const response = await fetch(url.toString());
 
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
+	if (!response.ok) {
+		throw new Error(`HTTP error! status: ${response.status}`);
+	}
 
-  return response.json();
+	return response.json();
 }

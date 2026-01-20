@@ -8,10 +8,10 @@ import type { FetchCharactersParams } from "../types/api";
  * @returns Query result with data, loading, and error states
  */
 export function useCharacters(params: FetchCharactersParams) {
-  return useQuery({
-    queryKey: ["characters", params.page, params.search],
-    queryFn: () => fetchCharacters(params),
-    placeholderData: (previousData) => previousData,
-    staleTime: 5 * 60 * 1000,
-  });
+	return useQuery({
+		queryKey: ["characters", params.page, params.search],
+		queryFn: () => fetchCharacters(params),
+		placeholderData: (previousData) => previousData,
+		staleTime: 5 * 60 * 1000,
+	});
 }
