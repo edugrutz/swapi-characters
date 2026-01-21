@@ -5,8 +5,9 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCharacters } from "../../hooks/useCharacters";
 import { useCharacterDetails } from "../../hooks/useCharacterDetails";
-import { FilmModal, SpeciesModal, VehicleModal, StarshipModal } from "../ResourceModals";
+import { FilmModal, SpeciesModal, VehicleModal, StarshipModal, PlanetModal } from "../ResourceModals";
 import { extractId } from "../../utils/extractId";
+import { useHomeworld } from "../../hooks/useHomeworld";
 import {
     ProfileContainer,
     ProfileHeader,
@@ -33,9 +34,13 @@ export function CharacterProfile() {
     const [starshipModalOpen, setStarshipModalOpen] = useState(false);
     const [selectedStarshipId, setSelectedStarshipId] = useState<string | null>(null);
 
+    const [planetModalOpen, setPlanetModalOpen] = useState(false);
+    const [selectedPlanetId, setSelectedPlanetId] = useState<string | null>(null);
+
     const { data, isFetching, error } = useCharacters({ page: 1, search: name || "" });
     const character = data?.results?.[0];
 
+    const { homeworld, isLoading: isLoadingHomeworld } = useHomeworld(character?.homeworld || null);
     const { films, species, vehicles, starships, isLoading: isLoadingDetails } =
         useCharacterDetails(character || null);
 
@@ -61,6 +66,17 @@ export function CharacterProfile() {
         const id = extractId(url);
         setSelectedStarshipId(id);
         setStarshipModalOpen(true);
+    };
+
+    const handlePlanetClick = (url: string) => {
+        const id = extractId(url);
+        setSelectedPlanetId(id);
+        setPlanetModalOpen(true);
+    };
+
+    const handleViewPlanet = (planetId: string) => {
+        setPlanetModalOpen(false);
+        navigate(`/planet/${planetId}`);
     };
 
     if (isFetching) {
@@ -132,6 +148,19 @@ export function CharacterProfile() {
                         </Descriptions.Item>
                         <Descriptions.Item label={t("table.columns.eye_color")}>
                             <span style={{ textTransform: "capitalize" }}>{character.eye_color}</span>
+                        </Descriptions.Item>
+                        <Descriptions.Item label={t("modal.homeworld")}>
+                            {isLoadingHomeworld ? (
+                                <Spin size="small" />
+                            ) : homeworld ? (
+                                <Tag
+                                    color="orange"
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => handlePlanetClick(character.homeworld)}
+                                >
+                                    {homeworld.name}
+                                </Tag>
+                            ) : "n/a"}
                         </Descriptions.Item>
                         <Descriptions.Item label={t("modal.species")}>
                             {isLoadingDetails ? (
@@ -257,6 +286,12 @@ export function CharacterProfile() {
                 starshipId={selectedStarshipId}
                 open={starshipModalOpen}
                 onClose={() => setStarshipModalOpen(false)}
+            />
+            <PlanetModal
+                planetId={selectedPlanetId}
+                open={planetModalOpen}
+                onClose={() => setPlanetModalOpen(false)}
+                onViewPlanet={handleViewPlanet}
             />
         </ProfileContainer>
     );

@@ -3,6 +3,7 @@ import { UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useCharacterDetails } from "../../hooks/useCharacterDetails";
+import { useHomeworld } from "../../hooks/useHomeworld";
 import type { CharacterModalProps } from "./types";
 
 export function CharacterModal({
@@ -13,6 +14,7 @@ export function CharacterModal({
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 	const { species, isLoading } = useCharacterDetails(character);
+	const { homeworld, isLoading: isLoadingHomeworld } = useHomeworld(character?.homeworld || null);
 
 	const handleViewProfile = () => {
 		if (character) {
@@ -60,6 +62,9 @@ export function CharacterModal({
 				</Descriptions.Item>
 				<Descriptions.Item label={t("table.columns.eye_color")}>
 					<span style={{ textTransform: "capitalize" }}>{character.eye_color}</span>
+				</Descriptions.Item>
+				<Descriptions.Item label={t("modal.homeworld")}>
+					{isLoadingHomeworld ? <Spin size="small" /> : homeworld?.name || "n/a"}
 				</Descriptions.Item>
 				<Descriptions.Item label={t("modal.species")}>
 					{isLoading ? <Spin size="small" /> : species.map(s => s.name).join(", ") || "n/a"}

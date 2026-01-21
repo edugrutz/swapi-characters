@@ -23,6 +23,7 @@
         "species": "Espécies",
         "vehicles": "Veículos",
         "starships": "Naves",
+        "homeworld": "Planeta Natal",
         "created": "Criado em",
         "edited": "Editado em",
         "view_profile": "Ver Perfil Completo"
@@ -78,12 +79,28 @@
         "cargo_capacity": "Capacidade de Carga",
         "consumables": "Consumíveis"
     },
+    "planet": {
+        "loading": "Carregando planeta...",
+        "climate": "Clima",
+        "terrain": "Terreno",
+        "population": "População",
+        "diameter": "Diâmetro",
+        "gravity": "Gravidade",
+        "rotation_period": "Período de Rotação",
+        "orbital_period": "Período Orbital",
+        "surface_water": "Água Superficial",
+        "view_planet": "Ver Página do Planeta",
+        "planetary_info": "Informações Planetárias",
+        "orbital_info": "Informações Orbitais"
+    },
     "common": {
-        "unknown": "Desconhecido"
+        "unknown": "Desconhecido",
+        "back": "Voltar"
     },
     "error": {
         "loading": "Erro ao carregar personagens",
         "swapi": "Falha ao buscar dados da SWAPI. Por favor, tente novamente mais tarde.",
-        "character_not_found": "Personagem não encontrado"
+        "character_not_found": "Personagem não encontrado",
+        "planet_not_found": "Planeta não encontrado"
     }
 }

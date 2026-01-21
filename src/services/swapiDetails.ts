@@ -1,4 +1,4 @@
-import type { Film, Species, Vehicle, Starship } from "../types/resources";
+import type { Film, Species, Vehicle, Starship, Planet } from "../types/resources";
 
 const SWAPI_BASE_URL = "https://swapi.dev/api";
 
@@ -30,6 +30,14 @@ export async function fetchStarshipById(id: string): Promise<Starship> {
     const response = await fetch(`${SWAPI_BASE_URL}/starships/${id}/`);
     if (!response.ok) {
         throw new Error(`Failed to fetch starship with id ${id}`);
+    }
+    return response.json();
+}
+
+export async function fetchPlanetById(id: string): Promise<Planet> {
+    const response = await fetch(`${SWAPI_BASE_URL}/planets/${id}/`);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch planet with id ${id}`);
     }
     return response.json();
 }

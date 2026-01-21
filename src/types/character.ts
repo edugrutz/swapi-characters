@@ -9,6 +9,7 @@ export interface Character {
 	skin_color: string;
 	eye_color: string;
 
+	homeworld: string;
 	films: string[];
 	species: string[];
 	vehicles: string[];
@@ -18,3 +19,4 @@ export interface Character {
 	edited: string;
 	url: string;
 }
+

@@ -2,6 +2,7 @@ import { Layout } from "antd";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CharacterTable } from "./components/CharacterTable";
 import { CharacterProfile } from "./components/CharacterProfile";
+import { PlanetDetail } from "./components/PlanetDetail";
 import { Header } from "./components/Header";
 import { GlobalStyles } from "./styles/global";
 
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<CharacterTable />} />
             <Route path="/character/:name" element={<CharacterProfile />} />
+            <Route path="/planet/:id" element={<PlanetDetail />} />
           </Routes>
         </Content>
       </Layout>
