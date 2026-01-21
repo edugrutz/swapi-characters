@@ -24,10 +24,16 @@
         "vehicles": "Veículos",
         "starships": "Naves",
         "created": "Criado em",
-        "edited": "Editado em"
+        "edited": "Editado em",
+        "view_profile": "Ver Perfil Completo"
+    },
+    "profile": {
+        "back": "Voltar aos Personagens",
+        "basic_info": "Informações Básicas"
     },
     "error": {
         "loading": "Erro ao carregar personagens",
-        "swapi": "Falha ao buscar dados da SWAPI. Por favor, tente novamente mais tarde."
+        "swapi": "Falha ao buscar dados da SWAPI. Por favor, tente novamente mais tarde.",
+        "character_not_found": "Personagem não encontrado"
     }
 }

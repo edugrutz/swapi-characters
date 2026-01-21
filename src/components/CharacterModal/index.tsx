@@ -1,4 +1,6 @@
-import { Modal, Descriptions, Tag, Divider, Spin } from "antd";
+import { Modal, Descriptions, Tag, Divider, Spin, Button } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useCharacterDetails } from "../../hooks/useCharacterDetails";
 import { useTheme } from "../../contexts/ThemeContext";
@@ -11,9 +13,17 @@ export function CharacterModal({
 }: CharacterModalProps) {
 	const { t } = useTranslation();
 	const { theme } = useTheme();
+	const navigate = useNavigate();
 	const { films, species, vehicles, starships, isLoading } = useCharacterDetails(character);
 
 	const headingColor = theme === "dark" ? "#ffffffff" : "#202020ff";
+
+	const handleViewProfile = () => {
+		if (character) {
+			onClose();
+			navigate(`/character/${encodeURIComponent(character.name)}`);
+		}
+	};
 
 	if (!character) return null;
 
@@ -26,7 +36,16 @@ export function CharacterModal({
 			}
 			open={open}
 			onCancel={onClose}
-			footer={null}
+			footer={
+				<Button
+					type="primary"
+					icon={<UserOutlined />}
+					onClick={handleViewProfile}
+					size="large"
+				>
+					{t("modal.view_profile")}
+				</Button>
+			}
 			width={700}
 			centered
 		>

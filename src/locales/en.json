@@ -24,10 +24,16 @@
         "vehicles": "Vehicles",
         "starships": "Starships",
         "created": "Created",
-        "edited": "Edited"
+        "edited": "Edited",
+        "view_profile": "View Full Profile"
+    },
+    "profile": {
+        "back": "Back to Characters",
+        "basic_info": "Basic Information"
     },
     "error": {
         "loading": "Error loading characters",
-        "swapi": "Failed to fetch data from SWAPI. Please try again later."
+        "swapi": "Failed to fetch data from SWAPI. Please try again later.",
+        "character_not_found": "Character not found"
     }
 }
