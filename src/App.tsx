@@ -8,6 +8,7 @@ import { VehicleDetail } from "./components/VehicleDetail";
 import { StarshipDetail } from "./components/StarshipDetail";
 import { Header } from "./components/Header";
 import { GlobalStyles } from "./styles/global";
+import { BackgroundStars } from "./components/BackgroundStars";
 
 const { Content } = Layout;
 
@@ -16,6 +17,7 @@ function App() {
     <BrowserRouter>
       <Layout className="app-layout">
         <GlobalStyles />
+        <BackgroundStars />
         <Header />
         <Content>
           <Routes>

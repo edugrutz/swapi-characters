@@ -16,6 +16,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.90.19",
     "antd": "^6.2.1",
+    "framer-motion": "^12.28.1",
     "i18next": "^25.8.0",
     "i18next-browser-languagedetector": "^8.2.0",
     "react": "^19.2.0",
