@@ -1,6 +1,6 @@
 import { Layout } from "antd";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { CharacterTable } from "./components/CharacterTable";
+import { CharacterGrid } from "./components/CharacterGrid";
 import { CharacterProfile } from "./components/CharacterProfile";
 import { PlanetDetail } from "./components/PlanetDetail";
 import { FilmDetail } from "./components/FilmDetail";
@@ -21,7 +21,7 @@ function App() {
         <Header />
         <Content>
           <Routes>
-            <Route path="/" element={<CharacterTable />} />
+            <Route path="/" element={<CharacterGrid />} />
             <Route path="/character/:name" element={<CharacterProfile />} />
             <Route path="/planet/:id" element={<PlanetDetail />} />
             <Route path="/film/:id" element={<FilmDetail />} />
