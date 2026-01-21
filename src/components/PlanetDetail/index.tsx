@@ -19,7 +19,7 @@ import {
     ErrorButton,
     Capitalized,
     ResourceTagsWrapper,
-    ResourceListWrapper,
+    StyledTabs,
     StyledTag,
 } from "../../styles/antd/components/profile";
 
@@ -38,6 +38,28 @@ export function PlanetDetail() {
     });
 
     const { residents, films, isLoading: isLoadingDetails } = usePlanetDetails(planet);
+
+    const planetDetails = planet ? [
+        {
+            label: t("planet.climate"),
+            value: <Capitalized>{planet.climate}</Capitalized>,
+        },
+        {
+            label: t("planet.terrain"),
+            value: <Capitalized>{planet.terrain}</Capitalized>,
+        },
+        {
+            label: t("planet.population"),
+            value: planet.population === "unknown"
+                ? t("common.unknown")
+                : parseInt(planet.population).toLocaleString(),
+        },
+        { label: t("planet.diameter"), value: `${planet.diameter} km` },
+        { label: t("planet.gravity"), value: planet.gravity },
+        { label: t("planet.surface_water"), value: `${planet.surface_water}%` },
+        { label: t("planet.rotation_period"), value: `${planet.rotation_period} hours` },
+        { label: t("planet.orbital_period"), value: `${planet.orbital_period} days` },
+    ] : [];
 
     const handleFilmClick = (url: string) => {
         const id = extractId(url);
@@ -104,85 +126,73 @@ export function PlanetDetail() {
             <ProfileContent>
                 <ProfileSection>
                     <SectionTitle>{t("planet.planetary_info")}</SectionTitle>
-                    <Descriptions bordered column={1} size="small" className="custom-descriptions">
-                        <Descriptions.Item label={t("planet.climate")}>
-                            <Capitalized>{planet.climate}</Capitalized>
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("planet.terrain")}>
-                            <Capitalized>{planet.terrain}</Capitalized>
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("planet.population")}>
-                            {planet.population === "unknown"
-                                ? t("common.unknown")
-                                : parseInt(planet.population).toLocaleString()}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("planet.diameter")}>
-                            {planet.diameter} km
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("planet.gravity")}>
-                            {planet.gravity}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("planet.surface_water")}>
-                            {planet.surface_water}%
-                        </Descriptions.Item>
+                    <Descriptions
+                        bordered
+                        column={{ xxl: 2, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 }}
+                        size="small"
+                        className="custom-descriptions"
+                    >
+                        {planetDetails.map((item) => (
+                            <Descriptions.Item key={item.label} label={item.label}>
+                                {item.value}
+                            </Descriptions.Item>
+                        ))}
                     </Descriptions>
                 </ProfileSection>
 
-                <ProfileSection>
-                    <SectionTitle>{t("planet.orbital_info")}</SectionTitle>
-                    <Descriptions bordered column={1} size="small" className="custom-descriptions">
-                        <Descriptions.Item label={t("planet.rotation_period")}>
-                            {planet.rotation_period} hours
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("planet.orbital_period")}>
-                            {planet.orbital_period} days
-                        </Descriptions.Item>
-                    </Descriptions>
-                </ProfileSection>
-
-                <ResourceListWrapper>
-                    {planet.residents.length > 0 && (
-                        <ProfileSection>
-                            <SectionTitle>{t("planet.residents")}</SectionTitle>
-                            {isLoadingDetails ? (
-                                <Spin size="small" />
-                            ) : (
-                                <ResourceTagsWrapper>
-                                    {residents.map((r) => (
-                                        <StyledTag
-                                            key={r.url}
-                                            color="cyan"
-                                            onClick={() => handleResidentClick(r.url)}
-                                        >
-                                            {r.name}
-                                        </StyledTag>
-                                    ))}
-                                </ResourceTagsWrapper>
-                            )}
-                        </ProfileSection>
-                    )}
-
-                    {planet.films.length > 0 && (
-                        <ProfileSection>
-                            <SectionTitle>{t("modal.films")}</SectionTitle>
-                            {isLoadingDetails ? (
-                                <Spin size="small" />
-                            ) : (
-                                <ResourceTagsWrapper>
-                                    {films.map((f) => (
-                                        <StyledTag
-                                            key={f.url}
-                                            color="gold"
-                                            onClick={() => handleFilmClick(f.url)}
-                                        >
-                                            {f.title}
-                                        </StyledTag>
-                                    ))}
-                                </ResourceTagsWrapper>
-                            )}
-                        </ProfileSection>
-                    )}
-                </ResourceListWrapper>
+                <StyledTabs
+                    defaultActiveKey="residents"
+                    items={[
+                        {
+                            key: "residents",
+                            label: t("planet.residents"),
+                            children: (
+                                <ProfileSection>
+                                    {isLoadingDetails ? (
+                                        <Spin size="small" />
+                                    ) : (
+                                        <ResourceTagsWrapper>
+                                            {residents.map((r) => (
+                                                <StyledTag
+                                                    key={r.url}
+                                                    color="cyan"
+                                                    onClick={() => handleResidentClick(r.url)}
+                                                >
+                                                    {r.name}
+                                                </StyledTag>
+                                            ))}
+                                            {residents.length === 0 && t("common.no_resources")}
+                                        </ResourceTagsWrapper>
+                                    )}
+                                </ProfileSection>
+                            ),
+                        },
+                        {
+                            key: "films",
+                            label: t("modal.films"),
+                            children: (
+                                <ProfileSection>
+                                    {isLoadingDetails ? (
+                                        <Spin size="small" />
+                                    ) : (
+                                        <ResourceTagsWrapper>
+                                            {films.map((f) => (
+                                                <StyledTag
+                                                    key={f.url}
+                                                    color="gold"
+                                                    onClick={() => handleFilmClick(f.url)}
+                                                >
+                                                    {f.title}
+                                                </StyledTag>
+                                            ))}
+                                            {films.length === 0 && t("common.no_resources")}
+                                        </ResourceTagsWrapper>
+                                    )}
+                                </ProfileSection>
+                            ),
+                        },
+                    ]}
+                />
             </ProfileContent>
 
             <FilmModal

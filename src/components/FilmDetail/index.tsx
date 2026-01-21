@@ -18,9 +18,9 @@ import {
     LoadingWrapper,
     ErrorButton,
     ResourceTagsWrapper,
-    ResourceListWrapper,
     CrawlBox,
     StyledTag,
+    StyledTabs,
 } from "../../styles/antd/components/profile";
 
 export function FilmDetail() {
@@ -127,7 +127,7 @@ export function FilmDetail() {
             <ProfileContent>
                 <ProfileSection>
                     <SectionTitle>{t("film.film_info")}</SectionTitle>
-                    <Descriptions bordered column={1} size="small" className="custom-descriptions">
+                    <Descriptions bordered column={{ xxl: 2, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 }} size="small" className="custom-descriptions">
                         <Descriptions.Item label={t("film.episode")}>
                             Episode {film.episode_id}
                         </Descriptions.Item>
@@ -150,112 +150,131 @@ export function FilmDetail() {
                     </CrawlBox>
                 </ProfileSection>
 
-                <ResourceListWrapper>
-                    {film.characters.length > 0 && (
-                        <ProfileSection>
-                            <SectionTitle>{t("film.characters")}</SectionTitle>
-                            {isLoadingDetails ? (
-                                <Spin size="small" />
-                            ) : (
-                                <ResourceTagsWrapper>
-                                    {characters.map((c) => (
-                                        <StyledTag
-                                            key={c.url}
-                                            color="cyan"
-                                            onClick={() => handleCharacterClick(c.url)}
-                                        >
-                                            {c.name}
-                                        </StyledTag>
-                                    ))}
-                                </ResourceTagsWrapper>
-                            )}
-                        </ProfileSection>
-                    )}
-
-                    {film.planets.length > 0 && (
-                        <ProfileSection>
-                            <SectionTitle>{t("film.planets")}</SectionTitle>
-                            {isLoadingDetails ? (
-                                <Spin size="small" />
-                            ) : (
-                                <ResourceTagsWrapper>
-                                    {planets.map((p) => (
-                                        <StyledTag
-                                            key={p.url}
-                                            color="orange"
-                                            onClick={() => handleModalOpen("planet", p.url)}
-                                        >
-                                            {p.name}
-                                        </StyledTag>
-                                    ))}
-                                </ResourceTagsWrapper>
-                            )}
-                        </ProfileSection>
-                    )}
-
-                    {film.species.length > 0 && (
-                        <ProfileSection>
-                            <SectionTitle>{t("modal.species")}</SectionTitle>
-                            {isLoadingDetails ? (
-                                <Spin size="small" />
-                            ) : (
-                                <ResourceTagsWrapper>
-                                    {species.map((s) => (
-                                        <StyledTag
-                                            key={s.url}
-                                            color="blue"
-                                            onClick={() => handleModalOpen("species", s.url)}
-                                        >
-                                            {s.name}
-                                        </StyledTag>
-                                    ))}
-                                </ResourceTagsWrapper>
-                            )}
-                        </ProfileSection>
-                    )}
-
-                    {film.vehicles.length > 0 && (
-                        <ProfileSection>
-                            <SectionTitle>{t("modal.vehicles")}</SectionTitle>
-                            {isLoadingDetails ? (
-                                <Spin size="small" />
-                            ) : (
-                                <ResourceTagsWrapper>
-                                    {vehicles.map((v) => (
-                                        <StyledTag
-                                            key={v.url}
-                                            color="green"
-                                            onClick={() => handleModalOpen("vehicle", v.url)}
-                                        >
-                                            {v.name}
-                                        </StyledTag>
-                                    ))}
-                                </ResourceTagsWrapper>
-                            )}
-                        </ProfileSection>
-                    )}
-
-                    {film.starships.length > 0 && (
-                        <ProfileSection>
-                            <SectionTitle>{t("modal.starships")}</SectionTitle>
-                            {isLoadingDetails ? (
-                                <Spin size="small" />
-                            ) : (
-                                <ResourceTagsWrapper>
-                                    {starships.map((s) => (
-                                        <StyledTag
-                                            key={s.url}
-                                            color="purple"
-                                            onClick={() => handleModalOpen("starship", s.url)}
-                                        >
-                                            {s.name}
-                                        </StyledTag>
-                                    ))}
-                                </ResourceTagsWrapper>
-                            )}
-                        </ProfileSection>
-                    )}
-                </ResourceListWrapper>
+                <StyledTabs
+                    defaultActiveKey="characters"
+                    items={[
+                        {
+                            key: "characters",
+                            label: t("film.characters"),
+                            children: (
+                                <ProfileSection>
+                                    {isLoadingDetails ? (
+                                        <Spin size="small" />
+                                    ) : (
+                                        <ResourceTagsWrapper>
+                                            {characters.map((c) => (
+                                                <StyledTag
+                                                    key={c.url}
+                                                    color="cyan"
+                                                    onClick={() => handleCharacterClick(c.url)}
+                                                >
+                                                    {c.name}
+                                                </StyledTag>
+                                            ))}
+                                            {characters.length === 0 && t("common.no_resources")}
+                                        </ResourceTagsWrapper>
+                                    )}
+                                </ProfileSection>
+                            ),
+                        },
+                        {
+                            key: "planets",
+                            label: t("film.planets"),
+                            children: (
+                                <ProfileSection>
+                                    {isLoadingDetails ? (
+                                        <Spin size="small" />
+                                    ) : (
+                                        <ResourceTagsWrapper>
+                                            {planets.map((p) => (
+                                                <StyledTag
+                                                    key={p.url}
+                                                    color="orange"
+                                                    onClick={() => handleModalOpen("planet", p.url)}
+                                                >
+                                                    {p.name}
+                                                </StyledTag>
+                                            ))}
+                                            {planets.length === 0 && t("common.no_resources")}
+                                        </ResourceTagsWrapper>
+                                    )}
+                                </ProfileSection>
+                            ),
+                        },
+                        {
+                            key: "species",
+                            label: t("modal.species"),
+                            children: (
+                                <ProfileSection>
+                                    {isLoadingDetails ? (
+                                        <Spin size="small" />
+                                    ) : (
+                                        <ResourceTagsWrapper>
+                                            {species.map((s) => (
+                                                <StyledTag
+                                                    key={s.url}
+                                                    color="blue"
+                                                    onClick={() => handleModalOpen("species", s.url)}
+                                                >
+                                                    {s.name}
+                                                </StyledTag>
+                                            ))}
+                                            {species.length === 0 && t("common.no_resources")}
+                                        </ResourceTagsWrapper>
+                                    )}
+                                </ProfileSection>
+                            ),
+                        },
+                        {
+                            key: "vehicles",
+                            label: t("modal.vehicles"),
+                            children: (
+                                <ProfileSection>
+                                    {isLoadingDetails ? (
+                                        <Spin size="small" />
+                                    ) : (
+                                        <ResourceTagsWrapper>
+                                            {vehicles.map((v) => (
+                                                <StyledTag
+                                                    key={v.url}
+                                                    color="green"
+                                                    onClick={() => handleModalOpen("vehicle", v.url)}
+                                                >
+                                                    {v.name}
+                                                </StyledTag>
+                                            ))}
+                                            {vehicles.length === 0 && t("common.no_resources")}
+                                        </ResourceTagsWrapper>
+                                    )}
+                                </ProfileSection>
+                            ),
+                        },
+                        {
+                            key: "starships",
+                            label: t("modal.starships"),
+                            children: (
+                                <ProfileSection>
+                                    {isLoadingDetails ? (
+                                        <Spin size="small" />
+                                    ) : (
+                                        <ResourceTagsWrapper>
+                                            {starships.map((s) => (
+                                                <StyledTag
+                                                    key={s.url}
+                                                    color="purple"
+                                                    onClick={() => handleModalOpen("starship", s.url)}
+                                                >
+                                                    {s.name}
+                                                </StyledTag>
+                                            ))}
+                                            {starships.length === 0 && t("common.no_resources")}
+                                        </ResourceTagsWrapper>
+                                    )}
+                                </ProfileSection>
+                            ),
+                        },
+                    ]}
+                />
             </ProfileContent>
 
             <SpeciesModal

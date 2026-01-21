@@ -21,6 +21,16 @@ export function FilmModal({ filmId, open, onClose, onViewFilm }: FilmModalProps)
         }
     };
 
+    const filmDetails = film ? [
+        { label: t("film.episode"), value: `Episode ${film.episode_id}` },
+        { label: t("film.director"), value: film.director },
+        { label: t("film.producer"), value: film.producer },
+        {
+            label: t("film.release_date"),
+            value: new Date(film.release_date).toLocaleDateString(),
+        },
+    ] : [];
+
     return (
         <Modal
             title={<ModalTitle>{film?.title || t("film.loading")}</ModalTitle>}
@@ -66,18 +76,11 @@ export function FilmModal({ filmId, open, onClose, onViewFilm }: FilmModalProps)
                     </div>
 
                     <Descriptions bordered column={1} size="small" className="custom-descriptions">
-                        <Descriptions.Item label={t("film.episode")}>
-                            Episode {film.episode_id}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("film.director")}>
-                            {film.director}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("film.producer")}>
-                            {film.producer}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("film.release_date")}>
-                            {new Date(film.release_date).toLocaleDateString()}
-                        </Descriptions.Item>
+                        {filmDetails.map((item) => (
+                            <Descriptions.Item key={item.label} label={item.label}>
+                                {item.value}
+                            </Descriptions.Item>
+                        ))}
                     </Descriptions>
                 </>
             )}

@@ -18,8 +18,8 @@ import {
     LoadingWrapper,
     ErrorButton,
     ResourceTagsWrapper,
-    ResourceListWrapper,
     StyledTag,
+    StyledTabs,
 } from "../../styles/antd/components/profile";
 
 export function StarshipDetail() {
@@ -37,6 +37,34 @@ export function StarshipDetail() {
     });
 
     const { pilots, films, isLoading: isLoadingDetails } = useStarshipDetails(starship);
+
+    const starshipDetails = starship ? [
+        { label: t("starship.model"), value: starship.model },
+        { label: t("starship.manufacturer"), value: starship.manufacturer },
+        { label: t("starship.starship_class"), value: starship.starship_class },
+        {
+            label: t("starship.cost_in_credits"),
+            value: starship.cost_in_credits === "unknown"
+                ? t("common.unknown")
+                : parseInt(starship.cost_in_credits).toLocaleString(),
+        },
+        { label: t("starship.length"), value: `${starship.length} m` },
+        {
+            label: t("starship.max_atmosphering_speed"),
+            value: `${starship.max_atmosphering_speed} km/h`,
+        },
+        { label: t("starship.hyperdrive_rating"), value: starship.hyperdrive_rating },
+        { label: t("starship.MGLT"), value: starship.MGLT },
+        { label: t("starship.crew"), value: starship.crew },
+        { label: t("starship.passengers"), value: starship.passengers },
+        {
+            label: t("starship.cargo_capacity"),
+            value: starship.cargo_capacity === "unknown"
+                ? t("common.unknown")
+                : `${parseInt(starship.cargo_capacity).toLocaleString()} kg`,
+        },
+        { label: t("starship.consumables"), value: starship.consumables },
+    ] : [];
 
     const handlePilotClick = (url: string) => {
         const pilotName = pilots.find(p => p.url === url)?.name;
@@ -103,99 +131,73 @@ export function StarshipDetail() {
             <ProfileContent>
                 <ProfileSection>
                     <SectionTitle>{t("starship.starship_info")}</SectionTitle>
-                    <Descriptions bordered column={1} size="small" className="custom-descriptions">
-                        <Descriptions.Item label={t("starship.model")}>
-                            {starship.model}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("starship.manufacturer")}>
-                            {starship.manufacturer}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("starship.starship_class")}>
-                            {starship.starship_class}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("starship.cost_in_credits")}>
-                            {starship.cost_in_credits === "unknown"
-                                ? t("common.unknown")
-                                : parseInt(starship.cost_in_credits).toLocaleString()}
-                        </Descriptions.Item>
+                    <Descriptions
+                        bordered
+                        column={{ xxl: 2, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 }}
+                        size="small"
+                        className="custom-descriptions"
+                    >
+                        {starshipDetails.map((item) => (
+                            <Descriptions.Item key={item.label} label={item.label}>
+                                {item.value}
+                            </Descriptions.Item>
+                        ))}
                     </Descriptions>
                 </ProfileSection>
 
-                <ProfileSection>
-                    <SectionTitle>{t("starship.specifications")}</SectionTitle>
-                    <Descriptions bordered column={1} size="small" className="custom-descriptions">
-                        <Descriptions.Item label={t("starship.length")}>
-                            {starship.length} m
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("starship.max_atmosphering_speed")}>
-                            {starship.max_atmosphering_speed} km/h
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("starship.hyperdrive_rating")}>
-                            {starship.hyperdrive_rating}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("starship.MGLT")}>
-                            {starship.MGLT}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("starship.crew")}>
-                            {starship.crew}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("starship.passengers")}>
-                            {starship.passengers}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("starship.cargo_capacity")}>
-                            {starship.cargo_capacity === "unknown"
-                                ? t("common.unknown")
-                                : parseInt(starship.cargo_capacity).toLocaleString()} kg
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("starship.consumables")}>
-                            {starship.consumables}
-                        </Descriptions.Item>
-                    </Descriptions>
-                </ProfileSection>
-
-                <ResourceListWrapper>
-                    {starship.pilots.length > 0 && (
-                        <ProfileSection>
-                            <SectionTitle>{t("starship.pilots")}</SectionTitle>
-                            {isLoadingDetails ? (
-                                <Spin size="small" />
-                            ) : (
-                                <ResourceTagsWrapper>
-                                    {pilots.map((p) => (
-                                        <StyledTag
-                                            key={p.url}
-                                            color="cyan"
-                                            onClick={() => handlePilotClick(p.url)}
-                                        >
-                                            {p.name}
-                                        </StyledTag>
-                                    ))}
-                                </ResourceTagsWrapper>
-                            )}
-                        </ProfileSection>
-                    )}
-
-                    {starship.films.length > 0 && (
-                        <ProfileSection>
-                            <SectionTitle>{t("modal.films")}</SectionTitle>
-                            {isLoadingDetails ? (
-                                <Spin size="small" />
-                            ) : (
-                                <ResourceTagsWrapper>
-                                    {films.map((f) => (
-                                        <StyledTag
-                                            key={f.url}
-                                            color="gold"
-                                            onClick={() => handleFilmClick(f.url)}
-                                        >
-                                            {f.title}
-                                        </StyledTag>
-                                    ))}
-                                </ResourceTagsWrapper>
-                            )}
-                        </ProfileSection>
-                    )}
-                </ResourceListWrapper>
+                <StyledTabs
+                    defaultActiveKey="pilots"
+                    items={[
+                        {
+                            key: "pilots",
+                            label: t("starship.pilots"),
+                            children: (
+                                <ProfileSection>
+                                    {isLoadingDetails ? (
+                                        <Spin size="small" />
+                                    ) : (
+                                        <ResourceTagsWrapper>
+                                            {pilots.map((p) => (
+                                                <StyledTag
+                                                    key={p.url}
+                                                    color="cyan"
+                                                    onClick={() => handlePilotClick(p.url)}
+                                                >
+                                                    {p.name}
+                                                </StyledTag>
+                                            ))}
+                                            {pilots.length === 0 && t("common.no_resources")}
+                                        </ResourceTagsWrapper>
+                                    )}
+                                </ProfileSection>
+                            ),
+                        },
+                        {
+                            key: "films",
+                            label: t("modal.films"),
+                            children: (
+                                <ProfileSection>
+                                    {isLoadingDetails ? (
+                                        <Spin size="small" />
+                                    ) : (
+                                        <ResourceTagsWrapper>
+                                            {films.map((f) => (
+                                                <StyledTag
+                                                    key={f.url}
+                                                    color="gold"
+                                                    onClick={() => handleFilmClick(f.url)}
+                                                >
+                                                    {f.title}
+                                                </StyledTag>
+                                            ))}
+                                            {films.length === 0 && t("common.no_resources")}
+                                        </ResourceTagsWrapper>
+                                    )}
+                                </ProfileSection>
+                            ),
+                        },
+                    ]}
+                />
             </ProfileContent>
 
             <FilmModal

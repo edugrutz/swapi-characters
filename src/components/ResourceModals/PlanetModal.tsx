@@ -21,6 +21,28 @@ export function PlanetModal({ planetId, open, onClose, onViewPlanet }: PlanetMod
         }
     };
 
+    const planetDetails = planet ? [
+        {
+            label: t("planet.climate"),
+            value: <Capitalized>{planet.climate}</Capitalized>,
+        },
+        {
+            label: t("planet.terrain"),
+            value: <Capitalized>{planet.terrain}</Capitalized>,
+        },
+        {
+            label: t("planet.population"),
+            value: planet.population === "unknown"
+                ? t("common.unknown")
+                : parseInt(planet.population).toLocaleString(),
+        },
+        { label: t("planet.diameter"), value: `${planet.diameter} km` },
+        { label: t("planet.gravity"), value: planet.gravity },
+        { label: t("planet.rotation_period"), value: `${planet.rotation_period} hours` },
+        { label: t("planet.orbital_period"), value: `${planet.orbital_period} days` },
+        { label: t("planet.surface_water"), value: `${planet.surface_water}%` },
+    ] : [];
+
     return (
         <Modal
             title={<ModalTitle>{planet?.name || t("planet.loading")}</ModalTitle>}
@@ -58,32 +80,11 @@ export function PlanetModal({ planetId, open, onClose, onViewPlanet }: PlanetMod
 
             {planet && (
                 <Descriptions bordered column={1} size="small" className="custom-descriptions">
-                    <Descriptions.Item label={t("planet.climate")}>
-                        <Capitalized>{planet.climate}</Capitalized>
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("planet.terrain")}>
-                        <Capitalized>{planet.terrain}</Capitalized>
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("planet.population")}>
-                        {planet.population === "unknown"
-                            ? t("common.unknown")
-                            : parseInt(planet.population).toLocaleString()}
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("planet.diameter")}>
-                        {planet.diameter} km
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("planet.gravity")}>
-                        {planet.gravity}
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("planet.rotation_period")}>
-                        {planet.rotation_period} hours
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("planet.orbital_period")}>
-                        {planet.orbital_period} days
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("planet.surface_water")}>
-                        {planet.surface_water}%
-                    </Descriptions.Item>
+                    {planetDetails.map((item) => (
+                        <Descriptions.Item key={item.label} label={item.label}>
+                            {item.value}
+                        </Descriptions.Item>
+                    ))}
                 </Descriptions>
             )}
         </Modal>

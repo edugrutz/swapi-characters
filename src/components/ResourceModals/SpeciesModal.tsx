@@ -14,6 +14,32 @@ export function SpeciesModal({ speciesId, open, onClose }: SpeciesModalProps) {
         enabled: !!speciesId && open,
     });
 
+    const speciesDetails = species ? [
+        {
+            label: t("species.classification"),
+            value: <Capitalized>{species.classification}</Capitalized>,
+        },
+        {
+            label: t("species.designation"),
+            value: <Capitalized>{species.designation}</Capitalized>,
+        },
+        { label: t("species.average_height"), value: `${species.average_height} cm` },
+        { label: t("species.average_lifespan"), value: `${species.average_lifespan} years` },
+        { label: t("species.language"), value: species.language },
+        {
+            label: t("species.skin_colors"),
+            value: <Capitalized>{species.skin_colors}</Capitalized>,
+        },
+        {
+            label: t("species.hair_colors"),
+            value: <Capitalized>{species.hair_colors}</Capitalized>,
+        },
+        {
+            label: t("species.eye_colors"),
+            value: <Capitalized>{species.eye_colors}</Capitalized>,
+        },
+    ] : [];
+
     return (
         <Modal
             title={<ModalTitle>{species?.name || t("species.loading")}</ModalTitle>}
@@ -40,30 +66,11 @@ export function SpeciesModal({ speciesId, open, onClose }: SpeciesModalProps) {
 
             {species && (
                 <Descriptions bordered column={1} size="small" className="custom-descriptions">
-                    <Descriptions.Item label={t("species.classification")}>
-                        <Capitalized>{species.classification}</Capitalized>
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("species.designation")}>
-                        <Capitalized>{species.designation}</Capitalized>
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("species.average_height")}>
-                        {species.average_height} cm
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("species.average_lifespan")}>
-                        {species.average_lifespan} years
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("species.language")}>
-                        {species.language}
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("species.skin_colors")}>
-                        <Capitalized>{species.skin_colors}</Capitalized>
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("species.hair_colors")}>
-                        <Capitalized>{species.hair_colors}</Capitalized>
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("species.eye_colors")}>
-                        <Capitalized>{species.eye_colors}</Capitalized>
-                    </Descriptions.Item>
+                    {speciesDetails.map((item) => (
+                        <Descriptions.Item key={item.label} label={item.label}>
+                            {item.value}
+                        </Descriptions.Item>
+                    ))}
                 </Descriptions>
             )}
         </Modal>

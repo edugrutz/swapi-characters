@@ -21,6 +21,35 @@ export function VehicleModal({ vehicleId, open, onClose, onViewVehicle }: Vehicl
         }
     };
 
+    const vehicleDetails = vehicle ? [
+        { label: t("vehicle.model"), value: vehicle.model },
+        { label: t("vehicle.manufacturer"), value: vehicle.manufacturer },
+        {
+            label: t("vehicle.vehicle_class"),
+            value: <Capitalized>{vehicle.vehicle_class}</Capitalized>,
+        },
+        {
+            label: t("vehicle.cost_in_credits"),
+            value: vehicle.cost_in_credits === "unknown"
+                ? t("common.unknown")
+                : `${parseInt(vehicle.cost_in_credits).toLocaleString()} credits`,
+        },
+        { label: t("vehicle.length"), value: `${vehicle.length} m` },
+        {
+            label: t("vehicle.max_atmosphering_speed"),
+            value: `${vehicle.max_atmosphering_speed} km/h`,
+        },
+        { label: t("vehicle.crew"), value: vehicle.crew },
+        { label: t("vehicle.passengers"), value: vehicle.passengers },
+        {
+            label: t("vehicle.cargo_capacity"),
+            value: vehicle.cargo_capacity === "unknown"
+                ? t("common.unknown")
+                : `${parseInt(vehicle.cargo_capacity).toLocaleString()} kg`,
+        },
+        { label: t("vehicle.consumables"), value: vehicle.consumables },
+    ] : [];
+
     return (
         <Modal
             title={<ModalTitle>{vehicle?.name || t("vehicle.loading")}</ModalTitle>}
@@ -58,40 +87,11 @@ export function VehicleModal({ vehicleId, open, onClose, onViewVehicle }: Vehicl
 
             {vehicle && (
                 <Descriptions bordered column={1} size="small" className="custom-descriptions">
-                    <Descriptions.Item label={t("vehicle.model")}>
-                        {vehicle.model}
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("vehicle.manufacturer")}>
-                        {vehicle.manufacturer}
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("vehicle.vehicle_class")}>
-                        <Capitalized>{vehicle.vehicle_class}</Capitalized>
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("vehicle.cost_in_credits")}>
-                        {vehicle.cost_in_credits === "unknown"
-                            ? t("common.unknown")
-                            : `${parseInt(vehicle.cost_in_credits).toLocaleString()} credits`}
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("vehicle.length")}>
-                        {vehicle.length} m
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("vehicle.max_atmosphering_speed")}>
-                        {vehicle.max_atmosphering_speed} km/h
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("vehicle.crew")}>
-                        {vehicle.crew}
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("vehicle.passengers")}>
-                        {vehicle.passengers}
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("vehicle.cargo_capacity")}>
-                        {vehicle.cargo_capacity === "unknown"
-                            ? t("common.unknown")
-                            : `${parseInt(vehicle.cargo_capacity).toLocaleString()} kg`}
-                    </Descriptions.Item>
-                    <Descriptions.Item label={t("vehicle.consumables")}>
-                        {vehicle.consumables}
-                    </Descriptions.Item>
+                    {vehicleDetails.map((item) => (
+                        <Descriptions.Item key={item.label} label={item.label}>
+                            {item.value}
+                        </Descriptions.Item>
+                    ))}
                 </Descriptions>
             )}
         </Modal>

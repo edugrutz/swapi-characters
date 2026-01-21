@@ -108,7 +108,8 @@
     },
     "common": {
         "unknown": "Unknown",
-        "back": "Back"
+        "back": "Back",
+        "no_resources": "No resources found"
     },
     "error": {
         "loading": "Error loading characters",

@@ -19,7 +19,7 @@ import {
     ErrorButton,
     Capitalized,
     ResourceTagsWrapper,
-    ResourceListWrapper,
+    StyledTabs,
     StyledTag,
 } from "../../styles/antd/components/profile";
 
@@ -75,6 +75,62 @@ export function CharacterProfile() {
         navigate(`/${modalType}/${id}`);
     }
 
+    const basicDetails = character ? [
+        { label: t("table.columns.height"), value: `${character.height} cm` },
+        { label: t("table.columns.mass"), value: `${character.mass} kg` },
+        { label: t("table.columns.birth_year"), value: character.birth_year },
+        {
+            label: t("table.columns.gender"),
+            value: <Capitalized>{character.gender}</Capitalized>,
+        },
+        {
+            label: t("table.columns.hair_color"),
+            value: <Capitalized>{character.hair_color}</Capitalized>,
+        },
+        {
+            label: t("table.columns.skin_color"),
+            value: <Capitalized>{character.skin_color}</Capitalized>,
+        },
+        {
+            label: t("table.columns.eye_color"),
+            value: <Capitalized>{character.eye_color}</Capitalized>,
+        },
+        {
+            label: t("modal.homeworld"),
+            value: isLoadingHomeworld ? (
+                <Spin size="small" />
+            ) : homeworld ? (
+                <StyledTag
+                    color="orange"
+                    onClick={() => handleModalOpen("planet", character.homeworld)}
+                >
+                    {homeworld.name}
+                </StyledTag>
+            ) : (
+                "n/a"
+            ),
+        },
+        {
+            label: t("modal.species"),
+            value: isLoadingDetails ? (
+                <Spin size="small" />
+            ) : (
+                <ResourceTagsWrapper>
+                    {species.map((s) => (
+                        <StyledTag
+                            key={s.url}
+                            color="blue"
+                            onClick={() => handleModalOpen("species", s.url)}
+                        >
+                            {s.name}
+                        </StyledTag>
+                    ))}
+                    {species.length === 0 && "n/a"}
+                </ResourceTagsWrapper>
+            ),
+        },
+    ] : [];
+
     if (isFetching) {
         return (
             <ProfileContainer>
@@ -122,123 +178,96 @@ export function CharacterProfile() {
             <ProfileContent>
                 <ProfileSection>
                     <SectionTitle>{t("profile.basic_info")}</SectionTitle>
-                    <Descriptions bordered column={1} size="small" className="custom-descriptions">
-                        <Descriptions.Item label={t("table.columns.height")}>
-                            {character.height} cm
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("table.columns.mass")}>
-                            {character.mass} kg
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("table.columns.birth_year")}>
-                            {character.birth_year}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("table.columns.gender")}>
-                            <Capitalized>{character.gender}</Capitalized>
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("table.columns.hair_color")}>
-                            <Capitalized>{character.hair_color}</Capitalized>
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("table.columns.skin_color")}>
-                            <Capitalized>{character.skin_color}</Capitalized>
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("table.columns.eye_color")}>
-                            <Capitalized>{character.eye_color}</Capitalized>
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("modal.homeworld")}>
-                            {isLoadingHomeworld ? (
-                                <Spin size="small" />
-                            ) : homeworld ? (
-                                <StyledTag
-                                    color="orange"
-                                    onClick={() => handleModalOpen("planet", character.homeworld)}
-                                >
-                                    {homeworld.name}
-                                </StyledTag>
-                            ) : "n/a"}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("modal.species")}>
-                            {isLoadingDetails ? (
-                                <Spin size="small" />
-                            ) : (
-                                <ResourceTagsWrapper>
-                                    {species.map((s) => (
-                                        <StyledTag
-                                            key={s.url}
-                                            color="blue"
-                                            onClick={() => handleModalOpen("species", s.url)}
-                                        >
-                                            {s.name}
-                                        </StyledTag>
-                                    ))}
-                                    {species.length === 0 && "n/a"}
-                                </ResourceTagsWrapper>
-                            )}
-                        </Descriptions.Item>
+                    <Descriptions
+                        bordered
+                        column={{ xxl: 2, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 }}
+                        size="small"
+                        className="custom-descriptions"
+                    >
+                        {basicDetails.map((item) => (
+                            <Descriptions.Item key={item.label} label={item.label}>
+                                {item.value}
+                            </Descriptions.Item>
+                        ))}
                     </Descriptions>
                 </ProfileSection>
-
-                <ResourceListWrapper>
-                    <ProfileSection>
-                        <SectionTitle>{t("modal.films")}</SectionTitle>
-                        {isLoadingDetails ? (
-                            <Spin size="small" />
-                        ) : (
-                            <ResourceTagsWrapper>
-                                {films.map((f) => (
-                                    <StyledTag
-                                        key={f.url}
-                                        color="gold"
-                                        onClick={() => handleModalOpen("film", f.url)}
-                                    >
-                                        {f.title}
-                                    </StyledTag>
-                                ))}
-                            </ResourceTagsWrapper>
-                        )}
-                    </ProfileSection>
-
-                    {character.vehicles.length > 0 && (
-                        <ProfileSection>
-                            <SectionTitle>{t("modal.vehicles")}</SectionTitle>
-                            {isLoadingDetails ? (
-                                <Spin size="small" />
-                            ) : (
-                                <ResourceTagsWrapper>
-                                    {vehicles.map((v) => (
-                                        <StyledTag
-                                            key={v.url}
-                                            color="green"
-                                            onClick={() => handleModalOpen("vehicle", v.url)}
-                                        >
-                                            {v.name}
-                                        </StyledTag>
-                                    ))}
-                                </ResourceTagsWrapper>
-                            )}
-                        </ProfileSection>
-                    )}
-
-                    {character.starships.length > 0 && (
-                        <ProfileSection>
-                            <SectionTitle>{t("modal.starships")}</SectionTitle>
-                            {isLoadingDetails ? (
-                                <Spin size="small" />
-                            ) : (
-                                <ResourceTagsWrapper>
-                                    {starships.map((s) => (
-                                        <StyledTag
-                                            key={s.url}
-                                            color="purple"
-                                            onClick={() => handleModalOpen("starship", s.url)}
-                                        >
-                                            {s.name}
-                                        </StyledTag>
-                                    ))}
-                                </ResourceTagsWrapper>
-                            )}
-                        </ProfileSection>
-                    )}
-                </ResourceListWrapper>
+                <StyledTabs
+                    defaultActiveKey="films"
+                    items={[
+                        {
+                            key: "films",
+                            label: t("modal.films"),
+                            children: (
+                                <ProfileSection>
+                                    {isLoadingDetails ? (
+                                        <Spin size="small" />
+                                    ) : (
+                                        <ResourceTagsWrapper>
+                                            {films.map((f) => (
+                                                <StyledTag
+                                                    key={f.url}
+                                                    color="gold"
+                                                    onClick={() => handleModalOpen("film", f.url)}
+                                                >
+                                                    {f.title}
+                                                </StyledTag>
+                                            ))}
+                                            {films.length === 0 && t("common.no_resources")}
+                                        </ResourceTagsWrapper>
+                                    )}
+                                </ProfileSection>
+                            ),
+                        },
+                        {
+                            key: "vehicles",
+                            label: t("modal.vehicles"),
+                            children: (
+                                <ProfileSection>
+                                    {isLoadingDetails ? (
+                                        <Spin size="small" />
+                                    ) : (
+                                        <ResourceTagsWrapper>
+                                            {vehicles.map((v) => (
+                                                <StyledTag
+                                                    key={v.url}
+                                                    color="green"
+                                                    onClick={() => handleModalOpen("vehicle", v.url)}
+                                                >
+                                                    {v.name}
+                                                </StyledTag>
+                                            ))}
+                                            {vehicles.length === 0 && t("common.no_resources")}
+                                        </ResourceTagsWrapper>
+                                    )}
+                                </ProfileSection>
+                            ),
+                        },
+                        {
+                            key: "starships",
+                            label: t("modal.starships"),
+                            children: (
+                                <ProfileSection>
+                                    {isLoadingDetails ? (
+                                        <Spin size="small" />
+                                    ) : (
+                                        <ResourceTagsWrapper>
+                                            {starships.map((s) => (
+                                                <StyledTag
+                                                    key={s.url}
+                                                    color="purple"
+                                                    onClick={() => handleModalOpen("starship", s.url)}
+                                                >
+                                                    {s.name}
+                                                </StyledTag>
+                                            ))}
+                                            {starships.length === 0 && t("common.no_resources")}
+                                        </ResourceTagsWrapper>
+                                    )}
+                                </ProfileSection>
+                            ),
+                        },
+                    ]}
+                />
             </ProfileContent>
 
             <FilmModal

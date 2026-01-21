@@ -108,7 +108,8 @@
     },
     "common": {
         "unknown": "Desconhecido",
-        "back": "Voltar"
+        "back": "Voltar",
+        "no_resources": "Nenhum recurso encontrado"
     },
     "error": {
         "loading": "Erro ao carregar personagens",

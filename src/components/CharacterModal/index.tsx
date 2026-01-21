@@ -26,6 +26,40 @@ export function CharacterModal({
 
 	if (!character) return null;
 
+	const details = [
+		{ label: t("table.columns.height"), value: `${character.height} cm` },
+		{ label: t("table.columns.mass"), value: `${character.mass} kg` },
+		{ label: t("table.columns.birth_year"), value: character.birth_year },
+		{
+			label: t("table.columns.gender"),
+			value: <Capitalized>{character.gender}</Capitalized>,
+		},
+		{
+			label: t("table.columns.hair_color"),
+			value: <Capitalized>{character.hair_color}</Capitalized>,
+		},
+		{
+			label: t("table.columns.skin_color"),
+			value: <Capitalized>{character.skin_color}</Capitalized>,
+		},
+		{
+			label: t("table.columns.eye_color"),
+			value: <Capitalized>{character.eye_color}</Capitalized>,
+		},
+		{
+			label: t("modal.homeworld"),
+			value: isLoadingHomeworld ? <Spin size="small" /> : homeworld?.name || "n/a",
+		},
+		{
+			label: t("modal.species"),
+			value: isLoading ? (
+				<Spin size="small" />
+			) : (
+				species.map((s) => s.name).join(", ") || "n/a"
+			),
+		},
+	];
+
 	return (
 		<Modal
 			title={<ModalTitle>{character.name}</ModalTitle>}
@@ -45,27 +79,11 @@ export function CharacterModal({
 			centered
 		>
 			<Descriptions bordered column={1} size="small" className="custom-descriptions">
-				<Descriptions.Item label={t("table.columns.height")}>{character.height} cm</Descriptions.Item>
-				<Descriptions.Item label={t("table.columns.mass")}>{character.mass} kg</Descriptions.Item>
-				<Descriptions.Item label={t("table.columns.birth_year")}>{character.birth_year}</Descriptions.Item>
-				<Descriptions.Item label={t("table.columns.gender")}>
-					<Capitalized>{character.gender}</Capitalized>
-				</Descriptions.Item>
-				<Descriptions.Item label={t("table.columns.hair_color")}>
-					<Capitalized>{character.hair_color}</Capitalized>
-				</Descriptions.Item>
-				<Descriptions.Item label={t("table.columns.skin_color")}>
-					<Capitalized>{character.skin_color}</Capitalized>
-				</Descriptions.Item>
-				<Descriptions.Item label={t("table.columns.eye_color")}>
-					<Capitalized>{character.eye_color}</Capitalized>
-				</Descriptions.Item>
-				<Descriptions.Item label={t("modal.homeworld")}>
-					{isLoadingHomeworld ? <Spin size="small" /> : homeworld?.name || "n/a"}
-				</Descriptions.Item>
-				<Descriptions.Item label={t("modal.species")}>
-					{isLoading ? <Spin size="small" /> : species.map(s => s.name).join(", ") || "n/a"}
-				</Descriptions.Item>
+				{details.map((item) => (
+					<Descriptions.Item key={item.label} label={item.label}>
+						{item.value}
+					</Descriptions.Item>
+				))}
 			</Descriptions>
 		</Modal>
 	);

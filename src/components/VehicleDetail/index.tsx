@@ -18,7 +18,7 @@ import {
     LoadingWrapper,
     ErrorButton,
     ResourceTagsWrapper,
-    ResourceListWrapper,
+    StyledTabs,
     StyledTag,
 } from "../../styles/antd/components/profile";
 
@@ -37,6 +37,32 @@ export function VehicleDetail() {
     });
 
     const { pilots, films, isLoading: isLoadingDetails } = useVehicleDetails(vehicle);
+
+    const vehicleDetails = vehicle ? [
+        { label: t("vehicle.model"), value: vehicle.model },
+        { label: t("vehicle.manufacturer"), value: vehicle.manufacturer },
+        { label: t("vehicle.vehicle_class"), value: vehicle.vehicle_class },
+        {
+            label: t("vehicle.cost_in_credits"),
+            value: vehicle.cost_in_credits === "unknown"
+                ? t("common.unknown")
+                : parseInt(vehicle.cost_in_credits).toLocaleString(),
+        },
+        { label: t("vehicle.length"), value: `${vehicle.length} m` },
+        {
+            label: t("vehicle.max_atmosphering_speed"),
+            value: `${vehicle.max_atmosphering_speed} km/h`,
+        },
+        { label: t("vehicle.crew"), value: vehicle.crew },
+        { label: t("vehicle.passengers"), value: vehicle.passengers },
+        {
+            label: t("vehicle.cargo_capacity"),
+            value: vehicle.cargo_capacity === "unknown"
+                ? t("common.unknown")
+                : `${parseInt(vehicle.cargo_capacity).toLocaleString()} kg`,
+        },
+        { label: t("vehicle.consumables"), value: vehicle.consumables },
+    ] : [];
 
     const handlePilotClick = (url: string) => {
         const pilotName = pilots.find(p => p.url === url)?.name;
@@ -103,93 +129,73 @@ export function VehicleDetail() {
             <ProfileContent>
                 <ProfileSection>
                     <SectionTitle>{t("vehicle.vehicle_info")}</SectionTitle>
-                    <Descriptions bordered column={1} size="small" className="custom-descriptions">
-                        <Descriptions.Item label={t("vehicle.model")}>
-                            {vehicle.model}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("vehicle.manufacturer")}>
-                            {vehicle.manufacturer}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("vehicle.vehicle_class")}>
-                            {vehicle.vehicle_class}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("vehicle.cost_in_credits")}>
-                            {vehicle.cost_in_credits === "unknown"
-                                ? t("common.unknown")
-                                : parseInt(vehicle.cost_in_credits).toLocaleString()}
-                        </Descriptions.Item>
+                    <Descriptions
+                        bordered
+                        column={{ xxl: 2, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 }}
+                        size="small"
+                        className="custom-descriptions"
+                    >
+                        {vehicleDetails.map((item) => (
+                            <Descriptions.Item key={item.label} label={item.label}>
+                                {item.value}
+                            </Descriptions.Item>
+                        ))}
                     </Descriptions>
                 </ProfileSection>
 
-                <ProfileSection>
-                    <SectionTitle>{t("vehicle.specifications")}</SectionTitle>
-                    <Descriptions bordered column={1} size="small" className="custom-descriptions">
-                        <Descriptions.Item label={t("vehicle.length")}>
-                            {vehicle.length} m
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("vehicle.max_atmosphering_speed")}>
-                            {vehicle.max_atmosphering_speed} km/h
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("vehicle.crew")}>
-                            {vehicle.crew}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("vehicle.passengers")}>
-                            {vehicle.passengers}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("vehicle.cargo_capacity")}>
-                            {vehicle.cargo_capacity === "unknown"
-                                ? t("common.unknown")
-                                : parseInt(vehicle.cargo_capacity).toLocaleString()} kg
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("vehicle.consumables")}>
-                            {vehicle.consumables}
-                        </Descriptions.Item>
-                    </Descriptions>
-                </ProfileSection>
-
-                <ResourceListWrapper>
-                    {vehicle.pilots.length > 0 && (
-                        <ProfileSection>
-                            <SectionTitle>{t("vehicle.pilots")}</SectionTitle>
-                            {isLoadingDetails ? (
-                                <Spin size="small" />
-                            ) : (
-                                <ResourceTagsWrapper>
-                                    {pilots.map((p) => (
-                                        <StyledTag
-                                            key={p.url}
-                                            color="cyan"
-                                            onClick={() => handlePilotClick(p.url)}
-                                        >
-                                            {p.name}
-                                        </StyledTag>
-                                    ))}
-                                </ResourceTagsWrapper>
-                            )}
-                        </ProfileSection>
-                    )}
-
-                    {vehicle.films.length > 0 && (
-                        <ProfileSection>
-                            <SectionTitle>{t("modal.films")}</SectionTitle>
-                            {isLoadingDetails ? (
-                                <Spin size="small" />
-                            ) : (
-                                <ResourceTagsWrapper>
-                                    {films.map((f) => (
-                                        <StyledTag
-                                            key={f.url}
-                                            color="gold"
-                                            onClick={() => handleFilmClick(f.url)}
-                                        >
-                                            {f.title}
-                                        </StyledTag>
-                                    ))}
-                                </ResourceTagsWrapper>
-                            )}
-                        </ProfileSection>
-                    )}
-                </ResourceListWrapper>
+                <StyledTabs
+                    defaultActiveKey="pilots"
+                    items={[
+                        {
+                            key: "pilots",
+                            label: t("vehicle.pilots"),
+                            children: (
+                                <ProfileSection>
+                                    {isLoadingDetails ? (
+                                        <Spin size="small" />
+                                    ) : (
+                                        <ResourceTagsWrapper>
+                                            {pilots.map((p) => (
+                                                <StyledTag
+                                                    key={p.url}
+                                                    color="cyan"
+                                                    onClick={() => handlePilotClick(p.url)}
+                                                >
+                                                    {p.name}
+                                                </StyledTag>
+                                            ))}
+                                            {pilots.length === 0 && t("common.no_resources")}
+                                        </ResourceTagsWrapper>
+                                    )}
+                                </ProfileSection>
+                            ),
+                        },
+                        {
+                            key: "films",
+                            label: t("modal.films"),
+                            children: (
+                                <ProfileSection>
+                                    {isLoadingDetails ? (
+                                        <Spin size="small" />
+                                    ) : (
+                                        <ResourceTagsWrapper>
+                                            {films.map((f) => (
+                                                <StyledTag
+                                                    key={f.url}
+                                                    color="gold"
+                                                    onClick={() => handleFilmClick(f.url)}
+                                                >
+                                                    {f.title}
+                                                </StyledTag>
+                                            ))}
+                                            {films.length === 0 && t("common.no_resources")}
+                                        </ResourceTagsWrapper>
+                                    )}
+                                </ProfileSection>
+                            ),
+                        },
+                    ]}
+                />
             </ProfileContent>
 
             <FilmModal

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button, Tag } from "antd";
+import { Button, Tag, Tabs } from "antd";
 
 export const StyledTag = styled(Tag)`
     cursor: pointer;
@@ -32,12 +32,35 @@ export const BackButton = styled(Button)`
 `;
 
 export const ProfileContent = styled.div`
-	display: grid;
+	display: flex;
+	flex-direction: column;
 	gap: 2rem;
-	
-	@media (min-width: 768px) {
-		grid-template-columns: 1fr 1fr;
-	}
+`;
+
+export const StyledTabs = styled(Tabs)`
+  .ant-tabs-nav::before {
+    border-bottom: 1px solid ${({ theme }) =>
+        theme.theme === 'dark' ? 'rgba(255, 232, 31, 0.2)' : 'rgba(0, 0, 0, 0.1)'} !important;
+  }
+
+  .ant-tabs-tab {
+    padding: 12px 16px !important;
+    
+    &:hover {
+      color: ${({ theme }) =>
+        theme.theme === 'dark' ? '#ffe81f' : '#1890ff'} !important;
+    }
+  }
+
+  .ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: ${({ theme }) =>
+        theme.theme === 'dark' ? '#ffe81f' : '#1890ff'} !important;
+  }
+
+  .ant-tabs-ink-bar {
+    background: ${({ theme }) =>
+        theme.theme === 'dark' ? '#ffe81f' : '#1890ff'} !important;
+  }
 `;
 
 export const ProfileSection = styled.section`
