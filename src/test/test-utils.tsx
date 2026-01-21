@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { render, type RenderOptions } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ThemeProvider } from '../contexts/ThemeContext';
+import { ThemeProvider } from '../contexts/ThemeContext/provider';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { ConfigProvider } from 'antd';
 import { BrowserRouter } from 'react-router-dom';

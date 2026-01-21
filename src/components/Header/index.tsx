@@ -3,7 +3,7 @@ import { SunOutlined, MoonOutlined } from "@ant-design/icons";
 import logo from "../../assets/images/logo.png";
 import storm from "../../assets/images/storm.png";
 import { useTranslation } from "react-i18next";
-import { useTheme } from "../../contexts/ThemeContext";
+import { useTheme } from "../../contexts/ThemeContext/provider";
 import { useNavigate } from "react-router-dom";
 import {
 	StyledHeader,

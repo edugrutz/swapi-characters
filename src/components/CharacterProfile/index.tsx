@@ -70,7 +70,7 @@ export function CharacterProfile() {
         setModalsOpen({ ...modalsOpen, [modalType]: false });
     };
 
-    const HandleViewResource = (modalType: ModalType, id: string) => {
+    const handleViewResource = (modalType: ModalType, id: string) => {
         handleModalClose(modalType);
         navigate(`/${modalType}/${id}`);
     }
@@ -274,7 +274,7 @@ export function CharacterProfile() {
                 filmId={selectedIds.film}
                 open={modalsOpen.film}
                 onClose={() => setModalsOpen({ ...modalsOpen, film: false })}
-                onViewFilm={(id) => HandleViewResource('film', id)}
+                onViewFilm={(id) => handleViewResource('film', id)}
             />
             <SpeciesModal
                 speciesId={selectedIds.species}
@@ -285,19 +285,19 @@ export function CharacterProfile() {
                 vehicleId={selectedIds.vehicle}
                 open={modalsOpen.vehicle}
                 onClose={() => setModalsOpen({ ...modalsOpen, vehicle: false })}
-                onViewVehicle={(id) => HandleViewResource('vehicle', id)}
+                onViewVehicle={(id) => handleViewResource('vehicle', id)}
             />
             <StarshipModal
                 starshipId={selectedIds.starship}
                 open={modalsOpen.starship}
                 onClose={() => setModalsOpen({ ...modalsOpen, starship: false })}
-                onViewStarship={(id) => HandleViewResource('starship', id)}
+                onViewStarship={(id) => handleViewResource('starship', id)}
             />
             <PlanetModal
                 planetId={selectedIds.planet}
                 open={modalsOpen.planet}
                 onClose={() => setModalsOpen({ ...modalsOpen, planet: false })}
-                onViewPlanet={(id) => HandleViewResource('planet', id)}
+                onViewPlanet={(id) => handleViewResource('planet', id)}
             />
         </ProfileContainer>
     );
