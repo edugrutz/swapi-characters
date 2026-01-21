@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Typography } from "antd";
+import { Typography, Button } from "antd";
 
 const { Title, Text } = Typography;
 
@@ -48,4 +48,30 @@ export const ResponsiveText = styled(Text)`
   font-size: clamp(0.85rem, 3vw, 1rem) !important;
   opacity: ${props => props.theme.theme === 'dark' ? '0.8' : '1'};
   max-width: 600px;
+`;
+
+export const LogoImage = styled.img`
+  height: clamp(60px, 10vw, 80px);
+  width: auto;
+`;
+
+export const SettingsSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+`;
+
+export const ThemeToggleButton = styled(Button)`
+  font-size: 1.2rem !important;
+  color: ${props => props.theme.theme === 'dark' ? '#fff' : '#000'} !important;
+  border: 1px solid ${props => props.theme.theme === 'dark' ? '#fff' : '#000'} !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  
+  &:hover {
+    color: ${props => props.theme.theme === 'dark' ? '#ffe81f' : '#1890ff'} !important;
+    border-color: ${props => props.theme.theme === 'dark' ? '#ffe81f' : '#1890ff'} !important;
+  }
 `;

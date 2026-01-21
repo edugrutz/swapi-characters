@@ -1,4 +1,4 @@
-import { Segmented, Button } from "antd";
+import { Segmented } from "antd";
 import { SunOutlined, MoonOutlined } from "@ant-design/icons";
 import logo from "../../assets/images/logo.png";
 import storm from "../../assets/images/storm.png";
@@ -10,6 +10,9 @@ import {
 	TextContainer,
 	ResponsiveTitle,
 	ResponsiveText,
+	LogoImage,
+	SettingsSection,
+	ThemeToggleButton,
 } from "../../styles/antd/components/header";
 
 export function Header() {
@@ -23,13 +26,9 @@ export function Header() {
 	return (
 		<StyledHeader>
 			<ContentSection>
-				<img
+				<LogoImage
 					src={theme === "dark" ? storm : logo}
 					alt="Star Wars Logo"
-					style={{
-						height: "clamp(60px, 10vw, 80px)",
-						width: "auto",
-					}}
 				/>
 				<TextContainer>
 					<ResponsiveTitle level={1}>
@@ -41,16 +40,11 @@ export function Header() {
 				</TextContainer>
 			</ContentSection>
 
-			<div style={{ display: "flex", alignItems: "center", gap: "1rem", flexShrink: 0 }}>
-				<Button
+			<SettingsSection>
+				<ThemeToggleButton
 					type="text"
 					icon={theme === 'dark' ? <SunOutlined /> : <MoonOutlined />}
 					onClick={toggleTheme}
-					style={{
-						fontSize: "1.2rem",
-						color: theme === 'dark' ? '#ffffffff' : '#000000ff',
-						border: "1px solid " + (theme === 'dark' ? '#ffffffff' : '#000000ff')
-					}}
 				/>
 				<Segmented
 					value={i18n.language.split("-")[0]}
@@ -60,7 +54,7 @@ export function Header() {
 					]}
 					onChange={handleLanguageChange}
 				/>
-			</div>
+			</SettingsSection>
 		</StyledHeader>
 	);
 }

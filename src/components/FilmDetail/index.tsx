@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Descriptions, Spin, Alert, Button, Tag } from "antd";
+import { Descriptions, Spin, Alert, Button } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -20,6 +20,7 @@ import {
     ResourceTagsWrapper,
     ResourceListWrapper,
     CrawlBox,
+    StyledTag,
 } from "../../styles/antd/components/profile";
 
 export function FilmDetail() {
@@ -158,14 +159,13 @@ export function FilmDetail() {
                             ) : (
                                 <ResourceTagsWrapper>
                                     {characters.map((c) => (
-                                        <Tag
+                                        <StyledTag
                                             key={c.url}
                                             color="cyan"
-                                            style={{ cursor: "pointer" }}
                                             onClick={() => handleCharacterClick(c.url)}
                                         >
                                             {c.name}
-                                        </Tag>
+                                        </StyledTag>
                                     ))}
                                 </ResourceTagsWrapper>
                             )}
@@ -180,14 +180,13 @@ export function FilmDetail() {
                             ) : (
                                 <ResourceTagsWrapper>
                                     {planets.map((p) => (
-                                        <Tag
+                                        <StyledTag
                                             key={p.url}
                                             color="orange"
-                                            style={{ cursor: "pointer" }}
                                             onClick={() => handleModalOpen("planet", p.url)}
                                         >
                                             {p.name}
-                                        </Tag>
+                                        </StyledTag>
                                     ))}
                                 </ResourceTagsWrapper>
                             )}
@@ -202,14 +201,13 @@ export function FilmDetail() {
                             ) : (
                                 <ResourceTagsWrapper>
                                     {species.map((s) => (
-                                        <Tag
+                                        <StyledTag
                                             key={s.url}
                                             color="blue"
-                                            style={{ cursor: "pointer" }}
                                             onClick={() => handleModalOpen("species", s.url)}
                                         >
                                             {s.name}
-                                        </Tag>
+                                        </StyledTag>
                                     ))}
                                 </ResourceTagsWrapper>
                             )}
@@ -224,14 +222,13 @@ export function FilmDetail() {
                             ) : (
                                 <ResourceTagsWrapper>
                                     {vehicles.map((v) => (
-                                        <Tag
+                                        <StyledTag
                                             key={v.url}
                                             color="green"
-                                            style={{ cursor: "pointer" }}
                                             onClick={() => handleModalOpen("vehicle", v.url)}
                                         >
                                             {v.name}
-                                        </Tag>
+                                        </StyledTag>
                                     ))}
                                 </ResourceTagsWrapper>
                             )}
@@ -246,14 +243,13 @@ export function FilmDetail() {
                             ) : (
                                 <ResourceTagsWrapper>
                                     {starships.map((s) => (
-                                        <Tag
+                                        <StyledTag
                                             key={s.url}
                                             color="purple"
-                                            style={{ cursor: "pointer" }}
                                             onClick={() => handleModalOpen("starship", s.url)}
                                         >
                                             {s.name}
-                                        </Tag>
+                                        </StyledTag>
                                     ))}
                                 </ResourceTagsWrapper>
                             )}

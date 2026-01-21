@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Descriptions, Tag, Spin, Alert, Button } from "antd";
+import { Descriptions, Spin, Alert, Button } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,6 +20,7 @@ import {
     Capitalized,
     ResourceTagsWrapper,
     ResourceListWrapper,
+    StyledTag,
 } from "../../styles/antd/components/profile";
 
 export function CharacterProfile() {
@@ -147,13 +148,12 @@ export function CharacterProfile() {
                             {isLoadingHomeworld ? (
                                 <Spin size="small" />
                             ) : homeworld ? (
-                                <Tag
+                                <StyledTag
                                     color="orange"
-                                    style={{ cursor: "pointer" }}
                                     onClick={() => handleModalOpen("planet", character.homeworld)}
                                 >
                                     {homeworld.name}
-                                </Tag>
+                                </StyledTag>
                             ) : "n/a"}
                         </Descriptions.Item>
                         <Descriptions.Item label={t("modal.species")}>
@@ -162,14 +162,13 @@ export function CharacterProfile() {
                             ) : (
                                 <ResourceTagsWrapper>
                                     {species.map((s) => (
-                                        <Tag
+                                        <StyledTag
                                             key={s.url}
                                             color="blue"
-                                            style={{ cursor: "pointer" }}
                                             onClick={() => handleModalOpen("species", s.url)}
                                         >
                                             {s.name}
-                                        </Tag>
+                                        </StyledTag>
                                     ))}
                                     {species.length === 0 && "n/a"}
                                 </ResourceTagsWrapper>
@@ -186,14 +185,13 @@ export function CharacterProfile() {
                         ) : (
                             <ResourceTagsWrapper>
                                 {films.map((f) => (
-                                    <Tag
+                                    <StyledTag
                                         key={f.url}
                                         color="gold"
-                                        style={{ cursor: "pointer" }}
                                         onClick={() => handleModalOpen("film", f.url)}
                                     >
                                         {f.title}
-                                    </Tag>
+                                    </StyledTag>
                                 ))}
                             </ResourceTagsWrapper>
                         )}
@@ -207,14 +205,13 @@ export function CharacterProfile() {
                             ) : (
                                 <ResourceTagsWrapper>
                                     {vehicles.map((v) => (
-                                        <Tag
+                                        <StyledTag
                                             key={v.url}
                                             color="green"
-                                            style={{ cursor: "pointer" }}
                                             onClick={() => handleModalOpen("vehicle", v.url)}
                                         >
                                             {v.name}
-                                        </Tag>
+                                        </StyledTag>
                                     ))}
                                 </ResourceTagsWrapper>
                             )}
@@ -229,14 +226,13 @@ export function CharacterProfile() {
                             ) : (
                                 <ResourceTagsWrapper>
                                     {starships.map((s) => (
-                                        <Tag
+                                        <StyledTag
                                             key={s.url}
                                             color="purple"
-                                            style={{ cursor: "pointer" }}
                                             onClick={() => handleModalOpen("starship", s.url)}
                                         >
                                             {s.name}
-                                        </Tag>
+                                        </StyledTag>
                                     ))}
                                 </ResourceTagsWrapper>
                             )}

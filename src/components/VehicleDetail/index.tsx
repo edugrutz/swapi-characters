@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Descriptions, Spin, Alert, Button, Tag } from "antd";
+import { Descriptions, Spin, Alert, Button } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -19,6 +19,7 @@ import {
     ErrorButton,
     ResourceTagsWrapper,
     ResourceListWrapper,
+    StyledTag,
 } from "../../styles/antd/components/profile";
 
 export function VehicleDetail() {
@@ -155,14 +156,13 @@ export function VehicleDetail() {
                             ) : (
                                 <ResourceTagsWrapper>
                                     {pilots.map((p) => (
-                                        <Tag
+                                        <StyledTag
                                             key={p.url}
                                             color="cyan"
-                                            style={{ cursor: "pointer" }}
                                             onClick={() => handlePilotClick(p.url)}
                                         >
                                             {p.name}
-                                        </Tag>
+                                        </StyledTag>
                                     ))}
                                 </ResourceTagsWrapper>
                             )}
@@ -177,14 +177,13 @@ export function VehicleDetail() {
                             ) : (
                                 <ResourceTagsWrapper>
                                     {films.map((f) => (
-                                        <Tag
+                                        <StyledTag
                                             key={f.url}
                                             color="gold"
-                                            style={{ cursor: "pointer" }}
                                             onClick={() => handleFilmClick(f.url)}
                                         >
                                             {f.title}
-                                        </Tag>
+                                        </StyledTag>
                                     ))}
                                 </ResourceTagsWrapper>
                             )}

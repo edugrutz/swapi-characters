@@ -1,5 +1,9 @@
 import styled from "styled-components";
-import { Button } from "antd";
+import { Button, Tag } from "antd";
+
+export const StyledTag = styled(Tag)`
+    cursor: pointer;
+`;
 
 export const ProfileContainer = styled.div`
 	max-width: 1200px;
