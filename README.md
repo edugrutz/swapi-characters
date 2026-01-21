@@ -127,7 +127,7 @@ O projeto conta com 26 testes distribuídos em 7 arquivos principais:
 - **Estratégia de API**: Utilização de `useQueries` para requisições paralelas ao abrir os detalhes do personagem, garantindo que todos os dados relacionados (filmes, naves) carreguem simultaneamente em vez de sequencialmente.
 - **Versão do React (v19)**: Embora o desafio mencione React 17, a aplicação foi desenvolvida com React 19 por compatibilidade com versões atuais do TanStack Query e Ant Design. A arquitetura e os padrões utilizados permanecem totalmente compatíveis com React 17, e a migração seria direta caso necessário.
 
-> **Nota sobre a API**: Este projeto utiliza a versão mantida pela comunidade em `https://swapi.py4e.com/api` ao invés da API original `swapi.dev`, devido a problemas de licenciamento e disponibilidade da versão original. A versão py4e.com é uma réplica funcional e estável mantida pelo projeto [PY4E (Python for Everybody)](https://www.py4e.com/).
+> **Nota sobre a API**: Este projeto utiliza a versão mantida pela comunidade em `https://swapi.py4e.com/api` ao invés da API original `swapi.dev`, devido a problemas de licenciamento e disponibilidade da versão original. A versão py4e.com é uma réplica funcional e estável mantida pelo projeto [PY4E (Python for Everybody)](https://www.py4e.com/). Para as imagens, utilizei outra api disponível em `https://akabab.github.io/starwars-api/`, porém mesmo com algumas imagens indisponíveis, não foi possível o uso de fallback, devido ao retorno de placeholders direto da API.
 
 ## ✅ Requisitos Atendidos
 
@@ -140,8 +140,9 @@ O projeto conta com 26 testes distribuídos em 7 arquivos principais:
 - [x] Testes unitários
 - [x] Documentação completa
 
-## 🗺️ Roadmap
+## 🗺️ Possíveis melhorias e próximos passos
 - [ ] Adicionar favoritos com persistência em LocalStorage
 - [ ] Implementar modo de visualização em lista
 - [ ] Adicionar filtros por espécie, planeta natal, etc.
 - [ ] Criar página de comparação entre personagens
+- [ ] 
