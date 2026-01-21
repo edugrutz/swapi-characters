@@ -76,7 +76,7 @@ O ambiente Docker está configurado com **Hot Module Replacement (HMR)**, então
 
 ## 🧪 Testes
 
-A aplicação conta com testes unitários utilizando Jest e React Testing Library.
+A aplicação conta com testes unitários utilizando Vitest e React Testing Library.
 
 Para rodar todos os testes do projeto, utilize o comando:
 
@@ -139,3 +139,9 @@ O projeto conta com 26 testes distribuídos em 7 arquivos principais:
 - [x] Containerização com Docker
 - [x] Testes unitários
 - [x] Documentação completa
+
+## 🗺️ Roadmap
+- [ ] Adicionar favoritos com persistência em LocalStorage
+- [ ] Implementar modo de visualização em lista
+- [ ] Adicionar filtros por espécie, planeta natal, etc.
+- [ ] Criar página de comparação entre personagens

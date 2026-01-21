@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { fetchFilmById } from "../../services/swapiDetails";
 import type { FilmModalProps } from "./types";
-import { ModalTitle, LoadingWrapper, CrawlBox } from "../../styles/antd/components/profile";
+import { ModalTitle, LoadingWrapper, CrawlBox, CrawlSection, CrawlTitle } from "../../styles/antd/components/profile";
 
 export function FilmModal({ filmId, open, onClose, onViewFilm }: FilmModalProps) {
     const { t } = useTranslation();
@@ -68,12 +68,12 @@ export function FilmModal({ filmId, open, onClose, onViewFilm }: FilmModalProps)
 
             {film && (
                 <>
-                    <div style={{ marginBottom: "1.5rem" }}>
-                        <h4 style={{ marginBottom: "0.5rem" }}>{t("film.opening_crawl")}</h4>
+                    <CrawlSection>
+                        <CrawlTitle>{t("film.opening_crawl")}</CrawlTitle>
                         <CrawlBox>
                             {film.opening_crawl}
                         </CrawlBox>
-                    </div>
+                    </CrawlSection>
 
                     <Descriptions bordered column={1} size="small" className="custom-descriptions">
                         {filmDetails.map((item) => (

@@ -120,6 +120,14 @@ export const CrawlBox = styled.div`
     color: ${({ theme }) => (theme.theme === "dark" ? "#ffffff" : "#333333")};
 `;
 
+export const CrawlSection = styled.div`
+    margin-bottom: 1.5rem;
+`;
+
+export const CrawlTitle = styled.h4`
+    margin-bottom: 0.5rem;
+`;
+
 export const ModalTitle = styled.span`
     font-size: 1.5rem;
     display: inline-block;

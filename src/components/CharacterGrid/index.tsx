@@ -1,9 +1,4 @@
 import { List, Input, Alert } from "antd";
-import {
-	ManOutlined,
-	WomanOutlined,
-	QuestionOutlined,
-} from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { useCharacters } from "../../hooks/useCharacters";
 import { useState, useEffect } from "react";
@@ -41,19 +36,11 @@ export function CharacterGrid() {
 	const getGenderIcon = (gender: string) => {
 		switch (gender.toLowerCase()) {
 			case "male":
-				return (
-					<ManOutlined style={{ color: "#1890ff", marginRight: 8 }} />
-				);
+				return <S.MaleIcon />;
 			case "female":
-				return (
-					<WomanOutlined style={{ color: "#eb2f96", marginRight: 8 }} />
-				);
+				return <S.FemaleIcon />;
 			default:
-				return (
-					<QuestionOutlined
-						style={{ color: "#8c8c8c", marginRight: 8 }}
-					/>
-				);
+				return <S.UnknownIcon />;
 		}
 	};
 
