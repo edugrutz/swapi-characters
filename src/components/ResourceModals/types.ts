@@ -22,6 +22,7 @@ export interface StarshipModalProps {
     starshipId: string | null;
     open: boolean;
     onClose: () => void;
+    onViewStarship?: (starshipId: string) => void;
 }
 
 export interface PlanetModalProps {

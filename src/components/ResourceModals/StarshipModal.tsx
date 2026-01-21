@@ -1,10 +1,11 @@
-import { Modal, Descriptions, Spin, Alert } from "antd";
+import { Modal, Descriptions, Spin, Alert, Button } from "antd";
+import { RocketOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { fetchStarshipById } from "../../services/swapiDetails";
 import type { StarshipModalProps } from "./types";
 
-export function StarshipModal({ starshipId, open, onClose }: StarshipModalProps) {
+export function StarshipModal({ starshipId, open, onClose, onViewStarship }: StarshipModalProps) {
     const { t } = useTranslation();
 
     const { data: starship, isLoading, error } = useQuery({
@@ -12,6 +13,12 @@ export function StarshipModal({ starshipId, open, onClose }: StarshipModalProps)
         queryFn: () => fetchStarshipById(starshipId!),
         enabled: !!starshipId && open,
     });
+
+    const handleViewStarship = () => {
+        if (starshipId && onViewStarship) {
+            onViewStarship(starshipId);
+        }
+    };
 
     return (
         <Modal
@@ -22,7 +29,18 @@ export function StarshipModal({ starshipId, open, onClose }: StarshipModalProps)
             }
             open={open}
             onCancel={onClose}
-            footer={null}
+            footer={
+                onViewStarship && starshipId ? (
+                    <Button
+                        type="primary"
+                        icon={<RocketOutlined />}
+                        onClick={handleViewStarship}
+                        size="large"
+                    >
+                        {t("starship.view_starship")}
+                    </Button>
+                ) : null
+            }
             width={700}
             centered
         >

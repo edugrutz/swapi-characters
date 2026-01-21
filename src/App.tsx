@@ -5,6 +5,7 @@ import { CharacterProfile } from "./components/CharacterProfile";
 import { PlanetDetail } from "./components/PlanetDetail";
 import { FilmDetail } from "./components/FilmDetail";
 import { VehicleDetail } from "./components/VehicleDetail";
+import { StarshipDetail } from "./components/StarshipDetail";
 import { Header } from "./components/Header";
 import { GlobalStyles } from "./styles/global";
 
@@ -23,6 +24,7 @@ function App() {
             <Route path="/planet/:id" element={<PlanetDetail />} />
             <Route path="/film/:id" element={<FilmDetail />} />
             <Route path="/vehicle/:id" element={<VehicleDetail />} />
+            <Route path="/starship/:id" element={<StarshipDetail />} />
           </Routes>
         </Content>
       </Layout>

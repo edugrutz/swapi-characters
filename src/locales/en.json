@@ -85,7 +85,11 @@
         "crew": "Crew",
         "passengers": "Passengers",
         "cargo_capacity": "Cargo Capacity",
-        "consumables": "Consumables"
+        "consumables": "Consumables",
+        "view_starship": "View Starship Page",
+        "starship_info": "Starship Information",
+        "pilots": "Pilots",
+        "specifications": "Specifications"
     },
     "planet": {
         "loading": "Loading planet...",
@@ -112,6 +116,7 @@
         "character_not_found": "Character not found",
         "planet_not_found": "Planet not found",
         "film_not_found": "Film not found",
-        "vehicle_not_found": "Vehicle not found"
+        "vehicle_not_found": "Vehicle not found",
+        "starship_not_found": "Starship not found"
     }
 }

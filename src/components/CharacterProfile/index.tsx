@@ -89,6 +89,11 @@ export function CharacterProfile() {
         navigate(`/vehicle/${vehicleId}`);
     };
 
+    const handleViewStarship = (starshipId: string) => {
+        setStarshipModalOpen(false);
+        navigate(`/starship/${starshipId}`);
+    };
+
     if (isFetching) {
         return (
             <ProfileContainer>
@@ -298,6 +303,7 @@ export function CharacterProfile() {
                 starshipId={selectedStarshipId}
                 open={starshipModalOpen}
                 onClose={() => setStarshipModalOpen(false)}
+                onViewStarship={handleViewStarship}
             />
             <PlanetModal
                 planetId={selectedPlanetId}
