@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { fetchPlanetById } from "../../services/swapiDetails";
 import type { PlanetModalProps } from "./types";
+import { ModalTitle, LoadingWrapper, Capitalized } from "../../styles/antd/components/profile";
 
 export function PlanetModal({ planetId, open, onClose, onViewPlanet }: PlanetModalProps) {
     const { t } = useTranslation();
@@ -22,11 +23,7 @@ export function PlanetModal({ planetId, open, onClose, onViewPlanet }: PlanetMod
 
     return (
         <Modal
-            title={
-                <span className="star-wars-font" style={{ fontSize: "1.5rem" }}>
-                    {planet?.name || t("planet.loading")}
-                </span>
-            }
+            title={<ModalTitle>{planet?.name || t("planet.loading")}</ModalTitle>}
             open={open}
             onCancel={onClose}
             footer={
@@ -45,9 +42,9 @@ export function PlanetModal({ planetId, open, onClose, onViewPlanet }: PlanetMod
             centered
         >
             {isLoading && (
-                <div style={{ textAlign: "center", padding: "2rem" }}>
+                <LoadingWrapper>
                     <Spin size="large" />
-                </div>
+                </LoadingWrapper>
             )}
 
             {error && (
@@ -62,10 +59,10 @@ export function PlanetModal({ planetId, open, onClose, onViewPlanet }: PlanetMod
             {planet && (
                 <Descriptions bordered column={1} size="small" className="custom-descriptions">
                     <Descriptions.Item label={t("planet.climate")}>
-                        <span style={{ textTransform: "capitalize" }}>{planet.climate}</span>
+                        <Capitalized>{planet.climate}</Capitalized>
                     </Descriptions.Item>
                     <Descriptions.Item label={t("planet.terrain")}>
-                        <span style={{ textTransform: "capitalize" }}>{planet.terrain}</span>
+                        <Capitalized>{planet.terrain}</Capitalized>
                     </Descriptions.Item>
                     <Descriptions.Item label={t("planet.population")}>
                         {planet.population === "unknown"

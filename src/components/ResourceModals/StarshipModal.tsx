@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { fetchStarshipById } from "../../services/swapiDetails";
 import type { StarshipModalProps } from "./types";
+import { ModalTitle, LoadingWrapper, Capitalized } from "../../styles/antd/components/profile";
 
 export function StarshipModal({ starshipId, open, onClose, onViewStarship }: StarshipModalProps) {
     const { t } = useTranslation();
@@ -22,11 +23,7 @@ export function StarshipModal({ starshipId, open, onClose, onViewStarship }: Sta
 
     return (
         <Modal
-            title={
-                <span className="star-wars-font" style={{ fontSize: "1.5rem" }}>
-                    {starship?.name || t("starship.loading")}
-                </span>
-            }
+            title={<ModalTitle>{starship?.name || t("starship.loading")}</ModalTitle>}
             open={open}
             onCancel={onClose}
             footer={
@@ -45,9 +42,9 @@ export function StarshipModal({ starshipId, open, onClose, onViewStarship }: Sta
             centered
         >
             {isLoading && (
-                <div style={{ textAlign: "center", padding: "2rem" }}>
+                <LoadingWrapper>
                     <Spin size="large" />
-                </div>
+                </LoadingWrapper>
             )}
 
             {error && (
@@ -68,7 +65,7 @@ export function StarshipModal({ starshipId, open, onClose, onViewStarship }: Sta
                         {starship.manufacturer}
                     </Descriptions.Item>
                     <Descriptions.Item label={t("starship.starship_class")}>
-                        <span style={{ textTransform: "capitalize" }}>{starship.starship_class}</span>
+                        <Capitalized>{starship.starship_class}</Capitalized>
                     </Descriptions.Item>
                     <Descriptions.Item label={t("starship.cost_in_credits")}>
                         {starship.cost_in_credits === "unknown"

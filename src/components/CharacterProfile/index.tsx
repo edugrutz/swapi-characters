@@ -107,7 +107,7 @@ export function CharacterProfile() {
     return (
         <ProfileContainer>
             <ProfileHeader>
-                <ProfileTitle className="star-wars-font">{character.name}</ProfileTitle>
+                <ProfileTitle>{character.name}</ProfileTitle>
                 <Button
                     type="default"
                     icon={<ArrowLeftOutlined />}
@@ -160,7 +160,7 @@ export function CharacterProfile() {
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
-                                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                                <ResourceTagsWrapper>
                                     {species.map((s) => (
                                         <Tag
                                             key={s.url}
@@ -172,7 +172,7 @@ export function CharacterProfile() {
                                         </Tag>
                                     ))}
                                     {species.length === 0 && "n/a"}
-                                </div>
+                                </ResourceTagsWrapper>
                             )}
                         </Descriptions.Item>
                     </Descriptions>
@@ -180,7 +180,7 @@ export function CharacterProfile() {
 
                 <ResourceListWrapper>
                     <ProfileSection>
-                        <SectionTitle className="star-wars-font">{t("modal.films")}</SectionTitle>
+                        <SectionTitle>{t("modal.films")}</SectionTitle>
                         {isLoadingDetails ? (
                             <Spin size="small" />
                         ) : (
@@ -201,7 +201,7 @@ export function CharacterProfile() {
 
                     {character.vehicles.length > 0 && (
                         <ProfileSection>
-                            <SectionTitle className="star-wars-font">{t("modal.vehicles")}</SectionTitle>
+                            <SectionTitle>{t("modal.vehicles")}</SectionTitle>
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
@@ -223,7 +223,7 @@ export function CharacterProfile() {
 
                     {character.starships.length > 0 && (
                         <ProfileSection>
-                            <SectionTitle className="star-wars-font">{t("modal.starships")}</SectionTitle>
+                            <SectionTitle>{t("modal.starships")}</SectionTitle>
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (

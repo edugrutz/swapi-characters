@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useCharacterDetails } from "../../hooks/useCharacterDetails";
 import { useHomeworld } from "../../hooks/useHomeworld";
 import type { CharacterModalProps } from "./types";
+import { Capitalized, ModalTitle } from "../../styles/antd/components/profile";
 
 export function CharacterModal({
 	character,
@@ -27,11 +28,7 @@ export function CharacterModal({
 
 	return (
 		<Modal
-			title={
-				<span className="star-wars-font" style={{ fontSize: "1.5rem" }}>
-					{character.name}
-				</span>
-			}
+			title={<ModalTitle>{character.name}</ModalTitle>}
 			open={open}
 			onCancel={onClose}
 			footer={
@@ -52,16 +49,16 @@ export function CharacterModal({
 				<Descriptions.Item label={t("table.columns.mass")}>{character.mass} kg</Descriptions.Item>
 				<Descriptions.Item label={t("table.columns.birth_year")}>{character.birth_year}</Descriptions.Item>
 				<Descriptions.Item label={t("table.columns.gender")}>
-					<span style={{ textTransform: "capitalize" }}>{character.gender}</span>
+					<Capitalized>{character.gender}</Capitalized>
 				</Descriptions.Item>
 				<Descriptions.Item label={t("table.columns.hair_color")}>
-					<span style={{ textTransform: "capitalize" }}>{character.hair_color}</span>
+					<Capitalized>{character.hair_color}</Capitalized>
 				</Descriptions.Item>
 				<Descriptions.Item label={t("table.columns.skin_color")}>
-					<span style={{ textTransform: "capitalize" }}>{character.skin_color}</span>
+					<Capitalized>{character.skin_color}</Capitalized>
 				</Descriptions.Item>
 				<Descriptions.Item label={t("table.columns.eye_color")}>
-					<span style={{ textTransform: "capitalize" }}>{character.eye_color}</span>
+					<Capitalized>{character.eye_color}</Capitalized>
 				</Descriptions.Item>
 				<Descriptions.Item label={t("modal.homeworld")}>
 					{isLoadingHomeworld ? <Spin size="small" /> : homeworld?.name || "n/a"}

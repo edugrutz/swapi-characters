@@ -89,7 +89,7 @@ export function PlanetDetail() {
     return (
         <ProfileContainer>
             <ProfileHeader>
-                <ProfileTitle className="star-wars-font">{planet.name}</ProfileTitle>
+                <ProfileTitle>{planet.name}</ProfileTitle>
                 <Button
                     type="default"
                     icon={<ArrowLeftOutlined />}
@@ -142,7 +142,7 @@ export function PlanetDetail() {
                 <ResourceListWrapper>
                     {planet.residents.length > 0 && (
                         <ProfileSection>
-                            <SectionTitle className="star-wars-font">{t("planet.residents")}</SectionTitle>
+                            <SectionTitle>{t("planet.residents")}</SectionTitle>
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
@@ -164,7 +164,7 @@ export function PlanetDetail() {
 
                     {planet.films.length > 0 && (
                         <ProfileSection>
-                            <SectionTitle className="star-wars-font">{t("modal.films")}</SectionTitle>
+                            <SectionTitle>{t("modal.films")}</SectionTitle>
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (

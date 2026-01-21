@@ -92,3 +92,9 @@ export const CrawlBox = styled.div`
     line-height: 1.6;
     color: ${({ theme }) => (theme.theme === "dark" ? "#ffffff" : "#333333")};
 `;
+
+export const ModalTitle = styled.span`
+    font-size: 1.5rem;
+    display: inline-block;
+    width: 100%;
+`;

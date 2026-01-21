@@ -112,7 +112,7 @@ export function FilmDetail() {
     return (
         <ProfileContainer>
             <ProfileHeader>
-                <ProfileTitle className="star-wars-font">{film.title}</ProfileTitle>
+                <ProfileTitle>{film.title}</ProfileTitle>
                 <Button
                     type="default"
                     icon={<ArrowLeftOutlined />}
@@ -152,7 +152,7 @@ export function FilmDetail() {
                 <ResourceListWrapper>
                     {film.characters.length > 0 && (
                         <ProfileSection>
-                            <SectionTitle className="star-wars-font">{t("film.characters")}</SectionTitle>
+                            <SectionTitle>{t("film.characters")}</SectionTitle>
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
@@ -174,7 +174,7 @@ export function FilmDetail() {
 
                     {film.planets.length > 0 && (
                         <ProfileSection>
-                            <SectionTitle className="star-wars-font">{t("film.planets")}</SectionTitle>
+                            <SectionTitle>{t("film.planets")}</SectionTitle>
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
@@ -196,7 +196,7 @@ export function FilmDetail() {
 
                     {film.species.length > 0 && (
                         <ProfileSection>
-                            <SectionTitle className="star-wars-font">{t("modal.species")}</SectionTitle>
+                            <SectionTitle>{t("modal.species")}</SectionTitle>
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
@@ -218,7 +218,7 @@ export function FilmDetail() {
 
                     {film.vehicles.length > 0 && (
                         <ProfileSection>
-                            <SectionTitle className="star-wars-font">{t("modal.vehicles")}</SectionTitle>
+                            <SectionTitle>{t("modal.vehicles")}</SectionTitle>
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
@@ -240,7 +240,7 @@ export function FilmDetail() {
 
                     {film.starships.length > 0 && (
                         <ProfileSection>
-                            <SectionTitle className="star-wars-font">{t("modal.starships")}</SectionTitle>
+                            <SectionTitle>{t("modal.starships")}</SectionTitle>
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (

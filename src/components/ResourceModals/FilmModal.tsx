@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { fetchFilmById } from "../../services/swapiDetails";
 import type { FilmModalProps } from "./types";
+import { ModalTitle, LoadingWrapper, CrawlBox } from "../../styles/antd/components/profile";
 
 export function FilmModal({ filmId, open, onClose, onViewFilm }: FilmModalProps) {
     const { t } = useTranslation();
@@ -22,11 +23,7 @@ export function FilmModal({ filmId, open, onClose, onViewFilm }: FilmModalProps)
 
     return (
         <Modal
-            title={
-                <span className="star-wars-font" style={{ fontSize: "1.5rem" }}>
-                    {film?.title || t("film.loading")}
-                </span>
-            }
+            title={<ModalTitle>{film?.title || t("film.loading")}</ModalTitle>}
             open={open}
             onCancel={onClose}
             footer={
@@ -45,9 +42,9 @@ export function FilmModal({ filmId, open, onClose, onViewFilm }: FilmModalProps)
             centered
         >
             {isLoading && (
-                <div style={{ textAlign: "center", padding: "2rem" }}>
+                <LoadingWrapper>
                     <Spin size="large" />
-                </div>
+                </LoadingWrapper>
             )}
 
             {error && (
@@ -63,17 +60,9 @@ export function FilmModal({ filmId, open, onClose, onViewFilm }: FilmModalProps)
                 <>
                     <div style={{ marginBottom: "1.5rem" }}>
                         <h4 style={{ marginBottom: "0.5rem" }}>{t("film.opening_crawl")}</h4>
-                        <p style={{
-                            fontStyle: "italic",
-                            lineHeight: "1.6",
-                            maxHeight: "200px",
-                            overflowY: "auto",
-                            padding: "1rem",
-                            background: "rgba(255, 232, 31, 0.05)",
-                            borderRadius: "4px"
-                        }}>
+                        <CrawlBox>
                             {film.opening_crawl}
-                        </p>
+                        </CrawlBox>
                     </div>
 
                     <Descriptions bordered column={1} size="small" className="custom-descriptions">

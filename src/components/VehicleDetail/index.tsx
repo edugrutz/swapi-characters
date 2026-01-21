@@ -88,7 +88,7 @@ export function VehicleDetail() {
     return (
         <ProfileContainer>
             <ProfileHeader>
-                <ProfileTitle className="star-wars-font">{vehicle.name}</ProfileTitle>
+                <ProfileTitle>{vehicle.name}</ProfileTitle>
                 <Button
                     type="default"
                     icon={<ArrowLeftOutlined />}
@@ -149,7 +149,7 @@ export function VehicleDetail() {
                 <ResourceListWrapper>
                     {vehicle.pilots.length > 0 && (
                         <ProfileSection>
-                            <SectionTitle className="star-wars-font">{t("vehicle.pilots")}</SectionTitle>
+                            <SectionTitle>{t("vehicle.pilots")}</SectionTitle>
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
@@ -171,7 +171,7 @@ export function VehicleDetail() {
 
                     {vehicle.films.length > 0 && (
                         <ProfileSection>
-                            <SectionTitle className="star-wars-font">{t("modal.films")}</SectionTitle>
+                            <SectionTitle>{t("modal.films")}</SectionTitle>
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (

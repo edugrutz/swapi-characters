@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { fetchVehicleById } from "../../services/swapiDetails";
 import type { VehicleModalProps } from "./types";
+import { ModalTitle, LoadingWrapper, Capitalized } from "../../styles/antd/components/profile";
 
 export function VehicleModal({ vehicleId, open, onClose, onViewVehicle }: VehicleModalProps) {
     const { t } = useTranslation();
@@ -22,11 +23,7 @@ export function VehicleModal({ vehicleId, open, onClose, onViewVehicle }: Vehicl
 
     return (
         <Modal
-            title={
-                <span className="star-wars-font" style={{ fontSize: "1.5rem" }}>
-                    {vehicle?.name || t("vehicle.loading")}
-                </span>
-            }
+            title={<ModalTitle>{vehicle?.name || t("vehicle.loading")}</ModalTitle>}
             open={open}
             onCancel={onClose}
             footer={
@@ -45,9 +42,9 @@ export function VehicleModal({ vehicleId, open, onClose, onViewVehicle }: Vehicl
             centered
         >
             {isLoading && (
-                <div style={{ textAlign: "center", padding: "2rem" }}>
+                <LoadingWrapper>
                     <Spin size="large" />
-                </div>
+                </LoadingWrapper>
             )}
 
             {error && (
@@ -68,7 +65,7 @@ export function VehicleModal({ vehicleId, open, onClose, onViewVehicle }: Vehicl
                         {vehicle.manufacturer}
                     </Descriptions.Item>
                     <Descriptions.Item label={t("vehicle.vehicle_class")}>
-                        <span style={{ textTransform: "capitalize" }}>{vehicle.vehicle_class}</span>
+                        <Capitalized>{vehicle.vehicle_class}</Capitalized>
                     </Descriptions.Item>
                     <Descriptions.Item label={t("vehicle.cost_in_credits")}>
                         {vehicle.cost_in_credits === "unknown"

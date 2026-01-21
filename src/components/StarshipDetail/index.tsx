@@ -88,7 +88,7 @@ export function StarshipDetail() {
     return (
         <ProfileContainer>
             <ProfileHeader>
-                <ProfileTitle className="star-wars-font">{starship.name}</ProfileTitle>
+                <ProfileTitle>{starship.name}</ProfileTitle>
                 <Button
                     type="default"
                     icon={<ArrowLeftOutlined />}
@@ -155,7 +155,7 @@ export function StarshipDetail() {
                 <ResourceListWrapper>
                     {starship.pilots.length > 0 && (
                         <ProfileSection>
-                            <SectionTitle className="star-wars-font">{t("starship.pilots")}</SectionTitle>
+                            <SectionTitle>{t("starship.pilots")}</SectionTitle>
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
@@ -177,7 +177,7 @@ export function StarshipDetail() {
 
                     {starship.films.length > 0 && (
                         <ProfileSection>
-                            <SectionTitle className="star-wars-font">{t("modal.films")}</SectionTitle>
+                            <SectionTitle>{t("modal.films")}</SectionTitle>
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
