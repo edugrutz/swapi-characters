@@ -53,3 +53,42 @@ export const SectionTitle = styled.h2`
         theme.theme === "dark" ? "#ffe81f" : "#000000"};
 	padding-bottom: 0.5rem;
 `;
+
+export const LoadingWrapper = styled.div`
+    text-align: center;
+    padding: 4rem;
+`;
+
+export const ErrorButton = styled(Button)`
+    margin-top: 1rem;
+`;
+
+export const Capitalized = styled.span`
+    text-transform: capitalize;
+`;
+
+export const ResourceTagsWrapper = styled.div`
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+`;
+
+export const ResourceListWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+`;
+
+export const CrawlBox = styled.div`
+    padding: 1rem;
+    background: ${({ theme }) =>
+        theme.theme === "dark" ? "rgba(255, 232, 31, 0.05)" : "rgba(0, 0, 0, 0.02)"};
+    border: 1px solid ${({ theme }) =>
+        theme.theme === "dark" ? "rgba(255, 232, 31, 0.2)" : "rgba(0, 0, 0, 0.1)"};
+    border-radius: 8px;
+    maxHeight: 300px;
+    overflow-y: auto;
+    font-style: italic;
+    line-height: 1.6;
+    color: ${({ theme }) => (theme.theme === "dark" ? "#ffffff" : "#333333")};
+`;

@@ -15,6 +15,10 @@ import {
     ProfileContent,
     ProfileSection,
     SectionTitle,
+    LoadingWrapper,
+    ErrorButton,
+    ResourceTagsWrapper,
+    ResourceListWrapper,
 } from "../../styles/antd/components/profile";
 
 export function VehicleDetail() {
@@ -54,9 +58,9 @@ export function VehicleDetail() {
     if (isLoading) {
         return (
             <ProfileContainer>
-                <div style={{ textAlign: "center", padding: "4rem" }}>
+                <LoadingWrapper>
                     <Spin size="large" />
-                </div>
+                </LoadingWrapper>
             </ProfileContainer>
         );
     }
@@ -70,14 +74,13 @@ export function VehicleDetail() {
                     type="error"
                     showIcon
                 />
-                <Button
+                <ErrorButton
                     type="primary"
                     icon={<ArrowLeftOutlined />}
                     onClick={() => navigate(-1)}
-                    style={{ marginTop: "1rem" }}
                 >
                     {t("common.back")}
-                </Button>
+                </ErrorButton>
             </ProfileContainer>
         );
     }
@@ -143,14 +146,14 @@ export function VehicleDetail() {
                     </Descriptions>
                 </ProfileSection>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+                <ResourceListWrapper>
                     {vehicle.pilots.length > 0 && (
                         <ProfileSection>
                             <SectionTitle className="star-wars-font">{t("vehicle.pilots")}</SectionTitle>
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
-                                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                                <ResourceTagsWrapper>
                                     {pilots.map((p) => (
                                         <Tag
                                             key={p.url}
@@ -161,7 +164,7 @@ export function VehicleDetail() {
                                             {p.name}
                                         </Tag>
                                     ))}
-                                </div>
+                                </ResourceTagsWrapper>
                             )}
                         </ProfileSection>
                     )}
@@ -172,7 +175,7 @@ export function VehicleDetail() {
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
-                                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                                <ResourceTagsWrapper>
                                     {films.map((f) => (
                                         <Tag
                                             key={f.url}
@@ -183,28 +186,12 @@ export function VehicleDetail() {
                                             {f.title}
                                         </Tag>
                                     ))}
-                                </div>
+                                </ResourceTagsWrapper>
                             )}
                         </ProfileSection>
                     )}
-                </div>
+                </ResourceListWrapper>
             </ProfileContent>
-
-            <div
-                style={{
-                    marginTop: "2rem",
-                    fontSize: "0.8rem",
-                    textAlign: "right",
-                    opacity: 0.6,
-                }}
-            >
-                <p>
-                    {t("modal.created")}: {new Date(vehicle.created).toLocaleDateString()}
-                </p>
-                <p>
-                    {t("modal.edited")}: {new Date(vehicle.edited).toLocaleDateString()}
-                </p>
-            </div>
 
             <FilmModal
                 filmId={selectedFilmId}

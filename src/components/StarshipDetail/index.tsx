@@ -15,6 +15,10 @@ import {
     ProfileContent,
     ProfileSection,
     SectionTitle,
+    LoadingWrapper,
+    ErrorButton,
+    ResourceTagsWrapper,
+    ResourceListWrapper,
 } from "../../styles/antd/components/profile";
 
 export function StarshipDetail() {
@@ -54,9 +58,9 @@ export function StarshipDetail() {
     if (isLoading) {
         return (
             <ProfileContainer>
-                <div style={{ textAlign: "center", padding: "4rem" }}>
+                <LoadingWrapper>
                     <Spin size="large" />
-                </div>
+                </LoadingWrapper>
             </ProfileContainer>
         );
     }
@@ -70,14 +74,13 @@ export function StarshipDetail() {
                     type="error"
                     showIcon
                 />
-                <Button
+                <ErrorButton
                     type="primary"
                     icon={<ArrowLeftOutlined />}
                     onClick={() => navigate(-1)}
-                    style={{ marginTop: "1rem" }}
                 >
                     {t("common.back")}
-                </Button>
+                </ErrorButton>
             </ProfileContainer>
         );
     }
@@ -149,14 +152,14 @@ export function StarshipDetail() {
                     </Descriptions>
                 </ProfileSection>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+                <ResourceListWrapper>
                     {starship.pilots.length > 0 && (
                         <ProfileSection>
                             <SectionTitle className="star-wars-font">{t("starship.pilots")}</SectionTitle>
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
-                                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                                <ResourceTagsWrapper>
                                     {pilots.map((p) => (
                                         <Tag
                                             key={p.url}
@@ -167,7 +170,7 @@ export function StarshipDetail() {
                                             {p.name}
                                         </Tag>
                                     ))}
-                                </div>
+                                </ResourceTagsWrapper>
                             )}
                         </ProfileSection>
                     )}
@@ -178,7 +181,7 @@ export function StarshipDetail() {
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
-                                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                                <ResourceTagsWrapper>
                                     {films.map((f) => (
                                         <Tag
                                             key={f.url}
@@ -189,28 +192,12 @@ export function StarshipDetail() {
                                             {f.title}
                                         </Tag>
                                     ))}
-                                </div>
+                                </ResourceTagsWrapper>
                             )}
                         </ProfileSection>
                     )}
-                </div>
+                </ResourceListWrapper>
             </ProfileContent>
-
-            <div
-                style={{
-                    marginTop: "2rem",
-                    fontSize: "0.8rem",
-                    textAlign: "right",
-                    opacity: 0.6,
-                }}
-            >
-                <p>
-                    {t("modal.created")}: {new Date(starship.created).toLocaleDateString()}
-                </p>
-                <p>
-                    {t("modal.edited")}: {new Date(starship.edited).toLocaleDateString()}
-                </p>
-            </div>
 
             <FilmModal
                 filmId={selectedFilmId}

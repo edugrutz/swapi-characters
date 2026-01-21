@@ -15,6 +15,11 @@ import {
     ProfileContent,
     ProfileSection,
     SectionTitle,
+    LoadingWrapper,
+    ErrorButton,
+    Capitalized,
+    ResourceTagsWrapper,
+    ResourceListWrapper,
 } from "../../styles/antd/components/profile";
 
 export function PlanetDetail() {
@@ -54,9 +59,9 @@ export function PlanetDetail() {
     if (isLoading) {
         return (
             <ProfileContainer>
-                <div style={{ textAlign: "center", padding: "4rem" }}>
+                <LoadingWrapper>
                     <Spin size="large" />
-                </div>
+                </LoadingWrapper>
             </ProfileContainer>
         );
     }
@@ -70,14 +75,13 @@ export function PlanetDetail() {
                     type="error"
                     showIcon
                 />
-                <Button
+                <ErrorButton
                     type="primary"
                     icon={<ArrowLeftOutlined />}
                     onClick={() => navigate(-1)}
-                    style={{ marginTop: "1rem" }}
                 >
                     {t("common.back")}
-                </Button>
+                </ErrorButton>
             </ProfileContainer>
         );
     }
@@ -101,10 +105,10 @@ export function PlanetDetail() {
                     <SectionTitle>{t("planet.planetary_info")}</SectionTitle>
                     <Descriptions bordered column={1} size="small" className="custom-descriptions">
                         <Descriptions.Item label={t("planet.climate")}>
-                            <span style={{ textTransform: "capitalize" }}>{planet.climate}</span>
+                            <Capitalized>{planet.climate}</Capitalized>
                         </Descriptions.Item>
                         <Descriptions.Item label={t("planet.terrain")}>
-                            <span style={{ textTransform: "capitalize" }}>{planet.terrain}</span>
+                            <Capitalized>{planet.terrain}</Capitalized>
                         </Descriptions.Item>
                         <Descriptions.Item label={t("planet.population")}>
                             {planet.population === "unknown"
@@ -135,14 +139,14 @@ export function PlanetDetail() {
                     </Descriptions>
                 </ProfileSection>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+                <ResourceListWrapper>
                     {planet.residents.length > 0 && (
                         <ProfileSection>
                             <SectionTitle className="star-wars-font">{t("planet.residents")}</SectionTitle>
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
-                                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                                <ResourceTagsWrapper>
                                     {residents.map((r) => (
                                         <Tag
                                             key={r.url}
@@ -153,7 +157,7 @@ export function PlanetDetail() {
                                             {r.name}
                                         </Tag>
                                     ))}
-                                </div>
+                                </ResourceTagsWrapper>
                             )}
                         </ProfileSection>
                     )}
@@ -164,7 +168,7 @@ export function PlanetDetail() {
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
-                                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                                <ResourceTagsWrapper>
                                     {films.map((f) => (
                                         <Tag
                                             key={f.url}
@@ -175,28 +179,12 @@ export function PlanetDetail() {
                                             {f.title}
                                         </Tag>
                                     ))}
-                                </div>
+                                </ResourceTagsWrapper>
                             )}
                         </ProfileSection>
                     )}
-                </div>
+                </ResourceListWrapper>
             </ProfileContent>
-
-            <div
-                style={{
-                    marginTop: "2rem",
-                    fontSize: "0.8rem",
-                    textAlign: "right",
-                    opacity: 0.6,
-                }}
-            >
-                <p>
-                    {t("modal.created")}: {new Date(planet.created).toLocaleDateString()}
-                </p>
-                <p>
-                    {t("modal.edited")}: {new Date(planet.edited).toLocaleDateString()}
-                </p>
-            </div>
 
             <FilmModal
                 filmId={selectedFilmId}

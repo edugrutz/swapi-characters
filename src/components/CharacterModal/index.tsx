@@ -70,11 +70,6 @@ export function CharacterModal({
 					{isLoading ? <Spin size="small" /> : species.map(s => s.name).join(", ") || "n/a"}
 				</Descriptions.Item>
 			</Descriptions>
-
-			<div style={{ marginTop: "20px", fontSize: "0.8rem", textAlign: "right", opacity: 0.6 }}>
-				<p>{t("modal.created")}: {new Date(character.created).toLocaleDateString()}</p>
-				<p>{t("modal.edited")}: {new Date(character.edited).toLocaleDateString()}</p>
-			</div>
 		</Modal>
 	);
 }

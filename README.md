@@ -1,73 +1,103 @@
-# React + TypeScript + Vite
+# SWAPI Characters Explorer 🌌
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Uma aplicação web profissional e de alta performance desenvolvida para explorar o universo de Star Wars, criada como resposta a um desafio técnico utilizando tecnologias modernas de desenvolvimento web.
 
-Currently, two official plugins are available:
+## 🚀 Visão Geral
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Este projeto oferece uma interface intuitiva para pesquisar e visualizar detalhes sobre os personagens de Star Wars. Utiliza a **SWAPI (Star Wars API)** e foca em excelência visual, performance e experiência do usuário (UX).
 
-## React Compiler
+## ✨ Funcionalidades Principais
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Interface Temática**: Estética do universo Star Wars com modo escuro customizado, tipografia temática e fundo estrelado animado.
+- **Busca em Tempo Real**: Barra de pesquisa responsiva com um **hook customizado de debounce** para otimizar chamadas de API e fornecer feedback imediato.
+- **Internacionalização (i18n)**: Suporte completo para **Inglês (EN)** e **Português (PT-BR)** com troca de idioma fluida.
+- **Modais Detalhados**: Informações aprofundadas dos personagens, incluindo busca dinâmica de entidades relacionadas como **Filmes**, **Veículos** e **Naves**.
+- **Performance Otimizada**: Busca de dados em paralelo utilizando **TanStack Query** (React Query) para transições suaves e cache eficiente.
+- **Design Responsivo**: Layout totalmente responsivo priorizando a usabilidade em todos os tamanhos de dispositivo.
+- **Arquitetura Limpa**: Estilos desacoplados (Styled Components), hooks customizados para reutilização de lógica e uma camada centralizada de serviços de API.
 
-## Expanding the ESLint configuration
+## 🛠️ Tecnologias Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Core**: React 19 + TypeScript + Vite
+- **Framework de UI**: [Ant Design (Antd)](https://ant.design/)
+- **Estilização**: [Styled Components](https://styled-components.com/) + CSS-in-JS
+- **Gerenciamento de Estado e Fetching**: [TanStack Query (React Query)](https://tanstack.com/query/latest)
+- **Internacionalização**: [i18next](https://www.i18next.com/)
+- **Ícones**: Ant Design Icons
 
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
+## 📁 Estrutura do Projeto
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+src/
+├── assets/             # Ativos estáticos (imagens, logos)
+├── components/         # Componentes de UI reutilizáveis (Header, Table, Modal)
+├── hooks/              # Hooks React customizados (useDebounce, useCharacters, etc.)
+├── locales/            # Arquivos de tradução (EN/PT)
+├── services/           # Camada de serviço de API (integração com SWAPI)
+├── styles/             # Estilos globais e customizações do Ant Design
+└── types/              # Interfaces e tipos TypeScript
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ⚙️ Como Executar
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+1. **Clonar o repositório**:
+   ```bash
+   git clone git@github.com:edugrutz/swapi-characters.git
+   ```
 
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+2. **Instalar dependências**:
+   ```bash
+   npm install
+   ```
+
+3. **Executar em modo de desenvolvimento**:
+   ```bash
+   npm run dev
+   ```
+
+4. **Gerar build de produção**:
+   ```bash
+   npm run build
+   ```
+
+## 🐳 Docker
+
+Para simular o ambiente de desenvolvimento em um container, você pode usar o Docker:
+
+1. **Subir o container**:
+   ```bash
+   docker compose up --build
+   ```
+
+2. **Acessar a aplicação**:
+   Abra [http://localhost:5173](http://localhost:5173) no seu navegador.
+
+O ambiente Docker está configurado com **Hot Module Replacement (HMR)**, então as mudanças no código local serão refletidas automaticamente dentro do container.
+
+## 🧪 Testes
+
+A aplicação conta com testes unitários utilizando Jest e React Testing Library.
+
+Para executar os testes:
+```bash
+npm run test
 ```
+
+## 🧠 Decisões Técnicas
+
+- **Customização do Ant Design**: O Ant Design foi customizado via Styled Components para evitar a aparência "genérica" da biblioteca.
+- **Estratégia de API**: Utilização de `useQueries` para requisições paralelas ao abrir os detalhes do personagem, garantindo que todos os dados relacionados (filmes, naves) carreguem simultaneamente em vez de sequencialmente.
+- **Versão do React (v19)**: Embora o desafio mencione React 17, a aplicação foi desenvolvida com React 19 por compatibilidade com versões atuais do TanStack Query e Ant Design. A arquitetura e os padrões utilizados permanecem totalmente compatíveis com React 17, e a migração seria direta caso necessário.
+
+> **Nota sobre a API**: Este projeto utiliza a versão mantida pela comunidade em `https://swapi.py4e.com/api` ao invés da API original `swapi.dev`, devido a problemas de licenciamento e disponibilidade da versão original. A versão py4e.com é uma réplica funcional e estável mantida pelo projeto [PY4E (Python for Everybody)](https://www.py4e.com/).
+
+## ✅ Requisitos Atendidos
+
+- [x] Listagem de personagens via SWAPI
+- [x] Filtro por nome
+- [x] Paginação (10 itens por página)
+- [x] Uso do Ant Design
+- [x] Responsividade
+- [x] Containerização com Docker
+- [x] Testes unitários
+- [x] Documentação completa
