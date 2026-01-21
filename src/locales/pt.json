@@ -31,6 +31,56 @@
         "back": "Voltar aos Personagens",
         "basic_info": "Informações Básicas"
     },
+    "film": {
+        "loading": "Carregando filme...",
+        "episode": "Episódio",
+        "director": "Diretor",
+        "producer": "Produtor",
+        "release_date": "Data de Lançamento",
+        "opening_crawl": "Texto de Abertura"
+    },
+    "species": {
+        "loading": "Carregando espécie...",
+        "classification": "Classificação",
+        "designation": "Designação",
+        "average_height": "Altura Média",
+        "average_lifespan": "Expectativa de Vida",
+        "language": "Idioma",
+        "skin_colors": "Cores de Pele",
+        "hair_colors": "Cores de Cabelo",
+        "eye_colors": "Cores de Olhos"
+    },
+    "vehicle": {
+        "loading": "Carregando veículo...",
+        "model": "Modelo",
+        "manufacturer": "Fabricante",
+        "vehicle_class": "Classe",
+        "cost_in_credits": "Custo",
+        "length": "Comprimento",
+        "max_atmosphering_speed": "Velocidade Máxima",
+        "crew": "Tripulação",
+        "passengers": "Passageiros",
+        "cargo_capacity": "Capacidade de Carga",
+        "consumables": "Consumíveis"
+    },
+    "starship": {
+        "loading": "Carregando nave...",
+        "model": "Modelo",
+        "manufacturer": "Fabricante",
+        "starship_class": "Classe",
+        "cost_in_credits": "Custo",
+        "length": "Comprimento",
+        "max_atmosphering_speed": "Velocidade Máxima",
+        "hyperdrive_rating": "Classificação Hyperdrive",
+        "MGLT": "MGLT",
+        "crew": "Tripulação",
+        "passengers": "Passageiros",
+        "cargo_capacity": "Capacidade de Carga",
+        "consumables": "Consumíveis"
+    },
+    "common": {
+        "unknown": "Desconhecido"
+    },
     "error": {
         "loading": "Erro ao carregar personagens",
         "swapi": "Falha ao buscar dados da SWAPI. Por favor, tente novamente mais tarde.",

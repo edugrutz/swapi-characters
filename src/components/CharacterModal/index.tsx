@@ -1,9 +1,8 @@
-import { Modal, Descriptions, Tag, Divider, Spin, Button } from "antd";
+import { Modal, Descriptions, Spin, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useCharacterDetails } from "../../hooks/useCharacterDetails";
-import { useTheme } from "../../contexts/ThemeContext";
 import type { CharacterModalProps } from "./types";
 
 export function CharacterModal({
@@ -12,11 +11,8 @@ export function CharacterModal({
 	onClose,
 }: CharacterModalProps) {
 	const { t } = useTranslation();
-	const { theme } = useTheme();
 	const navigate = useNavigate();
-	const { films, species, vehicles, starships, isLoading } = useCharacterDetails(character);
-
-	const headingColor = theme === "dark" ? "#ffffffff" : "#202020ff";
+	const { species, isLoading } = useCharacterDetails(character);
 
 	const handleViewProfile = () => {
 		if (character) {
@@ -56,56 +52,19 @@ export function CharacterModal({
 				<Descriptions.Item label={t("table.columns.gender")}>
 					<span style={{ textTransform: "capitalize" }}>{character.gender}</span>
 				</Descriptions.Item>
-				<Descriptions.Item label={t("table.columns.hair_color") || "Hair Color"}>
+				<Descriptions.Item label={t("table.columns.hair_color")}>
 					<span style={{ textTransform: "capitalize" }}>{character.hair_color}</span>
 				</Descriptions.Item>
-				<Descriptions.Item label={t("table.columns.skin_color") || "Skin Color"}>
+				<Descriptions.Item label={t("table.columns.skin_color")}>
 					<span style={{ textTransform: "capitalize" }}>{character.skin_color}</span>
 				</Descriptions.Item>
-				<Descriptions.Item label={t("table.columns.eye_color") || "Eye Color"}>
+				<Descriptions.Item label={t("table.columns.eye_color")}>
 					<span style={{ textTransform: "capitalize" }}>{character.eye_color}</span>
 				</Descriptions.Item>
 				<Descriptions.Item label={t("modal.species")}>
 					{isLoading ? <Spin size="small" /> : species.map(s => s.name).join(", ") || "n/a"}
 				</Descriptions.Item>
 			</Descriptions>
-
-			<Divider style={{ borderColor: "#FFE81F" }}>
-				<span className="star-wars-font" style={{ fontSize: "0.9rem" }}>{t("modal.statistics")}</span>
-			</Divider>
-
-			<div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-				<section>
-					<h4 style={{ color: headingColor, marginBottom: "8px" }}>{t("modal.films")}</h4>
-					{isLoading ? <Spin size="small" /> : (
-						<div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-							{films.map(f => <Tag key={f.url} color="gold">{f.title}</Tag>)}
-						</div>
-					)}
-				</section>
-
-				{character.vehicles.length > 0 && (
-					<section>
-						<h4 style={{ color: headingColor, marginBottom: "8px" }}>{t("modal.vehicles")}</h4>
-						{isLoading ? <Spin size="small" /> : (
-							<div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-								{vehicles.map(v => <Tag key={v.url} color="green">{v.name}</Tag>)}
-							</div>
-						)}
-					</section>
-				)}
-
-				{character.starships.length > 0 && (
-					<section>
-						<h4 style={{ color: headingColor, marginBottom: "8px" }}>{t("modal.starships")}</h4>
-						{isLoading ? <Spin size="small" /> : (
-							<div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-								{starships.map(s => <Tag key={s.url} color="purple">{s.name}</Tag>)}
-							</div>
-						)}
-					</section>
-				)}
-			</div>
 
 			<div style={{ marginTop: "20px", fontSize: "0.8rem", textAlign: "right", opacity: 0.6 }}>
 				<p>{t("modal.created")}: {new Date(character.created).toLocaleDateString()}</p>

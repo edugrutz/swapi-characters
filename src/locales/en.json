@@ -31,6 +31,56 @@
         "back": "Back to Characters",
         "basic_info": "Basic Information"
     },
+    "film": {
+        "loading": "Loading film...",
+        "episode": "Episode",
+        "director": "Director",
+        "producer": "Producer",
+        "release_date": "Release Date",
+        "opening_crawl": "Opening Crawl"
+    },
+    "species": {
+        "loading": "Loading species...",
+        "classification": "Classification",
+        "designation": "Designation",
+        "average_height": "Average Height",
+        "average_lifespan": "Average Lifespan",
+        "language": "Language",
+        "skin_colors": "Skin Colors",
+        "hair_colors": "Hair Colors",
+        "eye_colors": "Eye Colors"
+    },
+    "vehicle": {
+        "loading": "Loading vehicle...",
+        "model": "Model",
+        "manufacturer": "Manufacturer",
+        "vehicle_class": "Class",
+        "cost_in_credits": "Cost",
+        "length": "Length",
+        "max_atmosphering_speed": "Max Speed",
+        "crew": "Crew",
+        "passengers": "Passengers",
+        "cargo_capacity": "Cargo Capacity",
+        "consumables": "Consumables"
+    },
+    "starship": {
+        "loading": "Loading starship...",
+        "model": "Model",
+        "manufacturer": "Manufacturer",
+        "starship_class": "Class",
+        "cost_in_credits": "Cost",
+        "length": "Length",
+        "max_atmosphering_speed": "Max Speed",
+        "hyperdrive_rating": "Hyperdrive Rating",
+        "MGLT": "MGLT",
+        "crew": "Crew",
+        "passengers": "Passengers",
+        "cargo_capacity": "Cargo Capacity",
+        "consumables": "Consumables"
+    },
+    "common": {
+        "unknown": "Unknown"
+    },
     "error": {
         "loading": "Error loading characters",
         "swapi": "Failed to fetch data from SWAPI. Please try again later.",

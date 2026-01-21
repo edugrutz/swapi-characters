@@ -1,9 +1,12 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { Descriptions, Tag, Spin, Alert, Button } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCharacters } from "../../hooks/useCharacters";
 import { useCharacterDetails } from "../../hooks/useCharacterDetails";
+import { FilmModal, SpeciesModal, VehicleModal, StarshipModal } from "../ResourceModals";
+import { extractId } from "../../utils/extractId";
 import {
     ProfileContainer,
     ProfileHeader,
@@ -18,11 +21,47 @@ export function CharacterProfile() {
     const navigate = useNavigate();
     const { t } = useTranslation();
 
+    const [filmModalOpen, setFilmModalOpen] = useState(false);
+    const [selectedFilmId, setSelectedFilmId] = useState<string | null>(null);
+
+    const [speciesModalOpen, setSpeciesModalOpen] = useState(false);
+    const [selectedSpeciesId, setSelectedSpeciesId] = useState<string | null>(null);
+
+    const [vehicleModalOpen, setVehicleModalOpen] = useState(false);
+    const [selectedVehicleId, setSelectedVehicleId] = useState<string | null>(null);
+
+    const [starshipModalOpen, setStarshipModalOpen] = useState(false);
+    const [selectedStarshipId, setSelectedStarshipId] = useState<string | null>(null);
+
     const { data, isFetching, error } = useCharacters({ page: 1, search: name || "" });
     const character = data?.results?.[0];
 
     const { films, species, vehicles, starships, isLoading: isLoadingDetails } =
         useCharacterDetails(character || null);
+
+    const handleFilmClick = (url: string) => {
+        const id = extractId(url);
+        setSelectedFilmId(id);
+        setFilmModalOpen(true);
+    };
+
+    const handleSpeciesClick = (url: string) => {
+        const id = extractId(url);
+        setSelectedSpeciesId(id);
+        setSpeciesModalOpen(true);
+    };
+
+    const handleVehicleClick = (url: string) => {
+        const id = extractId(url);
+        setSelectedVehicleId(id);
+        setVehicleModalOpen(true);
+    };
+
+    const handleStarshipClick = (url: string) => {
+        const id = extractId(url);
+        setSelectedStarshipId(id);
+        setStarshipModalOpen(true);
+    };
 
     if (isFetching) {
         return (
@@ -98,7 +137,19 @@ export function CharacterProfile() {
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
-                                species.map((s) => s.name).join(", ") || "n/a"
+                                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                                    {species.map((s) => (
+                                        <Tag
+                                            key={s.url}
+                                            color="blue"
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => handleSpeciesClick(s.url)}
+                                        >
+                                            {s.name}
+                                        </Tag>
+                                    ))}
+                                    {species.length === 0 && "n/a"}
+                                </div>
                             )}
                         </Descriptions.Item>
                     </Descriptions>
@@ -112,7 +163,12 @@ export function CharacterProfile() {
                         ) : (
                             <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
                                 {films.map((f) => (
-                                    <Tag key={f.url} color="gold">
+                                    <Tag
+                                        key={f.url}
+                                        color="gold"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() => handleFilmClick(f.url)}
+                                    >
                                         {f.title}
                                     </Tag>
                                 ))}
@@ -128,7 +184,12 @@ export function CharacterProfile() {
                             ) : (
                                 <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
                                     {vehicles.map((v) => (
-                                        <Tag key={v.url} color="green">
+                                        <Tag
+                                            key={v.url}
+                                            color="green"
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => handleVehicleClick(v.url)}
+                                        >
                                             {v.name}
                                         </Tag>
                                     ))}
@@ -145,7 +206,12 @@ export function CharacterProfile() {
                             ) : (
                                 <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
                                     {starships.map((s) => (
-                                        <Tag key={s.url} color="purple">
+                                        <Tag
+                                            key={s.url}
+                                            color="purple"
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => handleStarshipClick(s.url)}
+                                        >
                                             {s.name}
                                         </Tag>
                                     ))}
@@ -171,6 +237,27 @@ export function CharacterProfile() {
                     {t("modal.edited")}: {new Date(character.edited).toLocaleDateString()}
                 </p>
             </div>
+
+            <FilmModal
+                filmId={selectedFilmId}
+                open={filmModalOpen}
+                onClose={() => setFilmModalOpen(false)}
+            />
+            <SpeciesModal
+                speciesId={selectedSpeciesId}
+                open={speciesModalOpen}
+                onClose={() => setSpeciesModalOpen(false)}
+            />
+            <VehicleModal
+                vehicleId={selectedVehicleId}
+                open={vehicleModalOpen}
+                onClose={() => setVehicleModalOpen(false)}
+            />
+            <StarshipModal
+                starshipId={selectedStarshipId}
+                open={starshipModalOpen}
+                onClose={() => setStarshipModalOpen(false)}
+            />
         </ProfileContainer>
     );
 }
