@@ -55,6 +55,16 @@ export function FilmDetail() {
 
     const { characters, planets, starships, vehicles, species, isLoading: isLoadingDetails } = useFilmDetails(film);
 
+    const filmDetails = film ? [
+        { label: t("film.episode"), value: `Episode ${film.episode_id}` },
+        { label: t("film.director"), value: film.director },
+        { label: t("film.producer"), value: film.producer },
+        {
+            label: t("film.release_date"),
+            value: new Date(film.release_date).toLocaleDateString(),
+        },
+    ] : [];
+
     type ModalType = "species" | "vehicle" | "starship" | "planet";
 
     const handleModalOpen = (modalType: ModalType, url: string) => {
@@ -127,19 +137,17 @@ export function FilmDetail() {
             <ProfileContent>
                 <ProfileSection>
                     <SectionTitle>{t("film.film_info")}</SectionTitle>
-                    <Descriptions bordered column={{ xxl: 2, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 }} size="small" className="custom-descriptions">
-                        <Descriptions.Item label={t("film.episode")}>
-                            Episode {film.episode_id}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("film.director")}>
-                            {film.director}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("film.producer")}>
-                            {film.producer}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("film.release_date")}>
-                            {new Date(film.release_date).toLocaleDateString()}
-                        </Descriptions.Item>
+                    <Descriptions
+                        bordered
+                        column={{ xxl: 2, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 }}
+                        size="small"
+                        className="custom-descriptions"
+                    >
+                        {filmDetails.map((item) => (
+                            <Descriptions.Item key={item.label} label={item.label}>
+                                {item.value}
+                            </Descriptions.Item>
+                        ))}
                     </Descriptions>
                 </ProfileSection>
 
