@@ -1,6 +1,6 @@
 import type { Film, Species, Vehicle, Starship, Planet } from "../types/resources";
 
-const SWAPI_BASE_URL = "https://swapi.dev/api";
+const SWAPI_BASE_URL = "https://swapi.py4e.com/api";
 
 export async function fetchFilmById(id: string): Promise<Film> {
     const response = await fetch(`${SWAPI_BASE_URL}/films/${id}/`);
