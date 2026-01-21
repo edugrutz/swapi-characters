@@ -1,6 +1,6 @@
 # SWAPI Characters Explorer 🌌
 
-Uma aplicação web profissional e de alta performance desenvolvida para explorar o universo de Star Wars, criada como resposta a um desafio técnico utilizando tecnologias modernas de desenvolvimento web.
+Uma aplicação web desenvolvida para explorar o universo de Star Wars, criada como resposta a um desafio técnico utilizando tecnologias modernas de desenvolvimento web.
 
 ## 🚀 Visão Geral
 
@@ -78,10 +78,48 @@ O ambiente Docker está configurado com **Hot Module Replacement (HMR)**, então
 
 A aplicação conta com testes unitários utilizando Jest e React Testing Library.
 
-Para executar os testes:
+Para rodar todos os testes do projeto, utilize o comando:
+
 ```bash
-npm run test
+npm test
 ```
+
+Para ver a cobertura de testes:
+
+```bash
+npm run test:coverage
+```
+
+Para abrir a interface visual do Vitest (onde você pode ver os testes rodando em tempo real):
+
+```bash
+npm run test:ui
+```
+
+## 📂 Estrutura dos Testes
+
+O projeto conta com 26 testes distribuídos em 7 arquivos principais:
+
+### 1. Testes de Serviço (`src/services/__tests__`)
+- **`swapi.test.ts` & `swapiDetails.test.ts`**:
+    - **O que testam**: A comunicação com a API do Star Wars.
+    - **Cenários**: Busca de personagens, listagem paginada, busca de detalhes de planetas, filmes, naves, etc.
+    - **Mocking**: Usa MSW para retornar JSONs pré-definidos em vez de bater na API real.
+
+### 2. Testes de Componentes UI (`src/components/**/__tests__`)
+- **`CharacterCard/index.test.tsx`**:
+    - **O que testa**: Se o card do personagem exibe corretamente o nome, altura, peso e ícone de gênero.
+    - **Interação**: Garante que o evento `onClick` é disparado ao clicar no card.
+- **`CharacterGrid/index.test.tsx`**:
+    - **O que testa**: A renderização da lista de personagens, o estado de carregamento (spinner) e a exibição de alertas de erro.
+    - **Busca**: Verifica se o campo de busca atualiza corretamente.
+- **`CharacterProfile/index.test.tsx`**:
+    - **O que testa**: A página de perfil completa, incluindo dados básicos e o nome do planeta natal.
+    - **Cenários**: Testa o que acontece quando um personagem é encontrado e quando ele não existe.
+
+### 3. Testes de Hooks e Utils
+- **`src/hooks/__tests__/useDebounce.test.ts`**: Garante que o delay de busca funciona corretamente, evitando chamadas excessivas à API.
+- **`src/utils/__tests__/extractId.test.ts`**: Testa a lógica de extração de IDs das URLs da API.
 
 ## 🧠 Decisões Técnicas
 
