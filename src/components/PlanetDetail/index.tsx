@@ -1,9 +1,13 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Descriptions, Spin, Alert, Button } from "antd";
+import { Descriptions, Spin, Alert, Button, Tag } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { fetchPlanetById } from "../../services/swapiDetails";
+import { usePlanetDetails } from "../../hooks/usePlanetDetails";
+import { FilmModal } from "../ResourceModals";
+import { extractId } from "../../utils/extractId";
 import {
     ProfileContainer,
     ProfileHeader,
@@ -18,11 +22,29 @@ export function PlanetDetail() {
     const navigate = useNavigate();
     const { t } = useTranslation();
 
+    const [filmModalOpen, setFilmModalOpen] = useState(false);
+    const [selectedFilmId, setSelectedFilmId] = useState<string | null>(null);
+
     const { data: planet, isLoading, error } = useQuery({
         queryKey: ["planet", id],
         queryFn: () => fetchPlanetById(id!),
         enabled: !!id,
     });
+
+    const { residents, films, isLoading: isLoadingDetails } = usePlanetDetails(planet);
+
+    const handleFilmClick = (url: string) => {
+        const id = extractId(url);
+        setSelectedFilmId(id);
+        setFilmModalOpen(true);
+    };
+
+    const handleResidentClick = (url: string) => {
+        const residentName = residents.find(r => r.url === url)?.name;
+        if (residentName) {
+            navigate(`/character/${encodeURIComponent(residentName)}`);
+        }
+    };
 
     if (isLoading) {
         return (
@@ -107,6 +129,52 @@ export function PlanetDetail() {
                         </Descriptions.Item>
                     </Descriptions>
                 </ProfileSection>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+                    {planet.residents.length > 0 && (
+                        <ProfileSection>
+                            <SectionTitle className="star-wars-font">{t("planet.residents")}</SectionTitle>
+                            {isLoadingDetails ? (
+                                <Spin size="small" />
+                            ) : (
+                                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                                    {residents.map((r) => (
+                                        <Tag
+                                            key={r.url}
+                                            color="cyan"
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => handleResidentClick(r.url)}
+                                        >
+                                            {r.name}
+                                        </Tag>
+                                    ))}
+                                </div>
+                            )}
+                        </ProfileSection>
+                    )}
+
+                    {planet.films.length > 0 && (
+                        <ProfileSection>
+                            <SectionTitle className="star-wars-font">{t("modal.films")}</SectionTitle>
+                            {isLoadingDetails ? (
+                                <Spin size="small" />
+                            ) : (
+                                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                                    {films.map((f) => (
+                                        <Tag
+                                            key={f.url}
+                                            color="gold"
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => handleFilmClick(f.url)}
+                                        >
+                                            {f.title}
+                                        </Tag>
+                                    ))}
+                                </div>
+                            )}
+                        </ProfileSection>
+                    )}
+                </div>
             </ProfileContent>
 
             <div
@@ -124,6 +192,12 @@ export function PlanetDetail() {
                     {t("modal.edited")}: {new Date(planet.edited).toLocaleDateString()}
                 </p>
             </div>
+
+            <FilmModal
+                filmId={selectedFilmId}
+                open={filmModalOpen}
+                onClose={() => setFilmModalOpen(false)}
+            />
         </ProfileContainer>
     );
 }

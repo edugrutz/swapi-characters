@@ -91,7 +91,8 @@
         "surface_water": "Surface Water",
         "view_planet": "View Planet Page",
         "planetary_info": "Planetary Information",
-        "orbital_info": "Orbital Information"
+        "orbital_info": "Orbital Information",
+        "residents": "Residents"
     },
     "common": {
         "unknown": "Unknown",

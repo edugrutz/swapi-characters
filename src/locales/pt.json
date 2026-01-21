@@ -91,7 +91,8 @@
         "surface_water": "Água Superficial",
         "view_planet": "Ver Página do Planeta",
         "planetary_info": "Informações Planetárias",
-        "orbital_info": "Informações Orbitais"
+        "orbital_info": "Informações Orbitais",
+        "residents": "Moradores"
     },
     "common": {
         "unknown": "Desconhecido",
