@@ -1,10 +1,11 @@
-import { Modal, Descriptions, Spin, Alert } from "antd";
+import { Modal, Descriptions, Spin, Alert, Button } from "antd";
+import { CarOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { fetchVehicleById } from "../../services/swapiDetails";
 import type { VehicleModalProps } from "./types";
 
-export function VehicleModal({ vehicleId, open, onClose }: VehicleModalProps) {
+export function VehicleModal({ vehicleId, open, onClose, onViewVehicle }: VehicleModalProps) {
     const { t } = useTranslation();
 
     const { data: vehicle, isLoading, error } = useQuery({
@@ -12,6 +13,12 @@ export function VehicleModal({ vehicleId, open, onClose }: VehicleModalProps) {
         queryFn: () => fetchVehicleById(vehicleId!),
         enabled: !!vehicleId && open,
     });
+
+    const handleViewVehicle = () => {
+        if (vehicleId && onViewVehicle) {
+            onViewVehicle(vehicleId);
+        }
+    };
 
     return (
         <Modal
@@ -22,7 +29,18 @@ export function VehicleModal({ vehicleId, open, onClose }: VehicleModalProps) {
             }
             open={open}
             onCancel={onClose}
-            footer={null}
+            footer={
+                onViewVehicle && vehicleId ? (
+                    <Button
+                        type="primary"
+                        icon={<CarOutlined />}
+                        onClick={handleViewVehicle}
+                        size="large"
+                    >
+                        {t("vehicle.view_vehicle")}
+                    </Button>
+                ) : null
+            }
             width={700}
             centered
         >

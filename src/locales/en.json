@@ -66,7 +66,11 @@
         "crew": "Crew",
         "passengers": "Passengers",
         "cargo_capacity": "Cargo Capacity",
-        "consumables": "Consumables"
+        "consumables": "Consumables",
+        "view_vehicle": "View Vehicle Page",
+        "vehicle_info": "Vehicle Information",
+        "pilots": "Pilots",
+        "specifications": "Specifications"
     },
     "starship": {
         "loading": "Loading starship...",
@@ -107,6 +111,7 @@
         "swapi": "Failed to fetch data from SWAPI. Please try again later.",
         "character_not_found": "Character not found",
         "planet_not_found": "Planet not found",
-        "film_not_found": "Film not found"
+        "film_not_found": "Film not found",
+        "vehicle_not_found": "Vehicle not found"
     }
 }

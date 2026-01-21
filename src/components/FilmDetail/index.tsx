@@ -78,6 +78,11 @@ export function FilmDetail() {
         setStarshipModalOpen(true);
     };
 
+    const handleViewVehicle = (vehicleId: string) => {
+        setVehicleModalOpen(false);
+        navigate(`/vehicle/${vehicleId}`);
+    };
+
     if (isLoading) {
         return (
             <ProfileContainer>
@@ -298,6 +303,7 @@ export function FilmDetail() {
                 vehicleId={selectedVehicleId}
                 open={vehicleModalOpen}
                 onClose={() => setVehicleModalOpen(false)}
+                onViewVehicle={handleViewVehicle}
             />
             <StarshipModal
                 starshipId={selectedStarshipId}

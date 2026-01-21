@@ -15,6 +15,7 @@ export interface VehicleModalProps {
     vehicleId: string | null;
     open: boolean;
     onClose: () => void;
+    onViewVehicle?: (vehicleId: string) => void;
 }
 
 export interface StarshipModalProps {

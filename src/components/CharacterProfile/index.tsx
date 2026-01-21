@@ -84,6 +84,11 @@ export function CharacterProfile() {
         navigate(`/film/${filmId}`);
     };
 
+    const handleViewVehicle = (vehicleId: string) => {
+        setVehicleModalOpen(false);
+        navigate(`/vehicle/${vehicleId}`);
+    };
+
     if (isFetching) {
         return (
             <ProfileContainer>
@@ -287,6 +292,7 @@ export function CharacterProfile() {
                 vehicleId={selectedVehicleId}
                 open={vehicleModalOpen}
                 onClose={() => setVehicleModalOpen(false)}
+                onViewVehicle={handleViewVehicle}
             />
             <StarshipModal
                 starshipId={selectedStarshipId}
