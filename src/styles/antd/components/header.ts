@@ -40,11 +40,12 @@ export const ResponsiveTitle = styled(Title)`
   font-size: clamp(1.8rem, 6vw, 2.5rem) !important;
   font-weight: bold !important;
   line-height: 1.2 !important;
+  color: ${props => props.theme.theme === 'dark' ? '#fff' : '#000'} !important;
 `;
 
 export const ResponsiveText = styled(Text)`
-  color: #ffe81f !important;
+  color: ${props => props.theme.theme === 'dark' ? '#ffe81f' : '#000000ff'} !important;
   font-size: clamp(0.85rem, 3vw, 1rem) !important;
-  opacity: 0.8;
+  opacity: ${props => props.theme.theme === 'dark' ? '0.8' : '1'};
   max-width: 600px;
 `;

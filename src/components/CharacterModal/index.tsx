@@ -1,6 +1,7 @@
 import { Modal, Descriptions, Tag, Divider, Spin } from "antd";
 import { useTranslation } from "react-i18next";
 import { useCharacterDetails } from "../../hooks/useCharacterDetails";
+import { useTheme } from "../../contexts/ThemeContext";
 import type { CharacterModalProps } from "./types";
 
 export function CharacterModal({
@@ -9,7 +10,10 @@ export function CharacterModal({
 	onClose,
 }: CharacterModalProps) {
 	const { t } = useTranslation();
+	const { theme } = useTheme();
 	const { films, species, vehicles, starships, isLoading } = useCharacterDetails(character);
+
+	const headingColor = theme === "dark" ? "#ffffffff" : "#202020ff";
 
 	if (!character) return null;
 
@@ -53,7 +57,7 @@ export function CharacterModal({
 
 			<div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
 				<section>
-					<h4 style={{ color: "#FFE81F", marginBottom: "8px" }}>{t("modal.films")}</h4>
+					<h4 style={{ color: headingColor, marginBottom: "8px" }}>{t("modal.films")}</h4>
 					{isLoading ? <Spin size="small" /> : (
 						<div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
 							{films.map(f => <Tag key={f.url} color="gold">{f.title}</Tag>)}
@@ -63,7 +67,7 @@ export function CharacterModal({
 
 				{character.vehicles.length > 0 && (
 					<section>
-						<h4 style={{ color: "#FFE81F", marginBottom: "8px" }}>{t("modal.vehicles")}</h4>
+						<h4 style={{ color: headingColor, marginBottom: "8px" }}>{t("modal.vehicles")}</h4>
 						{isLoading ? <Spin size="small" /> : (
 							<div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
 								{vehicles.map(v => <Tag key={v.url} color="green">{v.name}</Tag>)}
@@ -74,7 +78,7 @@ export function CharacterModal({
 
 				{character.starships.length > 0 && (
 					<section>
-						<h4 style={{ color: "#FFE81F", marginBottom: "8px" }}>{t("modal.starships")}</h4>
+						<h4 style={{ color: headingColor, marginBottom: "8px" }}>{t("modal.starships")}</h4>
 						{isLoading ? <Spin size="small" /> : (
 							<div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
 								{starships.map(s => <Tag key={s.url} color="purple">{s.name}</Tag>)}

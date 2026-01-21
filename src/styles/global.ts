@@ -12,9 +12,10 @@ export const GlobalStyles = createGlobalStyle`
     body {
         margin: 0;
         min-height: 100vh;
-        background-color: #000;
+        background-color: ${props => props.theme.theme === 'dark' ? '#000' : '#f5f5f5'};
         position: relative;
         overflow-x: hidden;
+        transition: background-color 0.3s ease;
     }
 
     body::before {
@@ -26,9 +27,10 @@ export const GlobalStyles = createGlobalStyle`
         height: 200%;
         background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
         animation: ${moveStars} 100s linear infinite;
-        opacity: 0.4;
+        opacity: ${props => props.theme.theme === 'dark' ? '0.4' : '0.1'};
         z-index: -1;
         pointer-events: none;
+        transition: opacity 0.3s ease;
     }
     
     .app-layout {

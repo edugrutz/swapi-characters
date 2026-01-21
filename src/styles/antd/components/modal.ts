@@ -2,7 +2,7 @@ import { css } from "styled-components";
 
 export const modalStyles = css`
 .ant-modal-content {
-        background-color: #1a1a1a !important;
+        background-color: ${props => props.theme.theme === 'dark' ? '#1a1a1a' : '#fff'} !important;
         border: 1px solid #FFE81F !important;
     }
 
@@ -11,20 +11,20 @@ export const modalStyles = css`
     }
 
     .ant-modal-title {
-        color: #FFE81F !important;
+        color: ${props => props.theme.theme === 'dark' ? '#ffffffff' : 'inherit'} !important;
     }
 
     .ant-descriptions-item-label {
-        background-color: #000 !important;
-        color: #FFE81F !important;
+        background-color: ${props => props.theme.theme === 'dark' ? '#000' : '#fafafa'} !important;
+        color: ${props => props.theme.theme === 'dark' ? '#ffffffff' : 'inherit'} !important;
         font-weight: bold !important;
-        border-color: #333 !important;
+        border-color: ${props => props.theme.theme === 'dark' ? '#333' : '#f0f0f0'} !important;
     }
 
     .ant-descriptions-item-content {
-        background-color: #1a1a1a !important;
-        color: #FFE81F !important;
-        border-color: #333 !important;
+        background-color: ${props => props.theme.theme === 'dark' ? '#1a1a1a' : '#fff'} !important;
+        color: ${props => props.theme.theme === 'dark' ? '#FFE81F' : 'inherit'} !important;
+        border-color: ${props => props.theme.theme === 'dark' ? '#333' : '#f0f0f0'} !important;
     }
 
     .ant-modal-close {

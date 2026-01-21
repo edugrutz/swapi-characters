@@ -2,7 +2,7 @@ import { css } from "styled-components";
 
 export const alertStyles = css`
   .ant-alert-error {
-    background-color: #2a1a1a !important;
+    background-color: ${props => props.theme.theme === 'dark' ? '#2a1a1a' : '#fff2f0'} !important;
     border-color: #ff4d4f !important;
   }
 
@@ -11,6 +11,6 @@ export const alertStyles = css`
   }
 
   .ant-alert-error .ant-alert-description {
-    color: #ffe81f !important;
+    color: ${props => props.theme.theme === 'dark' ? '#ffe81f' : 'inherit'} !important;
   }
 `;

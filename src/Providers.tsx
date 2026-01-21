@@ -1,8 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ConfigProvider, theme } from "antd";
+import { ConfigProvider, theme as antdTheme } from "antd";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { ThemeProvider as StyledThemeProvider } from "styled-components";
+import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
 import enUS from "antd/locale/en_US";
 import ptBR from "antd/locale/pt_BR";
 
@@ -12,33 +14,45 @@ interface ProvidersProps {
     children: ReactNode;
 }
 
-export function Providers({ children }: ProvidersProps) {
+function AntdConfigProvider({ children }: { children: ReactNode }) {
     const { i18n } = useTranslation();
+    const { theme } = useTheme();
     const [locale, setLocale] = useState(enUS);
 
     useEffect(() => {
         const currentLanguage = i18n.language.split("-")[0];
-        if (currentLanguage === "pt") {
-            setLocale(ptBR);
-        } else {
-            setLocale(enUS);
-        }
+        setLocale(currentLanguage === "pt" ? ptBR : enUS);
     }, [i18n.language]);
 
     return (
-        <QueryClientProvider client={queryClient}>
-            <ConfigProvider
-                locale={locale}
-                theme={{
-                    algorithm: theme.darkAlgorithm,
-                    token: {
-                        colorPrimary: "#FFE81F",
-                        colorLink: "#FFE81F",
-                    },
-                }}
-            >
+        <ConfigProvider
+            locale={locale}
+            theme={{
+                algorithm:
+                    theme === "dark"
+                        ? antdTheme.darkAlgorithm
+                        : antdTheme.defaultAlgorithm,
+                token: {
+                    colorPrimary: theme === "dark" ? "#ffe81f" : "#000000ff",
+                    colorLink: theme === "dark" ? "#ffe81f" : "#000000ff",
+                    colorBgBase: theme === "dark" ? "#000000" : "#ffffff",
+                    colorTextBase: theme === "dark" ? "#ffffff" : "#000000",
+                },
+            }}
+        >
+            <StyledThemeProvider theme={{ theme }}>
                 {children}
-            </ConfigProvider>
+            </StyledThemeProvider>
+        </ConfigProvider>
+    );
+}
+
+export function Providers({ children }: ProvidersProps) {
+    return (
+        <QueryClientProvider client={queryClient}>
+            <ThemeProvider>
+                <AntdConfigProvider>{children}</AntdConfigProvider>
+            </ThemeProvider>
         </QueryClientProvider>
     );
 }
