@@ -38,7 +38,11 @@
         "director": "Director",
         "producer": "Producer",
         "release_date": "Release Date",
-        "opening_crawl": "Opening Crawl"
+        "opening_crawl": "Opening Crawl",
+        "view_film": "View Film Page",
+        "film_info": "Film Information",
+        "characters": "Characters",
+        "planets": "Planets"
     },
     "species": {
         "loading": "Loading species...",
@@ -102,6 +106,7 @@
         "loading": "Error loading characters",
         "swapi": "Failed to fetch data from SWAPI. Please try again later.",
         "character_not_found": "Character not found",
-        "planet_not_found": "Planet not found"
+        "planet_not_found": "Planet not found",
+        "film_not_found": "Film not found"
     }
 }

@@ -2,6 +2,7 @@ export interface FilmModalProps {
     filmId: string | null;
     open: boolean;
     onClose: () => void;
+    onViewFilm?: (filmId: string) => void;
 }
 
 export interface SpeciesModalProps {

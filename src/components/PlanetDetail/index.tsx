@@ -46,6 +46,11 @@ export function PlanetDetail() {
         }
     };
 
+    const handleViewFilm = (filmId: string) => {
+        setFilmModalOpen(false);
+        navigate(`/film/${filmId}`);
+    };
+
     if (isLoading) {
         return (
             <ProfileContainer>
@@ -197,6 +202,7 @@ export function PlanetDetail() {
                 filmId={selectedFilmId}
                 open={filmModalOpen}
                 onClose={() => setFilmModalOpen(false)}
+                onViewFilm={handleViewFilm}
             />
         </ProfileContainer>
     );

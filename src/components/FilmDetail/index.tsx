@@ -1,13 +1,13 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Descriptions, Tag, Spin, Alert, Button } from "antd";
+import { Descriptions, Spin, Alert, Button, Tag } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { useCharacters } from "../../hooks/useCharacters";
-import { useCharacterDetails } from "../../hooks/useCharacterDetails";
-import { FilmModal, SpeciesModal, VehicleModal, StarshipModal, PlanetModal } from "../ResourceModals";
+import { fetchFilmById } from "../../services/swapiDetails";
+import { useFilmDetails } from "../../hooks/useFilmDetails";
+import { SpeciesModal, VehicleModal, StarshipModal, PlanetModal } from "../ResourceModals";
 import { extractId } from "../../utils/extractId";
-import { useHomeworld } from "../../hooks/useHomeworld";
 import {
     ProfileContainer,
     ProfileHeader,
@@ -17,13 +17,10 @@ import {
     SectionTitle,
 } from "../../styles/antd/components/profile";
 
-export function CharacterProfile() {
-    const { name } = useParams<{ name: string }>();
+export function FilmDetail() {
+    const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const { t } = useTranslation();
-
-    const [filmModalOpen, setFilmModalOpen] = useState(false);
-    const [selectedFilmId, setSelectedFilmId] = useState<string | null>(null);
 
     const [speciesModalOpen, setSpeciesModalOpen] = useState(false);
     const [selectedSpeciesId, setSelectedSpeciesId] = useState<string | null>(null);
@@ -37,17 +34,30 @@ export function CharacterProfile() {
     const [planetModalOpen, setPlanetModalOpen] = useState(false);
     const [selectedPlanetId, setSelectedPlanetId] = useState<string | null>(null);
 
-    const { data, isFetching, error } = useCharacters({ page: 1, search: name || "" });
-    const character = data?.results?.[0];
+    const { data: film, isLoading, error } = useQuery({
+        queryKey: ["film", id],
+        queryFn: () => fetchFilmById(id!),
+        enabled: !!id,
+    });
 
-    const { homeworld, isLoading: isLoadingHomeworld } = useHomeworld(character?.homeworld || null);
-    const { films, species, vehicles, starships, isLoading: isLoadingDetails } =
-        useCharacterDetails(character || null);
+    const { characters, planets, starships, vehicles, species, isLoading: isLoadingDetails } = useFilmDetails(film);
 
-    const handleFilmClick = (url: string) => {
+    const handleCharacterClick = (url: string) => {
+        const characterName = characters.find(c => c.url === url)?.name;
+        if (characterName) {
+            navigate(`/character/${encodeURIComponent(characterName)}`);
+        }
+    };
+
+    const handlePlanetClick = (url: string) => {
         const id = extractId(url);
-        setSelectedFilmId(id);
-        setFilmModalOpen(true);
+        setSelectedPlanetId(id);
+        setPlanetModalOpen(true);
+    };
+
+    const handleViewPlanet = (planetId: string) => {
+        setPlanetModalOpen(false);
+        navigate(`/planet/${planetId}`);
     };
 
     const handleSpeciesClick = (url: string) => {
@@ -68,23 +78,7 @@ export function CharacterProfile() {
         setStarshipModalOpen(true);
     };
 
-    const handlePlanetClick = (url: string) => {
-        const id = extractId(url);
-        setSelectedPlanetId(id);
-        setPlanetModalOpen(true);
-    };
-
-    const handleViewPlanet = (planetId: string) => {
-        setPlanetModalOpen(false);
-        navigate(`/planet/${planetId}`);
-    };
-
-    const handleViewFilm = (filmId: string) => {
-        setFilmModalOpen(false);
-        navigate(`/film/${filmId}`);
-    };
-
-    if (isFetching) {
+    if (isLoading) {
         return (
             <ProfileContainer>
                 <div style={{ textAlign: "center", padding: "4rem" }}>
@@ -94,22 +88,22 @@ export function CharacterProfile() {
         );
     }
 
-    if (error || !character) {
+    if (error || !film) {
         return (
             <ProfileContainer>
                 <Alert
                     message={t("error.loading")}
-                    description={error?.message || t("error.character_not_found")}
+                    description={error?.message || t("error.film_not_found")}
                     type="error"
                     showIcon
                 />
                 <Button
                     type="primary"
                     icon={<ArrowLeftOutlined />}
-                    onClick={() => navigate("/")}
+                    onClick={() => navigate(-1)}
                     style={{ marginTop: "1rem" }}
                 >
-                    {t("profile.back")}
+                    {t("common.back")}
                 </Button>
             </ProfileContainer>
         );
@@ -118,56 +112,102 @@ export function CharacterProfile() {
     return (
         <ProfileContainer>
             <ProfileHeader>
-                <ProfileTitle className="star-wars-font">{character.name}</ProfileTitle>
+                <ProfileTitle className="star-wars-font">{film.title}</ProfileTitle>
                 <Button
                     type="default"
                     icon={<ArrowLeftOutlined />}
-                    onClick={() => navigate("/")}
+                    onClick={() => navigate(-1)}
                     size="large"
                 >
-                    {t("profile.back")}
+                    {t("common.back")}
                 </Button>
             </ProfileHeader>
 
             <ProfileContent>
                 <ProfileSection>
-                    <SectionTitle>{t("profile.basic_info")}</SectionTitle>
+                    <SectionTitle>{t("film.film_info")}</SectionTitle>
                     <Descriptions bordered column={1} size="small" className="custom-descriptions">
-                        <Descriptions.Item label={t("table.columns.height")}>
-                            {character.height} cm
+                        <Descriptions.Item label={t("film.episode")}>
+                            Episode {film.episode_id}
                         </Descriptions.Item>
-                        <Descriptions.Item label={t("table.columns.mass")}>
-                            {character.mass} kg
+                        <Descriptions.Item label={t("film.director")}>
+                            {film.director}
                         </Descriptions.Item>
-                        <Descriptions.Item label={t("table.columns.birth_year")}>
-                            {character.birth_year}
+                        <Descriptions.Item label={t("film.producer")}>
+                            {film.producer}
                         </Descriptions.Item>
-                        <Descriptions.Item label={t("table.columns.gender")}>
-                            <span style={{ textTransform: "capitalize" }}>{character.gender}</span>
+                        <Descriptions.Item label={t("film.release_date")}>
+                            {new Date(film.release_date).toLocaleDateString()}
                         </Descriptions.Item>
-                        <Descriptions.Item label={t("table.columns.hair_color")}>
-                            <span style={{ textTransform: "capitalize" }}>{character.hair_color}</span>
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("table.columns.skin_color")}>
-                            <span style={{ textTransform: "capitalize" }}>{character.skin_color}</span>
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("table.columns.eye_color")}>
-                            <span style={{ textTransform: "capitalize" }}>{character.eye_color}</span>
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("modal.homeworld")}>
-                            {isLoadingHomeworld ? (
+                    </Descriptions>
+                </ProfileSection>
+
+                <ProfileSection>
+                    <SectionTitle>{t("film.opening_crawl")}</SectionTitle>
+                    <div
+                        style={{
+                            padding: "1rem",
+                            background: "rgba(255, 232, 31, 0.05)",
+                            border: "1px solid rgba(255, 232, 31, 0.2)",
+                            borderRadius: "8px",
+                            maxHeight: "300px",
+                            overflowY: "auto",
+                            fontStyle: "italic",
+                            lineHeight: "1.6",
+                        }}
+                    >
+                        {film.opening_crawl}
+                    </div>
+                </ProfileSection>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+                    {film.characters.length > 0 && (
+                        <ProfileSection>
+                            <SectionTitle className="star-wars-font">{t("film.characters")}</SectionTitle>
+                            {isLoadingDetails ? (
                                 <Spin size="small" />
-                            ) : homeworld ? (
-                                <Tag
-                                    color="orange"
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() => handlePlanetClick(character.homeworld)}
-                                >
-                                    {homeworld.name}
-                                </Tag>
-                            ) : "n/a"}
-                        </Descriptions.Item>
-                        <Descriptions.Item label={t("modal.species")}>
+                            ) : (
+                                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                                    {characters.map((c) => (
+                                        <Tag
+                                            key={c.url}
+                                            color="cyan"
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => handleCharacterClick(c.url)}
+                                        >
+                                            {c.name}
+                                        </Tag>
+                                    ))}
+                                </div>
+                            )}
+                        </ProfileSection>
+                    )}
+
+                    {film.planets.length > 0 && (
+                        <ProfileSection>
+                            <SectionTitle className="star-wars-font">{t("film.planets")}</SectionTitle>
+                            {isLoadingDetails ? (
+                                <Spin size="small" />
+                            ) : (
+                                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                                    {planets.map((p) => (
+                                        <Tag
+                                            key={p.url}
+                                            color="orange"
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => handlePlanetClick(p.url)}
+                                        >
+                                            {p.name}
+                                        </Tag>
+                                    ))}
+                                </div>
+                            )}
+                        </ProfileSection>
+                    )}
+
+                    {film.species.length > 0 && (
+                        <ProfileSection>
+                            <SectionTitle className="star-wars-font">{t("modal.species")}</SectionTitle>
                             {isLoadingDetails ? (
                                 <Spin size="small" />
                             ) : (
@@ -182,35 +222,12 @@ export function CharacterProfile() {
                                             {s.name}
                                         </Tag>
                                     ))}
-                                    {species.length === 0 && "n/a"}
                                 </div>
                             )}
-                        </Descriptions.Item>
-                    </Descriptions>
-                </ProfileSection>
+                        </ProfileSection>
+                    )}
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-                    <ProfileSection>
-                        <SectionTitle className="star-wars-font">{t("modal.films")}</SectionTitle>
-                        {isLoadingDetails ? (
-                            <Spin size="small" />
-                        ) : (
-                            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                                {films.map((f) => (
-                                    <Tag
-                                        key={f.url}
-                                        color="gold"
-                                        style={{ cursor: "pointer" }}
-                                        onClick={() => handleFilmClick(f.url)}
-                                    >
-                                        {f.title}
-                                    </Tag>
-                                ))}
-                            </div>
-                        )}
-                    </ProfileSection>
-
-                    {character.vehicles.length > 0 && (
+                    {film.vehicles.length > 0 && (
                         <ProfileSection>
                             <SectionTitle className="star-wars-font">{t("modal.vehicles")}</SectionTitle>
                             {isLoadingDetails ? (
@@ -232,7 +249,7 @@ export function CharacterProfile() {
                         </ProfileSection>
                     )}
 
-                    {character.starships.length > 0 && (
+                    {film.starships.length > 0 && (
                         <ProfileSection>
                             <SectionTitle className="star-wars-font">{t("modal.starships")}</SectionTitle>
                             {isLoadingDetails ? (
@@ -265,19 +282,13 @@ export function CharacterProfile() {
                 }}
             >
                 <p>
-                    {t("modal.created")}: {new Date(character.created).toLocaleDateString()}
+                    {t("modal.created")}: {new Date(film.created).toLocaleDateString()}
                 </p>
                 <p>
-                    {t("modal.edited")}: {new Date(character.edited).toLocaleDateString()}
+                    {t("modal.edited")}: {new Date(film.edited).toLocaleDateString()}
                 </p>
             </div>
 
-            <FilmModal
-                filmId={selectedFilmId}
-                open={filmModalOpen}
-                onClose={() => setFilmModalOpen(false)}
-                onViewFilm={handleViewFilm}
-            />
             <SpeciesModal
                 speciesId={selectedSpeciesId}
                 open={speciesModalOpen}

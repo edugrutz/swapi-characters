@@ -1,10 +1,11 @@
-import { Modal, Descriptions, Spin, Alert } from "antd";
+import { Modal, Descriptions, Spin, Alert, Button } from "antd";
+import { PlayCircleOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { fetchFilmById } from "../../services/swapiDetails";
 import type { FilmModalProps } from "./types";
 
-export function FilmModal({ filmId, open, onClose }: FilmModalProps) {
+export function FilmModal({ filmId, open, onClose, onViewFilm }: FilmModalProps) {
     const { t } = useTranslation();
 
     const { data: film, isLoading, error } = useQuery({
@@ -12,6 +13,12 @@ export function FilmModal({ filmId, open, onClose }: FilmModalProps) {
         queryFn: () => fetchFilmById(filmId!),
         enabled: !!filmId && open,
     });
+
+    const handleViewFilm = () => {
+        if (filmId && onViewFilm) {
+            onViewFilm(filmId);
+        }
+    };
 
     return (
         <Modal
@@ -22,7 +29,18 @@ export function FilmModal({ filmId, open, onClose }: FilmModalProps) {
             }
             open={open}
             onCancel={onClose}
-            footer={null}
+            footer={
+                onViewFilm && filmId ? (
+                    <Button
+                        type="primary"
+                        icon={<PlayCircleOutlined />}
+                        onClick={handleViewFilm}
+                        size="large"
+                    >
+                        {t("film.view_film")}
+                    </Button>
+                ) : null
+            }
             width={700}
             centered
         >

@@ -38,7 +38,11 @@
         "director": "Diretor",
         "producer": "Produtor",
         "release_date": "Data de Lançamento",
-        "opening_crawl": "Texto de Abertura"
+        "opening_crawl": "Texto de Abertura",
+        "view_film": "Ver Página do Filme",
+        "film_info": "Informações do Filme",
+        "characters": "Personagens",
+        "planets": "Planetas"
     },
     "species": {
         "loading": "Carregando espécie...",
@@ -102,6 +106,7 @@
         "loading": "Erro ao carregar personagens",
         "swapi": "Falha ao buscar dados da SWAPI. Por favor, tente novamente mais tarde.",
         "character_not_found": "Personagem não encontrado",
-        "planet_not_found": "Planeta não encontrado"
+        "planet_not_found": "Planeta não encontrado",
+        "film_not_found": "Filme não encontrado"
     }
 }
