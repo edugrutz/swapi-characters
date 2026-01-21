@@ -125,3 +125,69 @@ export const ModalTitle = styled.span`
     display: inline-block;
     width: 100%;
 `;
+
+export const ProfileAvatar = styled.div`
+    width: 180px;
+    height: 250px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 3px solid ${({ theme }) =>
+        theme.theme === "dark" ? "#ffe81f" : "#1890ff"};
+    flex-shrink: 0;
+    background: ${({ theme }) =>
+        theme.theme === "dark" ? "rgba(255, 232, 31, 0.1)" : "rgba(24, 144, 255, 0.1)"};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .anticon {
+        font-size: 60px;
+        color: ${({ theme }) =>
+        theme.theme === "dark" ? "#ffe81f" : "#1890ff"};
+    }
+`;
+
+export const ProfileAvatarPlaceholder = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: ${({ theme }) =>
+        theme.theme === "dark" ? "#ffe81f" : "#1890ff"};
+`;
+
+export const ProfileHeaderContent = styled.div`
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+    }
+`;
+
+export const ProfileInfo = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+`;
+
+export const ProfileBasicInfoContainer = styled.div`
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+    }
+`;

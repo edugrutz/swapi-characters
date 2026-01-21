@@ -1,11 +1,13 @@
-import { Modal, Descriptions, Spin, Button } from "antd";
+import { Modal, Descriptions, Spin, Button, Skeleton } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useCharacterDetails } from "../../hooks/useCharacterDetails";
 import { useHomeworld } from "../../hooks/useHomeworld";
+import { useCharacterImage } from "../../hooks/useCharacterImage";
 import type { CharacterModalProps } from "./types";
 import { Capitalized, ModalTitle } from "../../styles/antd/components/profile";
+import styled from "styled-components";
 
 export function CharacterModal({
 	character,
@@ -16,6 +18,7 @@ export function CharacterModal({
 	const navigate = useNavigate();
 	const { species, isLoading } = useCharacterDetails(character);
 	const { homeworld, isLoading: isLoadingHomeworld } = useHomeworld(character?.homeworld || null);
+	const { imageUrl, isLoading: isLoadingImage } = useCharacterImage(character?.name);
 
 	const handleViewProfile = () => {
 		if (character) {
@@ -78,13 +81,72 @@ export function CharacterModal({
 			width={700}
 			centered
 		>
-			<Descriptions bordered column={1} size="small" className="custom-descriptions">
-				{details.map((item) => (
-					<Descriptions.Item key={item.label} label={item.label}>
-						{item.value}
-					</Descriptions.Item>
-				))}
-			</Descriptions>
+			<ModalContent>
+				<ModalImageContainer>
+					{isLoadingImage ? (
+						<Skeleton.Image active style={{ width: 200, height: 280 }} />
+					) : imageUrl ? (
+						<ModalImage src={imageUrl} alt={character.name} />
+					) : (
+						<ModalImagePlaceholder>
+							<UserOutlined style={{ fontSize: 64 }} />
+						</ModalImagePlaceholder>
+					)}
+				</ModalImageContainer>
+				<ModalDetailsContainer>
+					<Descriptions bordered column={1} size="small" className="custom-descriptions">
+						{details.map((item) => (
+							<Descriptions.Item key={item.label} label={item.label}>
+								{item.value}
+							</Descriptions.Item>
+						))}
+					</Descriptions>
+				</ModalDetailsContainer>
+			</ModalContent>
 		</Modal>
 	);
 }
+
+const ModalContent = styled.div`
+	display: flex;
+	gap: 24px;
+	align-items: flex-start;
+
+	@media (max-width: 768px) {
+		flex-direction: column;
+		align-items: center;
+	}
+`;
+
+const ModalImageContainer = styled.div`
+	flex-shrink: 0;
+`;
+
+const ModalDetailsContainer = styled.div`
+	flex: 1;
+	min-width: 0;
+`;
+
+const ModalImage = styled.img`
+	width: 200px;
+	height: 280px;
+	border-radius: 8px;
+	object-fit: cover;
+	border: 3px solid ${({ theme }) =>
+		theme.theme === "dark" ? "#ffe81f" : "#1890ff"};
+`;
+
+const ModalImagePlaceholder = styled.div`
+	width: 200px;
+	height: 280px;
+	border-radius: 8px;
+	border: 3px solid ${({ theme }) =>
+		theme.theme === "dark" ? "#ffe81f" : "#1890ff"};
+	background: ${({ theme }) =>
+		theme.theme === "dark" ? "rgba(255, 232, 31, 0.1)" : "rgba(24, 144, 255, 0.1)"};
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: ${({ theme }) =>
+		theme.theme === "dark" ? "#ffe81f" : "#1890ff"};
+`;

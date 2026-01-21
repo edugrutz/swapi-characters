@@ -1,10 +1,11 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Descriptions, Spin, Alert, Button } from "antd";
-import { ArrowLeftOutlined } from "@ant-design/icons";
+import { Descriptions, Spin, Alert, Button, Skeleton } from "antd";
+import { ArrowLeftOutlined, UserOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCharacters } from "../../hooks/useCharacters";
 import { useCharacterDetails } from "../../hooks/useCharacterDetails";
+import { useCharacterImage } from "../../hooks/useCharacterImage";
 import { FilmModal, SpeciesModal, VehicleModal, StarshipModal, PlanetModal } from "../ResourceModals";
 import { extractId } from "../../utils/extractId";
 import { useHomeworld } from "../../hooks/useHomeworld";
@@ -21,6 +22,9 @@ import {
     ResourceTagsWrapper,
     StyledTabs,
     StyledTag,
+    ProfileAvatar,
+    ProfileAvatarPlaceholder,
+    ProfileBasicInfoContainer,
 } from "../../styles/antd/components/profile";
 
 export function CharacterProfile() {
@@ -52,6 +56,7 @@ export function CharacterProfile() {
 
     const { data, isFetching, error } = useCharacters({ page: 1, search: name || "" });
     const character = data?.results?.[0];
+    const { imageUrl, isLoading: isLoadingImage } = useCharacterImage(character?.name);
 
     const { homeworld, isLoading: isLoadingHomeworld } = useHomeworld(character?.homeworld || null);
     const { films, species, vehicles, starships, isLoading: isLoadingDetails } =
@@ -178,18 +183,33 @@ export function CharacterProfile() {
             <ProfileContent>
                 <ProfileSection>
                     <SectionTitle>{t("profile.basic_info")}</SectionTitle>
-                    <Descriptions
-                        bordered
-                        column={{ xxl: 2, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 }}
-                        size="small"
-                        className="custom-descriptions"
-                    >
-                        {basicDetails.map((item) => (
-                            <Descriptions.Item key={item.label} label={item.label}>
-                                {item.value}
-                            </Descriptions.Item>
-                        ))}
-                    </Descriptions>
+                    <ProfileBasicInfoContainer>
+                        <ProfileAvatar>
+                            {isLoadingImage ? (
+                                <Skeleton.Image active style={{ width: 180, height: 250 }} />
+                            ) : imageUrl ? (
+                                <img src={imageUrl} alt={character.name} />
+                            ) : (
+                                <ProfileAvatarPlaceholder>
+                                    <UserOutlined style={{ fontSize: 60 }} />
+                                </ProfileAvatarPlaceholder>
+                            )}
+                        </ProfileAvatar>
+                        <div style={{ flex: 1 }}>
+                            <Descriptions
+                                bordered
+                                column={{ xxl: 2, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 }}
+                                size="small"
+                                className="custom-descriptions"
+                            >
+                                {basicDetails.map((item) => (
+                                    <Descriptions.Item key={item.label} label={item.label}>
+                                        {item.value}
+                                    </Descriptions.Item>
+                                ))}
+                            </Descriptions>
+                        </div>
+                    </ProfileBasicInfoContainer>
                 </ProfileSection>
                 <StyledTabs
                     defaultActiveKey="films"
@@ -299,6 +319,6 @@ export function CharacterProfile() {
                 onClose={() => setModalsOpen({ ...modalsOpen, planet: false })}
                 onViewPlanet={(id) => handleViewResource('planet', id)}
             />
-        </ProfileContainer>
+        </ProfileContainer >
     );
 }
