@@ -22,6 +22,7 @@ export const ContentSection = styled.div`
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  cursor: pointer;
 
   @media (max-width: 768px) {
     flex-direction: column;

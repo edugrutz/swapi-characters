@@ -4,6 +4,7 @@ import logo from "../../assets/images/logo.png";
 import storm from "../../assets/images/storm.png";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../../contexts/ThemeContext";
+import { useNavigate } from "react-router-dom";
 import {
 	StyledHeader,
 	ContentSection,
@@ -18,6 +19,7 @@ import {
 export function Header() {
 	const { t, i18n } = useTranslation();
 	const { theme, toggleTheme } = useTheme();
+	const navigate = useNavigate();
 
 	const handleLanguageChange = (value: string | number) => {
 		i18n.changeLanguage(value as string);
@@ -25,7 +27,7 @@ export function Header() {
 
 	return (
 		<StyledHeader>
-			<ContentSection>
+			<ContentSection onClick={() => navigate("/")}>
 				<LogoImage
 					src={theme === "dark" ? storm : logo}
 					alt="Star Wars Logo"
