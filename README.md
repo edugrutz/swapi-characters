@@ -8,7 +8,7 @@ Este projeto oferece uma interface intuitiva para pesquisar e visualizar detalhe
 
 ## 🎥 Demonstração
 
-![SWAPI Characters Demo](docs/demo.gif)
+![SWAPI Characters Demo](docs/demonstration.gif)
 
 ## ✨ Funcionalidades Principais
 
