@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '../../../test/test-utils';
+import { render, screen, fireEvent } from '../../../test/test-utils';
 import { CharacterGrid } from '../index';
 import { useCharacters } from '../../../hooks/useCharacters';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
