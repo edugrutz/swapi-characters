@@ -145,4 +145,4 @@ O projeto conta com 26 testes distribuídos em 7 arquivos principais:
 - [ ] Implementar modo de visualização em lista
 - [ ] Adicionar filtros por espécie, planeta natal, etc.
 - [ ] Criar página de comparação entre personagens
-- [ ] 
+- [ ] Associar páginas dos filmes com o seu IMDB
