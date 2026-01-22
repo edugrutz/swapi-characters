@@ -7,7 +7,7 @@ export const GlobalStyles = createGlobalStyle`
     body {
         margin: 0;
         min-height: 100vh;
-        background-color: ${props => props.theme.theme === 'dark' ? '#000' : '#f5f5f5'};
+        background-color: ${props => props.theme.theme === 'dark' ? '#000' : '#fafafa'};
         position: relative;
         overflow-x: hidden;
         transition: background-color 0.3s ease;

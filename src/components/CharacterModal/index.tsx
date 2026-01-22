@@ -7,7 +7,7 @@ import { useHomeworld } from "../../hooks/useHomeworld";
 import { useCharacterImage } from "../../hooks/useCharacterImage";
 import type { CharacterModalProps } from "./types";
 import { Capitalized, ModalTitle } from "../../styles/antd/components/profile";
-import styled from "styled-components";
+import { ModalContent, ModalImageContainer, ModalDetailsContainer, ModalImage, ModalImagePlaceholder } from "./style";
 
 export function CharacterModal({
 	character,
@@ -106,47 +106,3 @@ export function CharacterModal({
 		</Modal>
 	);
 }
-
-const ModalContent = styled.div`
-	display: flex;
-	gap: 24px;
-	align-items: flex-start;
-
-	@media (max-width: 768px) {
-		flex-direction: column;
-		align-items: center;
-	}
-`;
-
-const ModalImageContainer = styled.div`
-	flex-shrink: 0;
-`;
-
-const ModalDetailsContainer = styled.div`
-	flex: 1;
-	min-width: 0;
-`;
-
-const ModalImage = styled.img`
-	width: 200px;
-	height: 280px;
-	border-radius: 8px;
-	object-fit: cover;
-	border: 3px solid ${({ theme }) =>
-		theme.theme === "dark" ? "#ffe81f" : "#1890ff"};
-`;
-
-const ModalImagePlaceholder = styled.div`
-	width: 200px;
-	height: 280px;
-	border-radius: 8px;
-	border: 3px solid ${({ theme }) =>
-		theme.theme === "dark" ? "#ffe81f" : "#1890ff"};
-	background: ${({ theme }) =>
-		theme.theme === "dark" ? "rgba(255, 232, 31, 0.1)" : "rgba(24, 144, 255, 0.1)"};
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: ${({ theme }) =>
-		theme.theme === "dark" ? "#ffe81f" : "#1890ff"};
-`;

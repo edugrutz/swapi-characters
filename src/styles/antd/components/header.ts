@@ -41,13 +41,13 @@ export const ResponsiveTitle = styled(Title)`
   font-size: clamp(1.8rem, 6vw, 2.5rem) !important;
   font-weight: bold !important;
   line-height: 1.2 !important;
-  color: ${props => props.theme.theme === 'dark' ? '#fff' : '#000'} !important;
+  color: ${props => props.theme.theme === 'dark' ? '#fff' : '#1f1f1f'} !important;
 `;
 
 export const ResponsiveText = styled(Text)`
-  color: ${props => props.theme.theme === 'dark' ? '#ffe81f' : '#000000ff'} !important;
+  color: ${props => props.theme.theme === 'dark' ? '#ffe81f' : '#595959'} !important;
   font-size: clamp(0.85rem, 3vw, 1rem) !important;
-  opacity: ${props => props.theme.theme === 'dark' ? '0.8' : '1'};
+  font-weight: ${props => props.theme.theme === 'dark' ? 'normal' : '500'};
   max-width: 600px;
 `;
 
@@ -65,14 +65,15 @@ export const SettingsSection = styled.div`
 
 export const ThemeToggleButton = styled(Button)`
   font-size: 1.2rem !important;
-  color: ${props => props.theme.theme === 'dark' ? '#fff' : '#000'} !important;
-  border: 1px solid ${props => props.theme.theme === 'dark' ? '#fff' : '#000'} !important;
+  color: ${props => props.theme.theme === 'dark' ? '#fff' : '#1f1f1f'} !important;
+  border: 1px solid ${props => props.theme.theme === 'dark' ? '#fff' : '#d9d9d9'} !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  background: ${props => props.theme.theme === 'dark' ? 'transparent' : '#fff'} !important;
   
   &:hover {
-    color: ${props => props.theme.theme === 'dark' ? '#ffe81f' : '#1890ff'} !important;
-    border-color: ${props => props.theme.theme === 'dark' ? '#ffe81f' : '#1890ff'} !important;
+    color: ${props => props.theme.theme === 'dark' ? '#ffe81f' : '#FFE81F'} !important;
+    border-color: ${props => props.theme.theme === 'dark' ? '#ffe81f' : '#FFE81F'} !important;
   }
 `;

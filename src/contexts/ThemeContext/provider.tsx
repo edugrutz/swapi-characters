@@ -41,10 +41,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
                             ? antdTheme.darkAlgorithm
                             : antdTheme.defaultAlgorithm,
                     token: {
-                        colorPrimary: theme === "dark" ? "#ffe81f" : "#000000ff",
-                        colorLink: theme === "dark" ? "#ffe81f" : "#000000ff",
-                        colorBgBase: theme === "dark" ? "#000000" : "#ffffff",
-                        colorTextBase: theme === "dark" ? "#ffffff" : "#000000",
+                        colorPrimary: theme === "dark" ? "#ffe81f" : "#FFE81F",
+                        colorLink: theme === "dark" ? "#ffe81f" : "#1890ff",
+                        colorBgBase: theme === "dark" ? "#000000" : "#fafafa",
+                        colorTextBase: theme === "dark" ? "#ffffff" : "#1f1f1f",
                     },
                 }}
             >

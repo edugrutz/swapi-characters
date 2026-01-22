@@ -3,9 +3,9 @@ import { Card } from "antd";
 
 export const StyledCard = styled(Card)`
   background: ${({ theme }) =>
-    theme.theme === "dark" ? "rgba(255, 232, 31, 0.05)" : "rgba(0, 0, 0, 0.02)"} !important;
+    theme.theme === "dark" ? "rgba(255, 232, 31, 0.05)" : "#ffffff"} !important;
   border: 1px solid ${({ theme }) =>
-    theme.theme === "dark" ? "rgba(255, 232, 31, 0.2)" : "rgba(0, 0, 0, 0.1)"} !important;
+    theme.theme === "dark" ? "rgba(255, 232, 31, 0.2)" : "#c7c7c7ff"} !important;
   transition: all 0.3s ease !important;
   cursor: pointer;
   height: 100%;
@@ -19,20 +19,23 @@ export const StyledCard = styled(Card)`
   &:hover {
     transform: translateY(-5px);
     border-color: ${({ theme }) =>
-    theme.theme === "dark" ? "#ffe81f" : "#1890ff"} !important;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    theme.theme === "dark" ? "#ffe81f" : "#FFE81F"} !important;
+    box-shadow: ${({ theme }) =>
+    theme.theme === "dark" ? "0 10px 20px rgba(0, 0, 0, 0.2)" : "0 10px 20px rgba(0, 0, 0, 0.1)"};
   }
 
   .ant-card-head {
     border-bottom: 1px solid ${({ theme }) =>
-    theme.theme === "dark" ? "rgba(255, 232, 31, 0.2)" : "rgba(0, 0, 0, 0.1)"};
+    theme.theme === "dark" ? "rgba(255, 232, 31, 0.2)" : "#e8e8e8"};
     color: ${({ theme }) =>
-    theme.theme === "dark" ? "#ffe81f" : "inherit"} !important;
+    theme.theme === "dark" ? "#ffe81f" : "#1f1f1f"} !important;
+    font-weight: ${({ theme }) =>
+    theme.theme === "dark" ? "normal" : "600"};
   }
 
   .ant-card-body {
     color: ${({ theme }) =>
-    theme.theme === "dark" ? "#fff" : "inherit"} !important;
+    theme.theme === "dark" ? "#fff" : "#1f1f1f"} !important;
   }
 `;
 
@@ -40,7 +43,7 @@ export const CardLabel = styled.span`
   font-weight: bold;
   margin-right: 8px;
   color: ${({ theme }) =>
-    theme.theme === "dark" ? "#ffe81f" : "inherit"};
+    theme.theme === "dark" ? "#ffe81f" : "#1f1f1f"};
 `;
 
 export const CardContent = styled.div`
@@ -62,10 +65,10 @@ export const CardAvatar = styled.div`
   border-radius: 8px;
   overflow: hidden;
   border: 2px solid ${({ theme }) =>
-    theme.theme === "dark" ? "#ffe81f" : "#1890ff"};
+    theme.theme === "dark" ? "#ffe81f" : "#FFE81F"};
   flex-shrink: 0;
   background: ${({ theme }) =>
-    theme.theme === "dark" ? "rgba(255, 232, 31, 0.1)" : "rgba(24, 144, 255, 0.1)"};
+    theme.theme === "dark" ? "rgba(255, 232, 31, 0.1)" : "rgba(255, 232, 31, 0.05)"};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,6 +82,6 @@ export const CardAvatar = styled.div`
   .anticon {
     font-size: 40px;
     color: ${({ theme }) =>
-    theme.theme === "dark" ? "#ffe81f" : "#1890ff"};
+    theme.theme === "dark" ? "#ffe81f" : "#FFE81F"};
   }
 `;

@@ -65,7 +65,6 @@ export function CharacterGrid() {
 					type="error"
 					showIcon
 					closable
-					style={{ marginBottom: 16 }}
 				/>
 			)}
 			<List

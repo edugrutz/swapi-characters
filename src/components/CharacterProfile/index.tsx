@@ -25,6 +25,7 @@ import {
     ProfileAvatar,
     ProfileAvatarPlaceholder,
     ProfileBasicInfoContainer,
+    ProfileDetailsContainer,
 } from "../../styles/antd/components/profile";
 
 export function CharacterProfile() {
@@ -195,7 +196,7 @@ export function CharacterProfile() {
                                 </ProfileAvatarPlaceholder>
                             )}
                         </ProfileAvatar>
-                        <div style={{ flex: 1 }}>
+                        <ProfileDetailsContainer>
                             <Descriptions
                                 bordered
                                 column={{ xxl: 2, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 }}
@@ -208,7 +209,7 @@ export function CharacterProfile() {
                                     </Descriptions.Item>
                                 ))}
                             </Descriptions>
-                        </div>
+                        </ProfileDetailsContainer>
                     </ProfileBasicInfoContainer>
                 </ProfileSection>
                 <StyledTabs

@@ -47,19 +47,17 @@ export const StyledTabs = styled(Tabs)`
     padding: 12px 16px !important;
     
     &:hover {
-      color: ${({ theme }) =>
-        theme.theme === 'dark' ? '#ffe81f' : '#1890ff'} !important;
+      color: #ffe81f !important;
     }
   }
 
   .ant-tabs-tab-active .ant-tabs-tab-btn {
     color: ${({ theme }) =>
-        theme.theme === 'dark' ? '#ffe81f' : '#1890ff'} !important;
+        theme.theme === 'dark' ? '#ffe81f' : '#000000ff'} !important;
   }
 
   .ant-tabs-ink-bar {
-    background: ${({ theme }) =>
-        theme.theme === 'dark' ? '#ffe81f' : '#1890ff'} !important;
+    background: #ffe81f !important;
   }
 `;
 
@@ -140,7 +138,7 @@ export const ProfileAvatar = styled.div`
     border-radius: 8px;
     overflow: hidden;
     border: 3px solid ${({ theme }) =>
-        theme.theme === "dark" ? "#ffe81f" : "#1890ff"};
+        theme.theme === "dark" ? "#ffe81f" : "#ffe81f"};
     flex-shrink: 0;
     background: ${({ theme }) =>
         theme.theme === "dark" ? "rgba(255, 232, 31, 0.1)" : "rgba(24, 144, 255, 0.1)"};
@@ -187,6 +185,11 @@ export const ProfileInfo = styled.div`
     flex-direction: column;
     gap: 16px;
     flex: 1;
+`;
+
+export const ProfileDetailsContainer = styled.div`
+    flex: 1;
+    width: 100%;
 `;
 
 export const ProfileBasicInfoContainer = styled.div`
