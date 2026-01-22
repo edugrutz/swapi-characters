@@ -6,6 +6,10 @@ Uma aplicação web desenvolvida para explorar o universo de Star Wars, criada c
 
 Este projeto oferece uma interface intuitiva para pesquisar e visualizar detalhes sobre os personagens de Star Wars. Utiliza a **SWAPI (Star Wars API)** e foca em excelência visual, performance e experiência do usuário (UX).
 
+## 🎥 Demonstração
+
+![SWAPI Characters Demo](docs/demo.gif)
+
 ## ✨ Funcionalidades Principais
 
 - **Interface Temática**: Estética do universo Star Wars com modo escuro customizado, tipografia temática e fundo estrelado animado.
