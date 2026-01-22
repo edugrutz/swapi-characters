@@ -49,7 +49,7 @@ src/
    git clone git@github.com:edugrutz/swapi-characters.git
    ```
 
-2. **Instalar dependências**:
+2. **Dentro da pasta do projeto, instalar dependências**:
    ```bash
    npm install
    ```
@@ -59,10 +59,15 @@ src/
    npm run dev
    ```
 
-4. **Gerar build de produção**:
+4. **Acessar a aplicação**:
+   Abra [http://localhost:5173](http://localhost:5173) no seu navegador.
+
+5. **(opcional) Gerar e testar build de produção**:
    ```bash
    npm run build
+   npm run preview
    ```
+   Abra o endereço indicado (geralmente [http://localhost:4173](http://localhost:4173)).
 
 ## 🐳 Docker
 
